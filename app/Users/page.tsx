@@ -1,12 +1,12 @@
 
 import React from 'react';
 
-const Auth = () => {
+const Users = () => {
     return (
         <div>
-            <h1>Auth</h1>
+            <h1>Users</h1>
         </div>
     );
 };
 
-export default Auth;
+export default Users;

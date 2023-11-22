@@ -1,12 +1,12 @@
 
 import React from 'react';
 
-const Auth = () => {
+const UsersApp = () => {
     return (
         <div>
-            <h1>Auth</h1>
+            <h1>UsersApp</h1>
         </div>
     );
 };
 
-export default Auth;
+export default UsersApp;
