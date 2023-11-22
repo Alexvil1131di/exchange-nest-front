@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# ExchangeNest
 
-## Getting Started
+ExchangeNest busca desarrollar una plataforma centralizada para facilitar y enriquecer la experiencia de intercambio estudiantil a nivel global. La plataforma permitirá a las universidades gestionar sus programas de intercambio, a los estudiantes aplicar a estos programas y buscar alojamiento, y a las familias anfitrionas interactuar con los estudiantes. Todo esto se hará garantizando la seguridad de los datos y eliminando intermediarios en el proceso. Además, se promoverá la transparencia en los requisitos de admisión y los criterios de selección para los programas de intercambio. En resumen, este proyecto tiene como objetivo mejorar significativamente la accesibilidad y transparencia de los programas de intercambio, beneficiando a estudiantes, universidades y familias anfitrionas.
 
-First, run the development server:
+## Características Principales
+
+- **Gestión de Programas de Intercambio:** Permite a las universidades gestionar de manera eficiente sus programas de intercambio.
+
+- **Solicitud de Estudiantes:** Facilita a los estudiantes la aplicación a programas de intercambio y la búsqueda de alojamiento.
+
+- **Interacción con Familias Anfitrionas:** Proporciona un espacio para que las familias anfitrionas interactúen y se conecten con los estudiantes.
+
+- **Seguridad de Datos:** Garantiza la seguridad de los datos mediante prácticas robustas de protección y privacidad.
+
+- **Eliminación de Intermediarios:** Simplifica el proceso eliminando intermediarios innecesarios.
+
+- **Transparencia en Requisitos y Criterios:** Promueve la transparencia al mostrar claramente los requisitos de admisión y los criterios de selección para los programas de intercambio.
+
+## Tecnologías Utilizadas
+
+- **Next.js:** Framework de React para el desarrollo de aplicaciones web.
+
+- **Tailwind CSS:** Biblioteca de estilos utilitarios para un desarrollo rápido y mantenible.
+
+- **Zustand:** Biblioteca de gestión de estado para React, que facilita el manejo del estado global de la aplicación.
+
+## Instalación
+
+Asegúrate de tener [Node.js](https://nodejs.org/) instalado en tu sistema.
+
+1. Clona este repositorio:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/tu-usuario/exchangenest.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Entra al directorio del proyecto: ``` cd exchangenest ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Instala las dependencias: ``` npm install ```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+4. Inicia la aplicación: ``` npm run dev ```
 
-## Learn More
+## Uso
 
-To learn more about Next.js, take a look at the following resources:
+La aplicación estará disponible en [http://localhost:3000](http://localhost:3000).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contribución
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+¡Contribuciones son bienvenidas! Si deseas contribuir a ExchangeNest, por favor sigue los siguientes pasos:
 
-## Deploy on Vercel
+1. Haz un fork del repositorio
+2. Crea una rama para tu contribución: `git checkout -b feature/nueva-caracteristica`
+3. Realiza tus cambios y haz commit: `git commit -am 'Añadir nueva característica'`
+4. Haz push a la rama: `git push origin feature/nueva-caracteristica`
+5. Abre un pull request en GitHub
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Licencia
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Este proyecto está bajo la licencia [MIT](LICENSE).
+
+
