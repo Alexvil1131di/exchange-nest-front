@@ -38,10 +38,10 @@ export default function SignUp() {
                 <form className="flex flex-col w-full max-w-[600px] items-center gap-8 justify-center">
 
                     <InputComponent label="Email" required={true} placeholder="Enter your email" type="email" name="email" value={stringDecrypter(email)} hasAnError={false}
-                        width="w-full " onChange={(e) => { setEmail(e.target.value) }} errorMessage={"Ha ocurrido un error, complete el campo correspondiente"} />
+                        width="w-full " onChange={(e) => { setEmail(e.target.value) }} errorMessage={"An error has occurred, please fill in the appropriate field."} />
 
                     <InputComponent label="password" required={true} placeholder="Password" type="password" name="password" value={stringDecrypter(password)} hasAnError={false}
-                        width="w-full " onChange={(e) => setPassword(e.target.value)} errorMessage={"Ha ocurrido un error, complete el campo correspondiente"} />
+                        width="w-full " onChange={(e) => setPassword(e.target.value)} errorMessage={"An error has occurred, please fill in the appropriate field."} />
 
                     <div className="w-full text-[14px] flex justify-between">
                         <CheckBoxWithLabel label={"Remember me"} id={"recuerdame"} checked={rememberMe as boolean} onChange={() => { setRememberMe() }} />
