@@ -1,11 +1,16 @@
+'use client'
 
 import React from 'react';
+import NavBar from '@/components/navBar';
 
 const Programs = () => {
     return (
-        <div>
-            <h1>Programs</h1>
-        </div>
+        <>
+            <NavBar />
+            Programs
+
+
+        </>
     );
 };
 

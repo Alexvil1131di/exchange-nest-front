@@ -1,11 +1,15 @@
+'use client'
 
 import React from 'react';
+import NavBar from '@/components/navBar';
 
 const Institution = () => {
     return (
-        <div>
-            <h1>Institution</h1>
-        </div>
+        <>
+            <NavBar />
+            Institution
+
+        </>
     );
 };
 
