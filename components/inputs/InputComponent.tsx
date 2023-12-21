@@ -57,7 +57,7 @@ function InputComponent(
         return (
             <div className={`relative dropdown ${isOpen ? 'open' : ''} w-full h-full cursor-pointer`} ref={ref} onClick={() => setIsOpen(!isOpen)} >
                 <div className="w-full h-full flex items-center justify-between rounded-[4px] text-[12px] px-[16px] " >
-                    <p>{selectedOption}</p>
+                    {selectedOption ? <p>{selectedOption}</p> : <p className="text-[#a0a0a0]">{placeholder}</p>}
                     <DownArrow className={`w-[24px] h-[24px] stroke-[1.5px] ${isOpen && " rotate-180"} `} />
                 </div>
 
