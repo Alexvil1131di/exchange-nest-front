@@ -5,10 +5,13 @@ import NavBar from '@/components/navBar';
 import InputComponent from '@/components/inputs/InputComponent';
 import CustomizableButton from '@/components/buttons/CustomizableButton';
 import ProgramCard from '@/components/cards/programCard';
+import { useRouter } from 'next/router';
 
-const arr = ["", "", "", "", "", "", "", "", "", "", "", "", "", ""]
 
 const Programs = () => {
+    const router = useRouter()
+    const arr = ["", "", "", "", "", "", "", "", "", "", "", "", "", ""]
+
     return (
         <>
             <NavBar />

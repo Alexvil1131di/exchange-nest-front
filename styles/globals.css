@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number'] {
+    -webkit-appearance: none;
+    -moz-appearance: textfield !important;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+}
+
+#__next {
+  height: 100vh;
+}
+
+.loading-bar {
+  position: absolute;
+  width: 98.5%;
+  bottom: 0px;
+  right: 4px;
+  border-radius: 50px;
+  height: 4px;
+  background-color: #1E1E1E;
+  animation-name: loading;
+  animation-duration: 3s;
+  animation-fill-mode: backwards;
+}
+
+.dragging {
+  z-index: 999;
+  opacity: 1;
+}
+
+
+
+@keyframes loading {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 95.5%;
+    background-color: #1E1E1E;
+  }
+}
+
+.grid {
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+}
+
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+li.dragging {
+  opacity: 0.5;
+  /* reduce la opacidad del componente arrastrado */
+  transform: scale(1.1);
+  /* aumenta el tamaño del componente arrastrado */
+  transition: all 0.2s ease-in-out;
+  /* añade una transición suave */
+}
+
+@keyframes loadingSkeleton {
+  0% {
+    background-position: 100% 50%;
+  }
+
+  50% {
+    background-position: 0 50%;
+  }
+
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #f8f8f8 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loadingSkeleton 3s infinite ease-in-out;
+}
