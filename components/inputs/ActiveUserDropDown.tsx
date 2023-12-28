@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 import DownArrow from "@/public/DownArrow.svg"
 import useEventListener from "@/hooks/useEvent";
 import UserSilhouette from "@/public/userSilhouette.svg"
+import { userLogOut } from "@/hooks/auth/methods";
 
 
 interface ActiveUserProps {
@@ -55,7 +56,7 @@ const ActiveUser = ({ commerceName, commerceImage, userEmail }: ActiveUserProps)
                                 <h1 className="my-[9px] text-[14px] text-[#444444]">Soporte</h1>
                             </button>
                             <hr />
-                            <button type="button" className="flex gap-2 items-center py-2 px-4  w-full hover:bg-[#00000010]" onClick={() => { }}>
+                            <button type="button" className="flex gap-2 items-center py-2 px-4  w-full hover:bg-[#00000010]" onClick={() => { userLogOut() }}>
                                 <h1 className="my-[9px] text-[14px] text-[#444444]">LogOut</h1>
                             </button>
                         </div>

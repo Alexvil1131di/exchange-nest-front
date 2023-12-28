@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Styles from "@/styles/Login.module.css";
 
 interface CheckBoxWithLabelProps {
     label: string;
@@ -12,7 +13,7 @@ interface CheckBoxWithLabelProps {
 const CheckBoxWithLabel = ({ label, id, checked, width = "w-6", height = "h-6", onChange }: CheckBoxWithLabelProps) => {
     return (
         <label htmlFor={id} className={`flex items-center`}>
-            <input type="checkbox" id={id} className={"checkbox" + ` ${width} ${height} text-[14px]`} checked={checked} onChange={onChange} />
+            <input type="checkbox" id={id} className={Styles.checkbox + ` ${width} ${height} text-[14px]`} checked={checked} onChange={onChange} />
             {label}
         </label>
     );

@@ -3,23 +3,61 @@ import CustomizableButton from "@/components/buttons/CustomizableButton";
 import CheckBoxWithLabel from "@/components/inputs/CheckBoxWithLabel";
 import InputComponent from "@/components/inputs/InputComponent"
 import ExchangeNestLogo from "@/public/ExchangeNestLogo.svg"
-import Link from "next/link";
 import useLoginForm from "@/store/singInStore";
-import { stringDecrypter } from "@/hooks/auth/methods";
-import { useEffect } from "react";
+import { stringDecrypter, stringEncrypter } from "@/hooks/auth/methods";
+import { useEffect, useState } from "react";
+import { useLogin } from "@/hooks/auth/hooks";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
+import ResetPasswordModal from "@/components/modals/resetPasswordModal";
+import { useChangePasswordEmail } from "@/hooks/auth/hooks";
 
 export default function SignUp() {
 
-    const { email, password, rememberMe, setEmail, setPassword, setRememberMe } = useLoginForm();
+    const { email, password, rememberMe, userData, setEmail, setPassword, setRememberMe, setUserData } = useLoginForm();
+    const { mutateAsync: loginUser } = useLogin()
+    const { mutateAsync: changePassWord } = useChangePasswordEmail()
+
+    const router = useRouter();
+
+    const [showModal, setShowModal] = useState(false)
+    const [changePassEmail, setChangePassEmail] = useState("")
+
 
     useEffect(() => { if (!rememberMe) { setEmail(""); setPassword("") } else { setRememberMe(true) } }, [rememberMe])
 
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        toast.promise(loginUser({ email: stringDecrypter(email), password: stringDecrypter(password) }), {
+            pending: 'Loggin in',
+            success: `Sucessfully logged in`,
+            error: `An error has occurred, please try again later`,
+        }).then((data) => {
+            router.push("/")
+            setUserData(data)
+            Cookies.set('token', stringEncrypter(data.accessToken), { expires: 1 })
+        }).catch((err) => { console.log(err) })
+
+    }
+
+    const handleResetPassword = () => {
+        toast.promise(changePassWord(changePassEmail), {
+            pending: 'Sending email',
+            success: `Email sended, please check your inbox`,
+            error: `An error has occurred, please try again later`,
+        }).then(() => {
+            setShowModal(false)
+        }).catch((err) => { console.log(err) })
+    }
 
 
     return (
 
         <div className="flex w-screen h-screen">
-
+            {showModal && <ResetPasswordModal title={"Reset Password"} actionMessage={"Enter your user account's verified email address and we will send you a password reset link."}
+                acctionConfirm={() => { handleResetPassword() }} acctionReject={() => { setShowModal(false) }} value={changePassEmail} onChange={(e) => { setChangePassEmail(e.target.value) }} />
+            }
 
             <img className="hidden select-none lg:inline w-full h-full object-center object-cover" src="/loginBackground.png" alt="" />
 
@@ -35,7 +73,7 @@ export default function SignUp() {
                     <p className="text-[16px]">Now you just have to enter your username and password and enjoy everything that Pidebot offers you.</p>
                 </div>
 
-                <form className="flex flex-col w-full max-w-[600px] items-center gap-8 justify-center">
+                <form onSubmit={handleSubmit} className="flex flex-col w-full max-w-[600px] items-center gap-8 justify-center">
 
                     <InputComponent label="Email" required={true} placeholder="Enter your email" type="email" name="email" value={stringDecrypter(email)} hasAnError={false}
                         width="w-full " onChange={(e) => { setEmail(e.target.value) }} errorMessage={"An error has occurred, please fill in the appropriate field."} />
@@ -45,7 +83,7 @@ export default function SignUp() {
 
                     <div className="w-full text-[14px] flex justify-between">
                         <CheckBoxWithLabel label={"Remember me"} id={"recuerdame"} checked={rememberMe as boolean} onChange={() => { setRememberMe() }} />
-                        <Link href="#" className=" underline">Forgot password?</Link>
+                        <button type="button" onClick={() => { setShowModal(true) }} className=" underline">Forgot password?</button>
                     </div>
 
                     <CustomizableButton text={"SING IN"} type="submit" onClick={() => { }} ></CustomizableButton>
