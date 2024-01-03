@@ -8,7 +8,7 @@ import EditIcon from '@/public/editIcon.svg';
 import TrashCan from '@/public/trashCan.svg';
 import CustomTable from '@/components/tables/Table';
 import { TableRow, TableCell } from '@mui/material';
-import CommerceInfo from '@/components/modals/ComerceInfo';
+import InstitutionModal from '@/components/modals/InstitutionModal';
 import useInstitutionForm from '@/store/institutionsStore';
 import { toast } from 'react-toastify'
 import { useGetOrganizations, useCreateOrganization, useDeleteOrganization, useUpdateOrganization } from '@/hooks/Institutions/hooks';
@@ -26,39 +26,6 @@ const Institution = () => {
     const { mutateAsync: putOrganization } = useUpdateOrganization();
     const { mutateAsync: deleteOrganization } = useDeleteOrganization();
     const { institution, setInsitution, reset } = useInstitutionForm();
-
-    const mockData = [
-        {
-            id: 1,
-            date: "2021-10-10",
-            name: "John Doe",
-            description: "Web Developer",
-            email: "john.doe@example.com",
-            phoneNumber: "555-1234",
-            address: "123 Main St, Cityville, Country",
-            organizationTypeText: "Tech Company"
-        },
-        {
-            id: 2,
-            date: "2021-10-10",
-            name: "Jane Smith",
-            description: "Marketing Specialist",
-            email: "jane.smith@example.com",
-            phoneNumber: "555-5678",
-            address: "456 Oak St, Townsville, Country",
-            organizationTypeText: "Marketing Agency"
-        },
-        {
-            id: 3,
-            date: "2021-10-10",
-            name: "Bob Johnson",
-            description: "Product Manager",
-            email: "bob.johnson@example.com",
-            phoneNumber: "555-9876",
-            address: "789 Pine St, Villageland, Country",
-            organizationTypeText: "Product Company"
-        }
-    ];
 
     const columns = [
         { id: 'checkBox', label: "", align: 'start', maxWidth: '127px' },
@@ -219,8 +186,8 @@ const Institution = () => {
 
                 </div>
 
-                <CustomTable columns={columns} rows={tableRows()} page={page} rowsPerPage={rowsPerPage} setPage={setPage} setRowsPerPage={setRowsPerPage} length={filterData(institutionArray, searchText, statusFilter).length} />
-                {openModal && <CommerceInfo closeModal={() => { setOpenModal(false), reset() }} headerMessage={`${institution.id ? "Update" : "Create"}  Institution`} onSubmit={() => { handleSubmit() }} />}
+                <CustomTable title='Registered Institutions' description={`Total of registered institutions: ${filterData(institutionArray, searchText, statusFilter).length}`} columns={columns} rows={tableRows()} page={page} rowsPerPage={rowsPerPage} setPage={setPage} setRowsPerPage={setRowsPerPage} length={filterData(institutionArray, searchText, statusFilter).length} />
+                {openModal && <InstitutionModal closeModal={() => { setOpenModal(false), reset() }} headerMessage={`${institution.id ? "Update" : "Create"}  Institution`} onSubmit={() => { handleSubmit() }} />}
 
             </div>
         </>

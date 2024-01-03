@@ -15,17 +15,3 @@ export interface userData {
     organizationId: number;
     countryId: number;
 }
-
-export interface user {
-    id: number;
-    firstName: string;
-    lastName: string;
-    nic: string;
-    email: string;
-    birthDate: string;
-    roleText: string;
-    statusId: number;
-    organizationId: number;
-    countryId: number;
-    accessToken: string;
-}

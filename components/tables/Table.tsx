@@ -9,7 +9,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 
 
-export default function CustomTable({ columns, rows, page, rowsPerPage, setPage, setRowsPerPage, length }) {
+export default function CustomTable({ columns, rows, page, rowsPerPage, setPage, setRowsPerPage, length, title = "", description = "" }) {
 
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
@@ -23,8 +23,8 @@ export default function CustomTable({ columns, rows, page, rowsPerPage, setPage,
     return (
         <Paper className='w-full'>
             <div className='w-full flex flex-col justify-center p-4'>
-                <p className='text-[20px]'>Registered Institutions</p>
-                <p className='text-[14px] text-[#666666]'>Total of institutions: {length}</p>
+                <p className='text-[20px]'>{title}</p>
+                <p className='text-[14px] text-[#666666]'>{description}</p>
 
             </div>
 

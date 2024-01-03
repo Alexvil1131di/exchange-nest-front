@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import { isAuthorizedRoute } from "./methods";
 import useLoginForm from "@/store/singInStore";
 import { stringDecrypter, stringEncrypter } from "./methods";
-import { user } from "@/interfaces/authInterface";
+import { user } from "@/interfaces/usersInterface";
 import { sendChangePasswordEmail } from "./fetchs";
 
 // export function useLogIn() {

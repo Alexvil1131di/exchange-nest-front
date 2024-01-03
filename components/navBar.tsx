@@ -6,7 +6,7 @@ import ActiveUser from './inputs/ActiveUserDropDown';
 import useEventListener from '@/hooks/useEvent';
 import useLoginForm from '@/store/singInStore';
 import { stringDecrypter } from '@/hooks/auth/methods';
-import { user } from '@/interfaces/authInterface';
+import { user } from '@/interfaces/usersInterface';
 
 const NavBar = () => {
 

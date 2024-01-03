@@ -6,13 +6,13 @@ import useInstitutionForm from "@/store/institutionsStore";
 import CustomizableButton from "../buttons/CustomizableButton";
 
 
-interface CommerceInfo {
+interface InstitutionModal {
     closeModal: Function;
     headerMessage: string;
     onSubmit: Function;
 }
 
-const CommerceInfo = ({ closeModal, headerMessage, onSubmit }: CommerceInfo) => {
+const InstitutionModal = ({ closeModal, headerMessage, onSubmit }: InstitutionModal) => {
     const [submitted, setSubmitted] = useState<boolean>(false)
     const { institution, setName, setDescription, setEmail, setPhoneNumber, setAddress, setOrganizationTypeId, setStatusId, setImage } = useInstitutionForm();
 
@@ -78,4 +78,4 @@ const CommerceInfo = ({ closeModal, headerMessage, onSubmit }: CommerceInfo) => 
     );
 };
 
-export default CommerceInfo;
+export default InstitutionModal;

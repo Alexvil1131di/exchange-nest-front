@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware'
 import { stringEncrypter, stringDecrypter } from '@/hooks/auth/methods';
-import { user } from '@/interfaces/authInterface';
+import { user } from '@/interfaces/usersInterface';
 
 
 interface LoginForm {
