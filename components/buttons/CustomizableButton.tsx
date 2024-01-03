@@ -15,7 +15,7 @@ interface CustomizableButtonProps {
 const CustomizableButton = ({ htmlFor, beforeImage = undefined, afterImage = undefined, text, textColor = "text-[#ffffff]", bgColor = 'bg-[#52BAAB]', maxSize = 'h-12', onClick, type = "button" }: CustomizableButtonProps) => {
     if (type === "button" || type === "submit") {
         return (
-            <button type={type} onClick={onClick} className={`flex items-center text-[14px] cursor-pointer font-semibold justify-center gap-2 space-x-2 rounded-[4px] ${textColor} shadow-md shadow-[#888888] ${bgColor} w-full ${maxSize}`}>
+            <button type={type} onClick={onClick} className={`flex items-center text-[14px] cursor-pointer font-semibold justify-center gap-2 rounded-[4px] px-2 ${textColor} shadow-md shadow-[#888888] ${bgColor} ${maxSize}`}>
                 {beforeImage}
                 {text}
                 {afterImage}
@@ -23,7 +23,7 @@ const CustomizableButton = ({ htmlFor, beforeImage = undefined, afterImage = und
         );
     } else {
         return (
-            <label typeof={type} htmlFor={htmlFor} onClick={onClick} className={`flex items-center text-[14px] cursor-pointer font-semibold justify-center gap-2 space-x-2 rounded-[4px] ${textColor} shadow-md shadow-[#888888] bg-[#${bgColor}] w-full ${maxSize}`}>
+            <label typeof={type} htmlFor={htmlFor} onClick={onClick} className={`flex items-center text-[14px] cursor-pointer font-semibold justify-center gap-2 rounded-[4px] ${textColor} shadow-md shadow-[#888888] ${bgColor}${maxSize}`}>
                 {beforeImage}
                 {text}
                 {afterImage}

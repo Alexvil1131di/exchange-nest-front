@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware'
-import { stringEncrypter } from '@/hooks/auth/methods';
+import { stringEncrypter, stringDecrypter } from '@/hooks/auth/methods';
 import { user } from '@/interfaces/authInterface';
 
 
@@ -14,6 +14,7 @@ interface LoginForm {
     setPassword: (newEmail: string) => void;
     setRememberMe: (newRememberMe?: boolean) => void;
     setUserData: (newUserData: user) => void;
+    getUserData: () => user | undefined;
 }
 
 const useLoginForm = create(persist<LoginForm>((set, get) => ({
@@ -28,6 +29,16 @@ const useLoginForm = create(persist<LoginForm>((set, get) => ({
     setRememberMe: (newRememberMe) => set(newRememberMe ? { rememberMe: newRememberMe } : { rememberMe: !get().rememberMe }),
 
     setUserData: (newUserData) => set({ userData: stringEncrypter(JSON.stringify(newUserData)) }),
+
+    getUserData: () => {
+        const encryptedUserData = get().userData;
+        if (typeof encryptedUserData === 'string') {
+            return JSON.parse(stringDecrypter(encryptedUserData));
+        }
+        return undefined;
+    }
+
+
 
 }), {
     name: 'email-login',
