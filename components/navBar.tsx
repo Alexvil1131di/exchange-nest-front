@@ -1,14 +1,20 @@
 'use client'
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Logo from '@/public/exchangeNestLogoPlain.svg'
 import Link from 'next/link';
 import ActiveUser from './inputs/ActiveUserDropDown';
 import useEventListener from '@/hooks/useEvent';
+import useLoginForm from '@/store/singInStore';
+import { stringDecrypter } from '@/hooks/auth/methods';
+import { user } from '@/interfaces/usersInterface';
 
 const NavBar = () => {
 
     const [isExpanded, setIsExpanded] = useState(false);
+    const [user, setUser] = useState<user>();
+
     const isExpandedRef = useRef<HTMLDivElement>(null);
+    const { userData } = useLoginForm();
 
     if (typeof document !== "undefined") {
         useEventListener("click", (e) => handleDocumentClick(e), document);
@@ -19,6 +25,13 @@ const NavBar = () => {
             setIsExpanded(false);
         }
     };
+
+    useEffect(() => {
+        if (userData) {
+            setUser(JSON.parse(stringDecrypter(userData as string)) as user)
+        }
+    }
+        , [userData])
 
     return (
         <>
@@ -36,7 +49,7 @@ const NavBar = () => {
                     </div>
 
                     <div className='flex items-center justify-center'>
-                        <ActiveUser commerceName={"Commerce Name"} commerceImage={"/logo.svg"} userEmail={""} />
+                        <ActiveUser commerceName={user?.firstName as string} commerceImage={"/logo.svg"} userEmail={user?.email as string} />
                     </div>
 
                 </div>

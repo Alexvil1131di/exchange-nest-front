@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import TooltipContainer from "../tooltips/tooltipContainer";
 import DownArrow from "@/public/DownArrow.svg"
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 
 interface InputComponentProps {
     label?: string;
     placeholder?: string;
-    type: "date" | "email" | "number" | "password" | "search" | "tel" | "text" | "time" | "url" | "week" | "month" | "dropdown";
+    type: "date" | "email" | "number" | "password" | "search" | "tel" | "text" | "time" | "url" | "week" | "month" | "dropdown" | "textarea";
     required?: boolean;
     name?: string;
     value?: string;
@@ -32,7 +34,6 @@ function InputComponent(
     }: InputComponentProps) {
 
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedOption, setSelectedOption] = useState(value);
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -49,7 +50,12 @@ function InputComponent(
     }
 
     function selectOption(option: string) {
-        setSelectedOption(option);
+        if (option === value) {
+            onChange("");
+        }
+        else {
+            onChange(option);
+        }
         setIsOpen(false);
     }
 
@@ -57,7 +63,7 @@ function InputComponent(
         return (
             <div className={`relative dropdown ${isOpen ? 'open' : ''} w-full h-full cursor-pointer`} ref={ref} onClick={() => setIsOpen(!isOpen)} >
                 <div className="w-full h-full flex items-center justify-between rounded-[4px] text-[12px] px-[16px] " >
-                    {selectedOption ? <p>{selectedOption}</p> : <p className="text-[#a0a0a0]">{placeholder}</p>}
+                    {value ? <p>{value}</p> : <p className="text-[#a0a0a0]">{placeholder}</p>}
                     <DownArrow className={`w-[24px] h-[24px] stroke-[1.5px] ${isOpen && " rotate-180"} `} />
                 </div>
 
@@ -78,6 +84,35 @@ function InputComponent(
     }
 
     function input() {
+        if (type === "textarea") {
+            return (
+                <textarea
+                    style={{ background: bgColor }}
+                    className={`w-full h-full rounded-[4px] text-[12px] p-[10px] resize-none`}
+                    placeholder={placeholder}
+                    name={name}
+                    value={value}
+                    onChange={onChange}
+                    required
+                />
+            );
+        }
+        else if (type === "tel") {
+            return (
+                <PhoneInput
+                    style={{ backgroundColor: bgColor }}
+                    defaultCountry="DO"
+                    defaultCode="DO"
+                    className={`w-full h-full rounded-[4px] text-[12px] px-[16px] `}
+                    keyboardType="phone-pad"
+                    name={name}
+                    value={value}
+                    onChange={onChange}
+                    required
+                />
+            );
+        }
+
         return (
             <input
                 style={{ background: bgColor }}
@@ -89,8 +124,7 @@ function InputComponent(
                 onChange={onChange}
                 required
             />
-        )
-
+        );
     }
 
     return (
@@ -106,7 +140,9 @@ function InputComponent(
                     <span className={`${!required && "hidden"} ml-1 text-[#ff3939]`}>*</span>
                 </label>
             </div>
-        </TooltipContainer>);
+        </TooltipContainer>
+    );
+
 }
 
 export default InputComponent;

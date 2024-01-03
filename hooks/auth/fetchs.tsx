@@ -1,4 +1,6 @@
-import { loginForm, user, userData } from "@/interfaces/authInterface";
+import { loginForm, userData } from "@/interfaces/authInterface";
+import { user } from "@/interfaces/usersInterface";
+
 import axios from "axios";
 
 export async function userLogin(user: loginForm) {

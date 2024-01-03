@@ -71,7 +71,7 @@ export default function Home() {
                     <InputComponent label="Confirm password" required={true} placeholder="Confirm your Password" type="password" name="password" value={confirmedPassword} hasAnError={password !== confirmedPassword}
                         width="w-full " onChange={(e) => { setConfirmedPassword(e.target.value) }} errorMessage={"Your passwords do not match "} />
 
-                    <CustomizableButton text={"SING UP"} type="submit" onClick={() => { }} ></CustomizableButton>
+                    <CustomizableButton text={"SING UP"} maxSize="w-full h-[42px]" type="submit" onClick={() => { }} ></CustomizableButton>
 
                 </form>
 

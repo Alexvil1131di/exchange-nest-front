@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import ResetPasswordModal from "@/components/modals/resetPasswordModal";
 import { useChangePasswordEmail } from "@/hooks/auth/hooks";
+import Link from "next/link";
 
 export default function SignUp() {
 
@@ -86,11 +87,11 @@ export default function SignUp() {
                         <button type="button" onClick={() => { setShowModal(true) }} className=" underline">Forgot password?</button>
                     </div>
 
-                    <CustomizableButton text={"SING IN"} type="submit" onClick={() => { }} ></CustomizableButton>
+                    <CustomizableButton text={"SING IN"} maxSize="w-full h-[42px]" type="submit" onClick={() => { }} ></CustomizableButton>
 
                 </form>
 
-
+                <Link href={"/Auth/signUp"}> New to Exchange Nest? <span className=" text-[#52BAAB] font-semibold ">Join now</span></Link>
 
             </div>
 

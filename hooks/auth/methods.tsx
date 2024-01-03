@@ -8,7 +8,7 @@ export function stringEncrypter(stringToEncrypt: string) {
 }
 
 export function stringDecrypter(stringToDecrypt: string) {
-    return CryptoJS.enc.Utf8.stringify(CryptoJS.AES.decrypt(stringToDecrypt as string, "ICKKCK")) as any;
+    return stringToDecrypt ? CryptoJS.enc.Utf8.stringify(CryptoJS.AES.decrypt(stringToDecrypt as string, "ICKKCK")) as any : ""
 }
 
 export function removeDataAttribute(obj: any): any {
