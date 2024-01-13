@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react';
+import React, { useState } from 'react';
 import NavBar from '@/components/navBar';
 import InputComponent from '@/components/inputs/InputComponent';
 import CustomizableButton from '@/components/buttons/CustomizableButton';
@@ -27,7 +27,7 @@ const Programs = () => {
                         <InputComponent type={'dropdown'} placeholder='Filter by status' label='Status' width='w-full md:max-w-[250px]' errorMessage={''} onChange={() => { }} options={["Activos", "Inactivos"]} />
                     </div>
 
-                    <CustomizableButton text={'CREATE USERS'} bgColor='bg-[#ffffff]' textColor='text-[#52BAAB] border-2 border-[#52BAAB]' maxSize='w-full max-w-[134px] h-[45px]' onClick={() => { }} />
+                    <CustomizableButton text={'CREATE PROGRAM'} bgColor='bg-[#ffffff]' textColor='text-[#52BAAB] border-2 border-[#52BAAB]' maxSize='w-full max-w-[134px] h-[45px]' onClick={() => { }} />
 
                 </div>
 

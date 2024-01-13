@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import UploadFile from "@/public/uploadFile.svg"
 import CustomizableButton from "../buttons/CustomizableButton";
-
-const ImageUpload = ({ image, description, errorMessage, imageOnChange, maxWidth, height, uniqueKey, maxSize }) => {
+import X from "@/public/x.svg"
+const ImageUpload = ({ image, description, errorMessage, imageOnChange, maxWidth, height, uniqueKey, maxSize, showButton = true, multiImage = false }) => {
     const [profileImage, setProfileImage] = useState<string>('');
+    const [imageArray, setImageArray] = useState<string[]>([]);
     const [error, setError] = useState<boolean>(false);
 
 
@@ -16,18 +16,47 @@ const ImageUpload = ({ image, description, errorMessage, imageOnChange, maxWidth
         }
     };
 
+    const handleImageRemove = (e, index: number) => {
+
+        console.log(e)
+        e.stopPropagation()
+        let newImageArray = [...imageArray];
+        newImageArray.splice(index, 1);
+        setImageArray(newImageArray);
+        imageOnChange(newImageArray);
+    }
+
     useEffect(() => {
-        if (image && image !== null && typeof image == "object") {
-            console.log(image)
-            setProfileImage(URL.createObjectURL(image))
-        }
-        else if (image?.length > 0) {
-            setProfileImage(process.env.NEXT_PUBLIC_BASE_SERVER_URL + image)
+        if (multiImage && image.length < 6) {
+            image.map((img) => {
+                if (img && img !== null && typeof img == "object") {
+                    setImageArray([...imageArray, URL.createObjectURL(img)])
+                }
+                else if (img?.length > 0) {
+                    setProfileImage(process.env.NEXT_PUBLIC_BASE_SERVER_URL + image)
+                }
+                else {
+                    setProfileImage("")
+                }
+            })
+
         }
         else {
-            setProfileImage("")
+            if (image && image !== null && typeof image == "object") {
+                console.log(image)
+                setProfileImage(URL.createObjectURL(image))
+            }
+            else if (image?.length > 0) {
+                setProfileImage(process.env.NEXT_PUBLIC_BASE_SERVER_URL + image)
+            }
+            else {
+                setProfileImage("")
+            }
         }
+
     }, [image]);
+
+    console.log(imageArray)
 
     return (
         <>
@@ -35,26 +64,34 @@ const ImageUpload = ({ image, description, errorMessage, imageOnChange, maxWidth
 
 
 
-                <label className={`w-full flex items-center justify-center rounded-[20px] bg-white ${maxWidth + " " + height} ${image && ('bg-cover')} bg-center bg-no-repeat shadow-sm border-2 border-[#0C9281] border-dashed cursor-pointer`}
+                <label className={`relative w-full flex items-center justify-center rounded-[20px] bg-white ${maxWidth + " " + height} ${image && ('bg-cover')} bg-center bg-no-repeat shadow-sm border-2 border-[#0C9281] border-dashed cursor-pointer`}
                     style={{ backgroundImage: `url(${profileImage})` }}
-                    htmlFor={uniqueKey} id={"upload " + uniqueKey}>
+                    htmlFor={uniqueKey} id={"upload " + uniqueKey} >
 
-                    {!profileImage && <div className=" text-center">
+                    {imageArray.length < 1 || !profileImage ? <div className=" text-center">
                         <p className="text-[10px] font-semibold text-[#444444]">
                             {description}
                         </p>
                         <p className="text-[10px] text-[#444444]">
                             Tamaño Máx 5Mb
                         </p>
+                    </div> : ""}
+
+                    {imageArray.length > 0 && <div className="relative flex flex-wrap gap-2">
+                        {imageArray.map((img, index) => (
+                            <div className="relative w-[100px] z-[99] h-[100px] bg-cover bg-center bg-no-repeat rounded-[20px]" style={{ backgroundImage: `url(${img})` }} key={index} >
+                                <button type="button" className="absolute top-1 right-1 w-6 h-6  rounded-full bg-[#0000005e] p-[5px]" onClick={(e) => { e.stopPropagation(); handleImageRemove(e, index) }} ><X className=" fill-white" /></button>
+                            </div>
+                        ))}
                     </div>}
+
 
                 </label>
 
 
-                <input className="w-auto hidden" id={uniqueKey} type="file" accept=".jpg, .jpeg, .png, .webp, .svg" onChange={(e) => { imageOnChange(e.target.files?.[0]); handleImageChange(e.target.files?.[0]) }} />
+                <input className="w-auto hidden" id={uniqueKey} type="file" accept=".jpg, .jpeg, .png, .webp, .svg" onChange={(e) => { multiImage && image.length < 6 ? imageOnChange([...image, e.target.files?.[0]]) : imageOnChange(e.target.files?.[0]); handleImageChange(e.target.files?.[0]) }} />
 
-                <CustomizableButton type="label" text={'Upload Image'} htmlFor={uniqueKey} bgColor='bg-[#ffffff]' textColor='text-[#52BAAB] border-2 border-[#52BAAB]' maxSize='w-full md:w-[180px]  h-[35px]' onClick={() => { }} />
-
+                {showButton && <CustomizableButton type="label" text={'Upload Image'} htmlFor={uniqueKey} bgColor='bg-[#ffffff]' textColor='text-[#52BAAB] border-2 border-[#52BAAB]' maxSize='w-full md:w-[180px]  h-[35px]' onClick={() => { }} />}
 
             </div>
 
