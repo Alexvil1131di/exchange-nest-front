@@ -18,9 +18,7 @@ const ActiveUser = ({ commerceName, commerceImage, userEmail }: ActiveUserProps)
     const [isExpanded, setIsExpanded] = useState(false);
     const isExpandedRef = useRef<HTMLDivElement>(null);
 
-    if (typeof document !== "undefined") {
-        useEventListener("click", (e) => handleDocumentClick(e), document);
-    }
+    useEventListener("click", (e) => handleDocumentClick(e), document);
 
     const handleDocumentClick = (event: any) => {
         if (isExpandedRef.current && !isExpandedRef.current.contains(event.target)) {

@@ -57,7 +57,7 @@ export function useUserAuth(route: string) {
                 setUserAuth(true)
             }
 
-            if (token && !isAuthorizedRoute(route, data?.roleText)) {
+            if (token && !isAuthorizedRoute(route, data?.roleText ?? "")) {
                 setUserAuth(false)
             }
 
