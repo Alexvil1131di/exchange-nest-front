@@ -43,7 +43,7 @@ const Application = () => {
                         <tbody>
 
                             {arr.map((item, index) => (
-                                <UserApplicationCard imageUrl='https://c4.wallpaperflare.com/wallpaper/331/854/417/skull-artwork-matei-apostolescu-psychedelic-wallpaper-preview.jpg' title='Programa ' description='Lorem ipsum dolor sit amet,' />
+                                <UserApplicationCard key={index} imageUrl='https://c4.wallpaperflare.com/wallpaper/331/854/417/skull-artwork-matei-apostolescu-psychedelic-wallpaper-preview.jpg' title='Programa ' description='Lorem ipsum dolor sit amet,' />
                             ))}
 
                         </tbody>

@@ -16,9 +16,7 @@ const NavBar = () => {
     const isExpandedRef = useRef<HTMLDivElement>(null);
     const { userData } = useLoginForm();
 
-    if (typeof document !== "undefined") {
-        useEventListener("click", (e) => handleDocumentClick(e), document);
-    }
+    useEventListener("click", (e) => handleDocumentClick(e), document);
 
     const handleDocumentClick = (event: any) => {
         if (isExpandedRef.current && !isExpandedRef.current.contains(event.target)) {

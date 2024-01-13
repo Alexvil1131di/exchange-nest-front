@@ -13,7 +13,7 @@ import { toast } from 'react-toastify'
 import { useCreateUser, useGetUsers, useDeleteUser, useUpdateUser } from '@/hooks/users/hooks';
 import useUserForm from '@/store/usersStore';
 
-const user = () => {
+const User = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [searchText, setSearchText] = useState('');
@@ -194,4 +194,4 @@ const user = () => {
     );
 };
 
-export default user;
+export default User;
