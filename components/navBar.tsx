@@ -44,6 +44,9 @@ const NavBar = () => {
                         <Link className='w-full md:w-fit p-2' href={'/'}>Home</Link>
                         <Link className='w-full md:w-fit p-2' href={'/Programs'}>Programs</Link>
                         <Link className='w-full md:w-fit p-2' href={'/Applications'}>Applications</Link>
+                        <Link className='w-full md:w-fit p-2' href={'/Institutions'}>Institutions</Link>
+                        <Link className='w-full md:w-fit p-2' href={'/Users'}>Users</Link>
+
                     </div>
 
                     <div className='flex items-center justify-center'>

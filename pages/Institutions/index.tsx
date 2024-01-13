@@ -12,6 +12,7 @@ import InstitutionModal from '@/components/modals/InstitutionModal';
 import useInstitutionForm from '@/store/institutionsStore';
 import { toast } from 'react-toastify'
 import { useGetOrganizations, useCreateOrganization, useDeleteOrganization, useUpdateOrganization } from '@/hooks/Institutions/hooks';
+import { useGetStatus } from '@/hooks/status/hooks';
 
 const Institution = () => {
     const [page, setPage] = useState(0);
@@ -26,6 +27,8 @@ const Institution = () => {
     const { mutateAsync: putOrganization } = useUpdateOrganization();
     const { mutateAsync: deleteOrganization } = useDeleteOrganization();
     const { institution, setInsitution, reset } = useInstitutionForm();
+    const { data: statuses } = useGetStatus();
+    const institutionStatus = statuses?.slice(0, 2).map((status) => status.description)
 
     const columns = [
         { id: 'checkBox', label: "", align: 'start', maxWidth: '127px' },
@@ -36,6 +39,10 @@ const Institution = () => {
         { id: 'status', label: 'Status ', align: 'start', maxWidth: '127px' },
 
     ];
+
+    function getStatusIdByName(status: string) {
+        return statuses?.find((statusObject) => statusObject.description == status)?.id
+    }
 
     const handleSubmit = () => {
 
@@ -87,7 +94,7 @@ const Institution = () => {
             return [];
         }
 
-        const filteredData = data.filter(item => {
+        let filteredData = data.filter(item => {
             const textMatch = searchText.trim() === '' || Object.values(item).some(value => {
                 if (typeof value === 'string') {
                     const normalizedValue = value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -97,17 +104,10 @@ const Institution = () => {
                 return false;
             });
 
-            const statusMatch = status.trim() === '' || Object.values(item).some(value => {
-                if (typeof value === 'string') {
-                    const normalizedValue = value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-                    const normalizedStatus = status.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-                    return normalizedValue.includes(normalizedStatus);
-                }
-                return false;
-            });
-
-            return textMatch && statusMatch;
+            return textMatch;
         });
+
+        filteredData = filteredData.filter(item => item.statusId === getStatusIdByName(status) || status === '');
 
         return filteredData;
     }
@@ -162,6 +162,8 @@ const Institution = () => {
 
     }
 
+    console.log(institutionArray)
+
     return (
         <>
             <NavBar />
@@ -174,7 +176,7 @@ const Institution = () => {
 
                     <div className='flex gap-4 w-full flex-col md:flex-row'>
                         <InputComponent type={'search'} label='Search' width='w-full md:max-w-[300px]' errorMessage={''} onChange={(e) => { setSearchText(e.target.value) }} />
-                        <InputComponent type={'dropdown'} label='Search' value={statusFilter} width='w-full md:max-w-[250px]' errorMessage={''} onChange={setStatusFilter} options={institutionArray?.map((dat) => dat.organizationTypeText) as string[]} />
+                        <InputComponent type={'dropdown'} label='Status' value={statusFilter} width='w-full md:max-w-[250px]' errorMessage={''} onChange={setStatusFilter} options={institutionStatus} />
                     </div>
 
                     <div className=' flex gap-4'>
