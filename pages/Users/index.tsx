@@ -12,6 +12,9 @@ import UserModal from '@/components/modals/usersModal';
 import { toast } from 'react-toastify'
 import { useCreateUser, useGetUsers, useDeleteUser, useUpdateUser } from '@/hooks/users/hooks';
 import useUserForm from '@/store/usersStore';
+import { getStatusIdByName, getStatusNameById } from "@/hooks/status/methods";
+import { useGetStatus } from '@/hooks/status/hooks';
+
 
 const User = () => {
     const [page, setPage] = useState(0);
@@ -26,6 +29,9 @@ const User = () => {
     const { mutateAsync: updateUsers } = useUpdateUser();
     const { mutateAsync: deleteUsers } = useDeleteUser();
     const { user, setUser, reset } = useUserForm();
+    const { data: statuses } = useGetStatus();
+
+    const institutionStatus = statuses?.slice(0, 2).map((status) => status.description)
 
     const columns = [
         { id: 'checkBox', label: "", align: 'start', maxWidth: '127px' },
@@ -36,6 +42,11 @@ const User = () => {
         { id: 'status', label: 'Status ', align: 'start', maxWidth: '127px' },
 
     ];
+
+    function getStatusIdByName(status: string) {
+        return statuses?.find((statusObject) => statusObject.description == status)?.id
+    }
+
 
     const handleSubmit = () => {
 
@@ -87,7 +98,7 @@ const User = () => {
             return [];
         }
 
-        const filteredData = data.filter(item => {
+        let filteredData = data.filter(item => {
             const textMatch = searchText.trim() === '' || Object.values(item).some(value => {
                 if (typeof value === 'string') {
                     const normalizedValue = value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -97,17 +108,10 @@ const User = () => {
                 return false;
             });
 
-            const statusMatch = status.trim() === '' || Object.values(item).some(value => {
-                if (typeof value === 'string') {
-                    const normalizedValue = value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-                    const normalizedStatus = status.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-                    return normalizedValue.includes(normalizedStatus);
-                }
-                return false;
-            });
-
-            return textMatch && statusMatch;
+            return textMatch;
         });
+
+        filteredData = filteredData.filter(item => item.statusId === getStatusIdByName(status) || status === '');
 
         return filteredData;
     }
@@ -149,8 +153,8 @@ const User = () => {
                             {row.nic}
                         </TableCell>
 
-                        <TableCell sx={{ overflow: 'hidden', textAlign: "start", maxWidth: "127px", fontWeight: '500', borderLeft: '1px solid #E5E5E5' }}>
-                            {row.roleText}
+                        <TableCell sx={{ overflow: 'hidden', textAlign: "start", maxWidth: "127px", fontWeight: '500', borderLeft: '1px solid #E5E5E5', color: `${getStatusNameById(row.statusId, statuses) == "Active" ? "green" : "red"}` }}>
+                            {getStatusNameById(row.statusId, statuses)}
                         </TableCell>
 
                     </TableRow>
@@ -174,7 +178,7 @@ const User = () => {
 
                     <div className='flex gap-4 w-full flex-col md:flex-row'>
                         <InputComponent type={'search'} label='Search' width='w-full md:max-w-[300px]' errorMessage={''} onChange={(e) => { setSearchText(e.target.value) }} />
-                        <InputComponent type={'dropdown'} label='Search' value={statusFilter} width='w-full md:max-w-[250px]' errorMessage={''} onChange={setStatusFilter} options={usersArray?.map((dat) => dat.roleText) as string[]} />
+                        <InputComponent type={'dropdown'} label='Search' value={statusFilter} width='w-full md:max-w-[250px]' errorMessage={''} onChange={setStatusFilter} options={institutionStatus} />
                     </div>
 
                     <div className=' flex gap-4'>

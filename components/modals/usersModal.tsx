@@ -5,6 +5,8 @@ import X from "@/public/x.svg";
 import CustomizableButton from "../buttons/CustomizableButton";
 import useUserForm from "@/store/usersStore";
 import { useGetOrganizations } from "@/hooks/Institutions/hooks";
+import { useGetStatus } from "@/hooks/status/hooks";
+import { getStatusIdByName, getStatusNameById } from "@/hooks/status/methods";
 
 
 interface UserModal {
@@ -18,7 +20,11 @@ const UserModal = ({ closeModal, headerMessage, onSubmit }: UserModal) => {
     const { user, setFirstName, setLastName, setImage, setEmail, setPassword, setNic, setCountryId, setOrganizationId, setRoleId, setStatusId } = useUserForm();
 
     const { data: organizations } = useGetOrganizations()
+    const { data: statuses } = useGetStatus();
+
     const organizationName = organizations?.map((organization) => organization.name)
+    const institutionStatus = statuses?.slice(0, 2).map((status) => status.description)
+
 
     function getSelectedName(id: number | undefined) {
         return id ? organizations?.find((organization) => organization.id === id)?.name : ""
@@ -29,6 +35,10 @@ const UserModal = ({ closeModal, headerMessage, onSubmit }: UserModal) => {
         organizationId && setOrganizationId(organizationId)
     }
 
+    function getStatusIdByName(status: string) {
+        let StatusId = statuses?.find((statusObject) => statusObject.description == status)?.id
+        setStatusId(StatusId as number)
+    }
 
     return (
         <>
@@ -62,15 +72,14 @@ const UserModal = ({ closeModal, headerMessage, onSubmit }: UserModal) => {
 
                                     <InputComponent type={'email'} value={user.email} required={true} label='Email' width='w-full ' errorMessage={''} onChange={(e) => { setEmail(e.target.value) }} />
 
-                                    <InputComponent type={'password'} value={user?.password} required={true} label='Password' width='w-full ' errorMessage={''} onChange={(e) => { setPassword(e.target.value) }} />
-
+                                    {!user.id && <InputComponent type={'password'} value={user?.password} required={true} label='Password' width='w-full ' errorMessage={''} onChange={(e) => { setPassword(e.target.value) }} />}
                                 </div>
 
                                 <div className="flex flex-col gap-6 items-end w-full ">
 
-                                    <InputComponent type={'dropdown'} value={String(user.roleId)} required={true} label='User Rol' width='w-full' options={["1"]} errorMessage={''} onChange={(e) => { setRoleId(1) }} />
+                                    <InputComponent type={'dropdown'} value={user.roleId ? "Student" : ""} required={true} label='User Rol' width='w-full' options={["Student"]} errorMessage={''} onChange={(e) => { setRoleId(1) }} />
 
-                                    <InputComponent type={'dropdown'} value={String(user.statusId)} required={true} label='Status' width='w-full' errorMessage={''} options={["1"]} onChange={(e) => { setStatusId(1) }} />
+                                    <InputComponent type={'dropdown'} value={getStatusNameById(user?.statusId as number, statuses)} required={true} label='Status' width='w-full' errorMessage={''} options={institutionStatus} onChange={getStatusIdByName} />
 
                                     <InputComponent type={'dropdown'} value={getSelectedName(user?.organizationId)} required={true} label='Institution' width='w-full' options={organizationName} errorMessage={''} onChange={setOrganizationIdByName} />
 
