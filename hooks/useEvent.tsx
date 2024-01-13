@@ -2,18 +2,18 @@ import { useEffect } from 'react';
 
 type EventCallback = (event: Event) => void;
 
-function useEventListener(eventName: string, callback: EventCallback, element: Document | Window = window) {
-    if (typeof element !== "undefined") {
+function useEventListener(eventName: string, callback: EventCallback) {
+    if (typeof document !== "undefined") {
         useEffect(() => {
-            const isSupported = element && element.addEventListener;
+            const isSupported = document && document.addEventListener;
             if (!isSupported) return;
 
-            element.addEventListener(eventName, callback);
+            document.addEventListener(eventName, callback);
 
             return () => {
-                element.removeEventListener(eventName, callback);
+                document.removeEventListener(eventName, callback);
             };
-        }, [eventName, callback, element]);
+        }, [eventName, callback, document]);
     }
 }
 

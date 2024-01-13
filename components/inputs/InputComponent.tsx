@@ -33,7 +33,7 @@ function InputComponent(
     const [isOpen, setIsOpen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
 
-    useEventListener("click", (e) => handleDocumentClick(e), document)
+    useEventListener("click", (e) => handleDocumentClick(e))
 
     const handleDocumentClick = (event) => {
         if (ref.current && !ref.current.contains(event.target)) {
