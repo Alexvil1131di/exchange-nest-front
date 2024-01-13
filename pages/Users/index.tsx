@@ -43,11 +43,6 @@ const User = () => {
 
     ];
 
-    function getStatusIdByName(status: string) {
-        return statuses?.find((statusObject) => statusObject.description == status)?.id
-    }
-
-
     const handleSubmit = () => {
 
         if (user.id) {
@@ -111,7 +106,7 @@ const User = () => {
             return textMatch;
         });
 
-        filteredData = filteredData.filter(item => item.statusId === getStatusIdByName(status) || status === '');
+        filteredData = filteredData.filter(item => item.statusId === getStatusIdByName(status, statuses) || status === '');
 
         return filteredData;
     }

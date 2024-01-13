@@ -40,9 +40,8 @@ const InstitutionModal = ({ closeModal, headerMessage, onSubmit }: InstitutionMo
         institutionTypeId && setOrganizationTypeId(institutionTypeId)
     }
 
-    function getStatusIdByName(status: string) {
-        let StatusId = statuses?.find((statusObject) => statusObject.description == status)?.id
-        setStatusId(StatusId as number)
+    function setStatusIdByName(status: string) {
+        setStatusId(getStatusIdByName(status, statuses) as number)
     }
 
 
@@ -83,7 +82,7 @@ const InstitutionModal = ({ closeModal, headerMessage, onSubmit }: InstitutionMo
 
                                     <InputComponent type={'dropdown'} value={getInstitutionStatusById(institution.organizationTypeId as number)} required={true} label='Type Of Institution' width='w-full' options={institutionType} errorMessage={''} onChange={getInstitutionStatusByName} />
 
-                                    <InputComponent type={'dropdown'} value={getStatusNameById(institution?.statusId as number, statuses)} required={true} label='Status' width='w-full' errorMessage={''} options={institutionStatus} onChange={getStatusIdByName} />
+                                    <InputComponent type={'dropdown'} value={getStatusNameById(institution?.statusId as number, statuses)} required={true} label='Status' width='w-full' errorMessage={''} options={institutionStatus} onChange={setStatusIdByName} />
 
                                 </div>
 

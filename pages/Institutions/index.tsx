@@ -13,6 +13,7 @@ import useInstitutionForm from '@/store/institutionsStore';
 import { toast } from 'react-toastify'
 import { useGetOrganizations, useCreateOrganization, useDeleteOrganization, useUpdateOrganization } from '@/hooks/Institutions/hooks';
 import { useGetStatus } from '@/hooks/status/hooks';
+import { getStatusIdByName } from '@/hooks/status/methods';
 
 const Institution = () => {
     const [page, setPage] = useState(0);
@@ -39,10 +40,6 @@ const Institution = () => {
         { id: 'status', label: 'Status ', align: 'start', maxWidth: '127px' },
 
     ];
-
-    function getStatusIdByName(status: string) {
-        return statuses?.find((statusObject) => statusObject.description == status)?.id
-    }
 
     const handleSubmit = () => {
 
@@ -107,7 +104,7 @@ const Institution = () => {
             return textMatch;
         });
 
-        filteredData = filteredData.filter(item => item.statusId === getStatusIdByName(status) || status === '');
+        filteredData = filteredData.filter(item => item.statusId === getStatusIdByName(status, statuses) || status === '');
 
         return filteredData;
     }
