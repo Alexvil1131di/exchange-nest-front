@@ -37,7 +37,7 @@ export default function SignUp() {
         }).then((data) => {
             router.push("/")
             setUserData(data)
-            Cookies.set('token', stringEncrypter(data.accessToken), { expires: 1 })
+            Cookies.set('token', stringEncrypter(String(data.accessToken)), { expires: 1 })
         }).catch((err) => { console.log(err) })
 
     }

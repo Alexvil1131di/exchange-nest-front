@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import TooltipContainer from "../tooltips/tooltipContainer";
 import DownArrow from "@/public/DownArrow.svg"
 import PhoneInput from "react-phone-number-input";
+import useEventListener from "@/hooks/useEvent";
 import "react-phone-number-input/style.css";
 
 interface InputComponentProps {
@@ -24,30 +25,21 @@ interface InputComponentProps {
 function InputComponent(
     {
         label, placeholder, type, required = false, name, value, hasAnError, errorMessage,
-        onChange,
-        height = "h-[56px]",
-        width = "w-[100%]",
-        bgColor = "#F4FFFF",
-        border = `border-b-[3px] border-[#52BAAB]`,
-        options = [] // Default value for dropdown options
+        onChange, height = "h-[56px]", width = "w-[100%]", bgColor = "#F4FFFF", border = `border-b-[3px] border-[#52BAAB]`,
+        options = []
 
     }: InputComponentProps) {
 
     const [isOpen, setIsOpen] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        document.addEventListener("click", close);
-        return () => {
-            document.removeEventListener("click", close);
-        };
-    }, []);
+    if (typeof document !== "undefined") useEventListener("click", (e) => handleDocumentClick(e), document)
 
-    function close(e: MouseEvent) {
-        if (e && e.target === ref.current) {
+    const handleDocumentClick = (event) => {
+        if (ref.current && !ref.current.contains(event.target)) {
             setIsOpen(false);
         }
-    }
+    };
 
     function selectOption(option: string) {
         if (option === value) {
@@ -62,7 +54,7 @@ function InputComponent(
     function dropdown() {
         return (
             <div className={`relative dropdown ${isOpen ? 'open' : ''} w-full h-full cursor-pointer`} ref={ref} onClick={() => setIsOpen(!isOpen)} >
-                <div className="w-full h-full flex items-center justify-between rounded-[4px] text-[12px] px-[16px] " >
+                <div className="w-full h-full flex items-center justify-between rounded-[4px] text-[12px] px-[16px]" >
                     {value ? <p>{value}</p> : <p className="text-[#a0a0a0]">{placeholder}</p>}
                     <DownArrow className={`w-[24px] h-[24px] stroke-[1.5px] ${isOpen && " rotate-180"} `} />
                 </div>
@@ -71,7 +63,7 @@ function InputComponent(
                     <div className={`absolute options w-full h-fit max-h-[200px] overflow-scroll mt-2 z-[99] flex flex-col border-[1px] border-[#52BAAB] rounded-[4px] shadow-sm`} style={{ background: bgColor }}>
                         {options.map((option, index) => (
                             <>
-                                <div className="w-full p-2 cursor-pointer" key={index} onClick={() => selectOption(option)}>
+                                <div className="w-full p-2 cursor-pointer text-[12px] px-[16px]" key={index} onClick={() => selectOption(option)}>
                                     {option}
                                 </div>
                                 <hr className="border-[#52BAAB]" />

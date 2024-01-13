@@ -4,6 +4,7 @@ import ImageUpload from "../inputs/imageUpload";
 import X from "@/public/x.svg";
 import CustomizableButton from "../buttons/CustomizableButton";
 import useUserForm from "@/store/usersStore";
+import { useGetOrganizations } from "@/hooks/Institutions/hooks";
 
 
 interface UserModal {
@@ -15,6 +16,18 @@ interface UserModal {
 const UserModal = ({ closeModal, headerMessage, onSubmit }: UserModal) => {
     const [submitted, setSubmitted] = useState<boolean>(false)
     const { user, setFirstName, setLastName, setImage, setEmail, setPassword, setNic, setCountryId, setOrganizationId, setRoleId, setStatusId } = useUserForm();
+
+    const { data: organizations } = useGetOrganizations()
+    const organizationName = organizations?.map((organization) => organization.name)
+
+    function getSelectedName(id: number | undefined) {
+        return id ? organizations?.find((organization) => organization.id === id)?.name : ""
+    }
+
+    function setOrganizationIdByName(name: string) {
+        let organizationId = organizations?.find((organization) => organization.name === name)?.id
+        organizationId && setOrganizationId(organizationId)
+    }
 
 
     return (
@@ -59,7 +72,7 @@ const UserModal = ({ closeModal, headerMessage, onSubmit }: UserModal) => {
 
                                     <InputComponent type={'dropdown'} value={String(user.statusId)} required={true} label='Status' width='w-full' errorMessage={''} options={["1"]} onChange={(e) => { setStatusId(1) }} />
 
-                                    <InputComponent type={'dropdown'} value={String(user.organizationId)} required={true} label='Institution' width='w-full' options={["1"]} errorMessage={''} onChange={(e) => { setOrganizationId(1) }} />
+                                    <InputComponent type={'dropdown'} value={getSelectedName(user?.organizationId)} required={true} label='Institution' width='w-full' options={organizationName} errorMessage={''} onChange={setOrganizationIdByName} />
 
                                     <InputComponent type={'dropdown'} value={String(user.countryId)} required={true} label='Country' width='w-full' errorMessage={''} options={["1"]} onChange={(e) => { setCountryId(1) }} />
 
