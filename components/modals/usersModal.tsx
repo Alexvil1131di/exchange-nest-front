@@ -56,7 +56,7 @@ const UserModal = ({ closeModal, headerMessage, onSubmit }: UserModal) => {
                     <div className="flex flex-col md:flex-row w-full ">
 
                         <div className="flex flex-col max-w-[462px] p-3 w-full  items-center justify-center">
-                            <ImageUpload image={user.image} description={"UPLOAD YOUR OWN IMAGE"} errorMessage={"El tamaño del logo debe ser inferior a los 2mb"} imageOnChange={setImage} height={"h-[160px]"} uniqueKey={"commerceImage"} maxWidth={"max-w-[160px]"} maxSize={200000000} />
+                            <ImageUpload image={user.imageUrl} description={"UPLOAD YOUR OWN IMAGE"} errorMessage={"El tamaño del logo debe ser inferior a los 2mb"} imageOnChange={setImage} height={"h-[160px]"} uniqueKey={"commerceImage"} maxWidth={"max-w-[160px]"} maxSize={200000000} />
                         </div>
 
                         <div className="flex flex-col w-full p-6 pt-12 gap-4">

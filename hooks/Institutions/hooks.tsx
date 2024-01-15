@@ -7,9 +7,9 @@ import { postImage } from "../images/fetch";
 export function useCreateOrganization() {
     return useMutation({
         mutationFn: async (institution: institutions) => {
-            checkImageType(institution?.imageUrl) && (institution.imageUrl = await postImage(institution?.imageUrl as File))
-            postOrganization(institution)
-        },
+            checkImageType(institution?.imageUrl) ? postImage(institution?.imageUrl as File).then((img) => { postOrganization({ ...institution, imageUrl: img }) }) : postOrganization(institution)
+
+        }
     })
 }
 
@@ -30,4 +30,4 @@ export function useDeleteOrganization() {
     return useMutation({
         mutationFn: async (idArray: number[]) => { idArray.map((id) => { setTimeout(async () => { deleteOrganization(id) }, 500); }) },
     })
-}
+} postOrganization

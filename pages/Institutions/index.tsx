@@ -61,14 +61,14 @@ const Institution = () => {
                 pending: 'Updating institution...',
                 success: 'Institution updated successfully',
                 error: 'Error updating institution'
-            }).then(() => { refetch(); setOpenModal(false); reset() }).catch(() => { })
+            }).then(() => { refetch(); setOpenModal(false); reset() }).catch(() => { }).then(() => refetch())
         }
         else {
             toast.promise(createOrganization(institution), {
                 pending: 'Creating institution...',
                 success: 'Institution created successfully',
                 error: 'Error creating institution the email is already in use'
-            }).then(() => { refetch(); setOpenModal(false); reset() }).catch(() => { })
+            }).then(() => { refetch(); setOpenModal(false); reset() }).catch(() => { }).then(() => refetch())
         }
     }
 
