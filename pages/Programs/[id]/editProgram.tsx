@@ -64,7 +64,7 @@ const DndItem = ({ id, text, index, moveItem }) => {
 };
 
 const EditProgram = () => {
-    const mock = [{ id: 1, text: "hola" }, { id: 2, text: "hola2" }, { id: 3, text: "hola3" }, { id: 4, text: "hola4" }, { id: 5, text: "hola5" }]
+    const mock = [{ id: 1, text: "Document1" }, { id: 2, text: "Document2" }, { id: 3, text: "Document3" }, { id: 4, text: "Document4" }, { id: 5, text: "Document5" }]
 
     const [imageArray, setImageArray] = useState([]);
     const [list, setList] = useState(mock);

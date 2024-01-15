@@ -33,7 +33,7 @@ const Programs = () => {
 
                 <div className='flex flex-wrap w-full gap-5 justify-center md:justify-start'>
                     {arr.map((item, index) => (
-                        <ProgramCard key={index} imageUrl='https://c4.wallpaperflare.com/wallpaper/331/854/417/skull-artwork-matei-apostolescu-psychedelic-wallpaper-preview.jpg' title='Programa de Intercambio' description='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc, ut sit in sit. ' />
+                        <ProgramCard key={index} imageUrl='https://c4.wallpaperflare.com/wallpaper/331/854/417/skull-artwork-matei-apostolescu-psychedelic-wallpaper-preview.jpg' title='Programa de Intercambio' description='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc, ut sit in sit. ' onEdit={() => { router.push("/Programs/3/editProgram") }} />
                     ))}
 
                 </div>
