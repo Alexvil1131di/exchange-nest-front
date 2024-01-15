@@ -1,7 +1,7 @@
 export interface institutions {
     id?: number;
     name: string;
-    image?: string;
+    imageUrl?: File | string;
     description: string;
     email: string;
     phoneNumber: string;

@@ -58,7 +58,7 @@ function InputComponent(
                     {value ? <p>{value}</p> : <p className="text-[#a0a0a0]">{placeholder}</p>}
                     <DownArrow className={`w-[24px] h-[24px] stroke-[1.5px] ${isOpen && " rotate-180"} `} />
                 </div>
-
+                <input className="absolute bottom-0 w-0 h-0" type="text" required value={value} />
                 {isOpen && (
                     <div className={`absolute options w-full h-fit max-h-[200px] overflow-scroll mt-2 z-[99] flex flex-col border-[1px] border-[#52BAAB] rounded-[4px] shadow-sm`} style={{ background: bgColor }}>
                         {options.map((option, index) => (

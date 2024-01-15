@@ -35,7 +35,6 @@ const User = () => {
 
     const columns = [
         { id: 'checkBox', label: "", align: 'start', maxWidth: '127px' },
-        { id: 'date', label: 'Date', align: 'start', maxWidth: '127px' },
         { id: 'User', label: 'User Name', align: 'start', maxWidth: '127px' },
         { id: 'email', label: 'Email', align: 'start', maxWidth: '127px' },
         { id: 'phone', label: 'Id or Passport Number', align: 'start', maxWidth: '127px' },
@@ -133,10 +132,6 @@ const User = () => {
                         </TableCell>
 
                         <TableCell sx={{ overflow: 'hidden', textAlign: "start", maxWidth: "127px", fontWeight: '500', borderLeft: '1px solid #E5E5E5' }}>
-                            {row.date}
-                        </TableCell>
-
-                        <TableCell sx={{ overflow: 'hidden', textAlign: "start", maxWidth: "127px", fontWeight: '500', borderLeft: '1px solid #E5E5E5' }}>
                             {row.firstName + " " + row.lastName}
                         </TableCell>
 
@@ -148,7 +143,7 @@ const User = () => {
                             {row.nic}
                         </TableCell>
 
-                        <TableCell sx={{ overflow: 'hidden', textAlign: "start", maxWidth: "127px", fontWeight: '500', borderLeft: '1px solid #E5E5E5', color: `${getStatusNameById(row.statusId, statuses) == "Active" ? "green" : "red"}` }}>
+                        <TableCell sx={{ overflow: 'hidden', textAlign: "start", maxWidth: "127px", fontWeight: '500', borderLeft: '1px solid #E5E5E5', color: `${getStatusNameById(row.statusId, statuses) == "Active" ? "#52baab" : "red"}` }}>
                             {getStatusNameById(row.statusId, statuses)}
                         </TableCell>
 
