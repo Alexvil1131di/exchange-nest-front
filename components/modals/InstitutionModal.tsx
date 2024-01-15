@@ -40,9 +40,8 @@ const InstitutionModal = ({ closeModal, headerMessage, onSubmit }: InstitutionMo
         institutionTypeId && setOrganizationTypeId(institutionTypeId)
     }
 
-    function getStatusIdByName(status: string) {
-        let StatusId = statuses?.find((statusObject) => statusObject.description == status)?.id
-        setStatusId(StatusId as number)
+    function setStatusIdByName(status: string) {
+        setStatusId(getStatusIdByName(status, statuses) as number)
     }
 
 
@@ -62,7 +61,7 @@ const InstitutionModal = ({ closeModal, headerMessage, onSubmit }: InstitutionMo
                     <div className="flex flex-col md:flex-row w-full ">
 
                         <div className="flex flex-col max-w-[462px] p-3 w-full  items-center justify-center">
-                            <ImageUpload image={institution.image} description={"UPLOAD YOUR OWN IMAGE"} errorMessage={"El tamaño del logo debe ser inferior a los 2mb"} imageOnChange={setImage} height={"h-[160px]"} uniqueKey={"commerceImage"} maxWidth={"max-w-[160px]"} maxSize={200000000} />
+                            <ImageUpload image={institution.imageUrl} description={"UPLOAD YOUR OWN IMAGE"} errorMessage={"El tamaño del logo debe ser inferior a los 2mb"} imageOnChange={setImage} height={"h-[160px]"} uniqueKey={"commerceImage"} maxWidth={"max-w-[160px]"} maxSize={200000000} />
                         </div>
 
                         <div className="flex flex-col w-full p-6 pt-12 gap-4">
@@ -83,7 +82,7 @@ const InstitutionModal = ({ closeModal, headerMessage, onSubmit }: InstitutionMo
 
                                     <InputComponent type={'dropdown'} value={getInstitutionStatusById(institution.organizationTypeId as number)} required={true} label='Type Of Institution' width='w-full' options={institutionType} errorMessage={''} onChange={getInstitutionStatusByName} />
 
-                                    <InputComponent type={'dropdown'} value={getStatusNameById(institution?.statusId as number, statuses)} required={true} label='Status' width='w-full' errorMessage={''} options={institutionStatus} onChange={getStatusIdByName} />
+                                    <InputComponent type={'dropdown'} value={getStatusNameById(institution?.statusId as number, statuses)} required={true} label='Status' width='w-full' errorMessage={''} options={institutionStatus} onChange={setStatusIdByName} />
 
                                 </div>
 

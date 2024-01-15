@@ -54,6 +54,9 @@ export async function putUser(user: user) {
         email: user.email,
         password: user.password,
         birthDate: "2024-01-03T14:27:55.851Z",
+        statusId: user.statusId,
+        roleId: user.roleId,
+        countryId: user.countryId,
 
     },
         {

@@ -1,10 +1,15 @@
 import { institutions } from "@/interfaces/institutionsInterface";
+import { checkImageType } from "../images/methods";
 import { postOrganization, getOrganizations, deleteOrganization, putOrganization } from "./fetchs";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { postImage } from "../images/fetch";
 
 export function useCreateOrganization() {
     return useMutation({
-        mutationFn: postOrganization,
+        mutationFn: async (institution: institutions) => {
+            checkImageType(institution?.imageUrl) && (institution.imageUrl = await postImage(institution?.imageUrl as File))
+            postOrganization(institution)
+        },
     })
 }
 
@@ -14,7 +19,10 @@ export function useGetOrganizations() {
 
 export function useUpdateOrganization() {
     return useMutation({
-        mutationFn: putOrganization,
+        mutationFn: async (institution: institutions) => {
+            checkImageType(institution?.imageUrl) ? postImage(institution?.imageUrl as File).then((img) => { putOrganization({ ...institution, imageUrl: img }) }) : putOrganization(institution)
+
+        }
     })
 }
 

@@ -29,7 +29,7 @@ const useInstitutionForm = create<organizationForm>((set, get) => ({
 
     setInsitution: (newInstitution) => set({ institution: newInstitution }),
     setName: (newName) => set((state) => ({ institution: { ...state.institution, name: newName } })),
-    setImage: (newImage) => set((state) => ({ institution: { ...state.institution, image: newImage } })),
+    setImage: (newImage) => set((state) => ({ institution: { ...state.institution, imageUrl: newImage } })),
     setDescription: (newDescription) => set((state) => ({ institution: { ...state.institution, description: newDescription } })),
     setEmail: (newEmail) => set((state) => ({ institution: { ...state.institution, email: newEmail } })),
     setPhoneNumber: (newPhoneNumber) => set((state) => ({ institution: { ...state.institution, phoneNumber: newPhoneNumber } })),

@@ -12,6 +12,7 @@ export async function postOrganization(institution: institutions) {
         description: institution.description,
         email: institution.email,
         phoneNumber: institution.phoneNumber,
+        imageUrl: institution.imageUrl,
         address: institution.address,
         organizationTypeId: institution.organizationTypeId,
         statusId: institution.statusId
@@ -48,8 +49,11 @@ export async function putOrganization(institution: institutions) {
         name: institution.name,
         description: institution.description,
         email: institution.email,
+        imageUrl: institution.imageUrl,
         phoneNumber: institution.phoneNumber,
         address: institution.address,
+        organizationTypeId: institution.organizationTypeId,
+        statusId: institution.statusId
 
     },
         {

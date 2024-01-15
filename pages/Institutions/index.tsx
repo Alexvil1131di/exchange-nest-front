@@ -13,6 +13,7 @@ import useInstitutionForm from '@/store/institutionsStore';
 import { toast } from 'react-toastify'
 import { useGetOrganizations, useCreateOrganization, useDeleteOrganization, useUpdateOrganization } from '@/hooks/Institutions/hooks';
 import { useGetStatus } from '@/hooks/status/hooks';
+import { getStatusIdByName, getStatusNameById } from '@/hooks/status/methods';
 
 const Institution = () => {
     const [page, setPage] = useState(0);
@@ -32,16 +33,25 @@ const Institution = () => {
 
     const columns = [
         { id: 'checkBox', label: "", align: 'start', maxWidth: '127px' },
-        { id: 'date', label: 'Date', align: 'start', maxWidth: '127px' },
         { id: 'institution', label: 'Institution Name', align: 'start', maxWidth: '127px' },
         { id: 'email', label: 'Email', align: 'start', maxWidth: '127px' },
         { id: 'phone', label: 'Phone Number', align: 'start', maxWidth: '127px' },
+        { id: 'Institution', label: 'Institution Type', align: 'start', maxWidth: '127px' },
         { id: 'status', label: 'Status ', align: 'start', maxWidth: '127px' },
+
 
     ];
 
-    function getStatusIdByName(status: string) {
-        return statuses?.find((statusObject) => statusObject.description == status)?.id
+    const institutionTypes = [{
+        id: 1,
+        name: "Public",
+    }, {
+        id: 2,
+        name: "Private",
+    }]
+
+    function getInstitutionStatusById(id) {
+        return id ? institutionTypes?.find((type) => type.id === id)?.name : ""
     }
 
     const handleSubmit = () => {
@@ -107,7 +117,7 @@ const Institution = () => {
             return textMatch;
         });
 
-        filteredData = filteredData.filter(item => item.statusId === getStatusIdByName(status) || status === '');
+        filteredData = filteredData.filter(item => item.statusId === getStatusIdByName(status, statuses) || status === '');
 
         return filteredData;
     }
@@ -134,10 +144,6 @@ const Institution = () => {
                         </TableCell>
 
                         <TableCell sx={{ overflow: 'hidden', textAlign: "start", maxWidth: "127px", fontWeight: '500', borderLeft: '1px solid #E5E5E5' }}>
-                            {row.date}
-                        </TableCell>
-
-                        <TableCell sx={{ overflow: 'hidden', textAlign: "start", maxWidth: "127px", fontWeight: '500', borderLeft: '1px solid #E5E5E5' }}>
                             {row.name}
                         </TableCell>
 
@@ -150,8 +156,13 @@ const Institution = () => {
                         </TableCell>
 
                         <TableCell sx={{ overflow: 'hidden', textAlign: "start", maxWidth: "127px", fontWeight: '500', borderLeft: '1px solid #E5E5E5' }}>
-                            {row.organizationTypeText}
+                            {getInstitutionStatusById(row.organizationTypeId)}
                         </TableCell>
+
+                        <TableCell sx={{ overflow: 'hidden', textAlign: "start", maxWidth: "127px", fontWeight: '500', borderLeft: '1px solid #E5E5E5', color: `${getStatusNameById(row.statusId, statuses) == "Active" ? "#52baab" : "red"}` }}>
+                            {getStatusNameById(row.statusId, statuses)}
+                        </TableCell>
+
 
                     </TableRow>
 
@@ -162,7 +173,6 @@ const Institution = () => {
 
     }
 
-    console.log(institutionArray)
 
     return (
         <>

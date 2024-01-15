@@ -33,7 +33,7 @@ const ImageUpload = ({ image, description, errorMessage, imageOnChange, maxWidth
                     setImageArray([...imageArray, URL.createObjectURL(img)])
                 }
                 else if (img?.length > 0) {
-                    setProfileImage(process.env.NEXT_PUBLIC_BASE_SERVER_URL + image)
+                    setProfileImage("https://qrepipawlxyhhqjvbyqs.supabase.co/storage/v1/object/public/" + image)
                 }
                 else {
                     setProfileImage("")
@@ -47,7 +47,7 @@ const ImageUpload = ({ image, description, errorMessage, imageOnChange, maxWidth
                 setProfileImage(URL.createObjectURL(image))
             }
             else if (image?.length > 0) {
-                setProfileImage(process.env.NEXT_PUBLIC_BASE_SERVER_URL + image)
+                setProfileImage("https://qrepipawlxyhhqjvbyqs.supabase.co/storage/v1/object/public/" + image)
             }
             else {
                 setProfileImage("")
@@ -68,7 +68,7 @@ const ImageUpload = ({ image, description, errorMessage, imageOnChange, maxWidth
                     style={{ backgroundImage: `url(${profileImage})` }}
                     htmlFor={uniqueKey} id={"upload " + uniqueKey} >
 
-                    {imageArray.length < 1 || !profileImage ? <div className=" text-center">
+                    {imageArray.length < 1 && !profileImage ? <div className=" text-center">
                         <p className="text-[10px] font-semibold text-[#444444]">
                             {description}
                         </p>
