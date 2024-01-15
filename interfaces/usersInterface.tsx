@@ -1,6 +1,6 @@
 export interface user {
     id?: number;
-    image?: string | File;
+    imageUrl?: string | File;
     firstName: string;
     lastName: string;
     nic: string;

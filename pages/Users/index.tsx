@@ -49,14 +49,14 @@ const User = () => {
                 pending: 'Updating user...',
                 success: 'User updated successfully',
                 error: 'Error updating user'
-            }).then(() => { refetch(); setOpenModal(false); reset() }).catch(() => { })
+            }).then(() => { refetch(); setOpenModal(false); reset() }).catch(() => { }).then(() => refetch())
         }
         else {
             toast.promise(createUser(user), {
                 pending: 'Creating user...',
                 success: 'User created successfully',
                 error: 'Error creating an user, the email is already in use'
-            }).then(() => { refetch(); setOpenModal(false); reset() }).catch(() => { })
+            }).then(() => { refetch(); setOpenModal(false); reset() }).catch(() => { }).then(() => refetch())
         }
     }
 

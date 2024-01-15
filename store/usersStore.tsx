@@ -30,7 +30,7 @@ const useUserForm = create<usersForm>((set, get) => ({
 
     setFirstName: (newFirstName) => set((state) => ({ user: { ...state.user, firstName: newFirstName } })),
     setLastName: (newLastName) => set((state) => ({ user: { ...state.user, lastName: newLastName } })),
-    setImage: (newImage) => set((state) => ({ user: { ...state.user, image: newImage } })),
+    setImage: (newImage) => set((state) => ({ user: { ...state.user, imageUrl: newImage } })),
     setCountryId: (newCountryId) => set((state) => ({ user: { ...state.user, countryId: newCountryId } })),
     setNic: (newNic) => set((state) => ({ user: { ...state.user, nic: newNic } })),
     setBirthDate: (newBirthDate) => set((state) => ({ user: { ...state.user, birthDate: newBirthDate } })),
