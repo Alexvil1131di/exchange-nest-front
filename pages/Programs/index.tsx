@@ -6,11 +6,13 @@ import InputComponent from '@/components/inputs/InputComponent';
 import CustomizableButton from '@/components/buttons/CustomizableButton';
 import ProgramCard from '@/components/cards/programCard';
 import { useRouter } from 'next/router';
+import { useGetPrograms } from '@/hooks/programs/hooks';
 
 
 const Programs = () => {
     const router = useRouter()
     const arr = ["", "", "", "", "", "", "", "", "", "", "", "", "", ""]
+    const { data: Programs } = useGetPrograms()
 
     return (
         <>
@@ -27,12 +29,12 @@ const Programs = () => {
                         <InputComponent type={'dropdown'} placeholder='Filter by status' label='Status' width='w-full md:max-w-[250px]' errorMessage={''} onChange={() => { }} options={["Activos", "Inactivos"]} />
                     </div>
 
-                    <CustomizableButton text={'CREATE PROGRAM'} bgColor='bg-[#ffffff]' textColor='text-[#52BAAB] border-2 border-[#52BAAB]' maxSize='w-full max-w-[134px] h-[45px]' onClick={() => { }} />
+                    <CustomizableButton text={'CREATE PROGRAM'} bgColor='bg-[#ffffff]' textColor='text-[#52BAAB] border-2 border-[#52BAAB]' maxSize='w-full md:max-w-[184px] h-[45px]' onClick={() => { router.push("/Programs/create/editProgram") }} />
 
                 </div>
 
                 <div className='flex flex-wrap w-full gap-5 justify-center md:justify-start'>
-                    {arr.map((item, index) => (
+                    {Programs?.map((item, index) => (
                         <ProgramCard key={index} imageUrl='https://c4.wallpaperflare.com/wallpaper/331/854/417/skull-artwork-matei-apostolescu-psychedelic-wallpaper-preview.jpg' title='Programa de Intercambio' description='Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc, ut sit in sit. ' onEdit={() => { router.push("/Programs/3/editProgram") }} />
                     ))}
 

@@ -20,13 +20,14 @@ interface InputComponentProps {
     border?: string;
     onChange: (e: any) => void;
     options?: string[]; // New property for dropdown options
+    minDate?: string;
 }
 
 function InputComponent(
     {
         label, placeholder, type, required = false, name, value, hasAnError, errorMessage,
         onChange, height = "h-[56px]", width = "w-[100%]", bgColor = "#F4FFFF", border = `border-b-[3px] border-[#52BAAB]`,
-        options = []
+        options = [], minDate,
 
     }: InputComponentProps) {
 
@@ -104,6 +105,20 @@ function InputComponent(
                 />
             );
         }
+        else if (type === "date") {
+            <input
+                style={{ background: bgColor }}
+                className={`w-full h-full rounded-[4px] text-[12px] px-[16px] `}
+                type={type}
+                placeholder={placeholder}
+                name={name}
+                value={value}
+                onClick={onChange}
+                required
+                min={minDate}
+            />
+        }
+
 
         return (
             <input
@@ -115,6 +130,7 @@ function InputComponent(
                 value={value}
                 onChange={onChange}
                 required
+                min={minDate}
             />
         );
     }
