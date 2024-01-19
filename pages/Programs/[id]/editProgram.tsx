@@ -6,6 +6,7 @@ import { DndProvider, useDrag, useDrop } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import TrashCan from "@/public/trashCan.svg"
 import CustomizableButton from "@/components/buttons/CustomizableButton";
+import Dots from "@/public/DotsGrid.svg"
 
 const DndItem = ({ id, text, index, moveItem }) => {
     const ref = useRef<HTMLDivElement>(null);
@@ -57,6 +58,7 @@ const DndItem = ({ id, text, index, moveItem }) => {
 
     return (
         <div ref={ref} style={{ opacity: isDragging ? 0 : 1 }} className=" w-[513px] px-[7px] h-[70px] border border-[#52BAAB] rounded-[10px] flex justify-between items-center">
+            <Dots className="w-8 h-8 fill-black" />
             <input type="text" value={text} className="w-full h-full text-[23px] font-bold" />
             <TrashCan className="w-14 h-14 p-4 fill-white rounded-xl  cursor-pointer bg-[#16688C]" />
         </div>

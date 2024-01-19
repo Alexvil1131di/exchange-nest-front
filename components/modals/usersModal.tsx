@@ -5,8 +5,8 @@ import X from "@/public/x.svg";
 import CustomizableButton from "../buttons/CustomizableButton";
 import useUserForm from "@/store/usersStore";
 import { useGetOrganizations } from "@/hooks/Institutions/hooks";
-import { useGetStatus } from "@/hooks/status/hooks";
-import { getStatusIdByName, getStatusNameById } from "@/hooks/status/methods";
+import { useGetStatus, useGetRoles } from "@/hooks/genericData/hooks";
+import { getStatusIdByName, getStatusNameById } from "@/hooks/genericData/methods";
 
 
 interface UserModal {
@@ -21,9 +21,14 @@ const UserModal = ({ closeModal, headerMessage, onSubmit }: UserModal) => {
 
     const { data: organizations } = useGetOrganizations()
     const { data: statuses } = useGetStatus();
+    const { data: roles } = useGetRoles();
+
+
 
     const organizationName = organizations?.map((organization) => organization.name)
     const institutionStatus = statuses?.slice(0, 2).map((status) => status.description)
+    const userRoles = roles?.map((role) => role.description)
+
 
 
     function getSelectedName(id: number | undefined) {
@@ -38,6 +43,15 @@ const UserModal = ({ closeModal, headerMessage, onSubmit }: UserModal) => {
     function getStatusIdByName(status: string) {
         let StatusId = statuses?.find((statusObject) => statusObject.description == status)?.id
         setStatusId(StatusId as number)
+    }
+
+    function getRoleById(id: number) {
+        return id ? roles?.find((role) => role.id === id)?.description : ""
+    }
+
+    function setRoleIdByName(role: string) {
+        let roleId = roles?.find((roleObject) => roleObject.description == role)?.id
+        setRoleId(roleId as number)
     }
 
     return (
@@ -77,7 +91,7 @@ const UserModal = ({ closeModal, headerMessage, onSubmit }: UserModal) => {
 
                                 <div className="flex flex-col gap-6 items-end w-full ">
 
-                                    <InputComponent type={'dropdown'} value={user.roleId ? "Student" : ""} required={true} label='User Rol' width='w-full' options={["Student"]} errorMessage={''} onChange={(e) => { setRoleId(1) }} />
+                                    <InputComponent type={'dropdown'} value={getRoleById(user.roleId as number)} required={true} label='User Rol' width='w-full' options={userRoles} errorMessage={''} onChange={setRoleIdByName} />
 
                                     <InputComponent type={'dropdown'} value={getStatusNameById(user?.statusId as number, statuses)} required={true} label='Status' width='w-full' errorMessage={''} options={institutionStatus} onChange={getStatusIdByName} />
 

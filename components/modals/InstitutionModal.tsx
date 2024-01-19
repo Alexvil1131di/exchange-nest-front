@@ -4,8 +4,8 @@ import ImageUpload from "../inputs/imageUpload";
 import X from "@/public/x.svg";
 import useInstitutionForm from "@/store/institutionsStore";
 import CustomizableButton from "../buttons/CustomizableButton";
-import { useGetStatus } from "@/hooks/status/hooks";
-import { getStatusIdByName, getStatusNameById } from "@/hooks/status/methods";
+import { useGetStatus, useGetOrganizationTypes } from "@/hooks/genericData/hooks";
+import { getStatusIdByName, getStatusNameById } from "@/hooks/genericData/methods";
 
 
 interface InstitutionModal {
@@ -18,25 +18,19 @@ const InstitutionModal = ({ closeModal, headerMessage, onSubmit }: InstitutionMo
     const [submitted, setSubmitted] = useState<boolean>(false)
     const { institution, setName, setDescription, setEmail, setPhoneNumber, setAddress, setOrganizationTypeId, setStatusId, setImage } = useInstitutionForm();
 
-    const institutionTypes = [{
-        id: 1,
-        name: "Public",
-    }, {
-        id: 2,
-        name: "Private",
-    }]
 
     const { data: statuses } = useGetStatus();
+    const { data: organizationTypes } = useGetOrganizationTypes();
 
-    const institutionType = institutionTypes?.map((type) => type.name)
     const institutionStatus = statuses?.slice(0, 2).map((status) => status.description)
+    const organizationType = organizationTypes?.map((type) => type.description)
 
     function getInstitutionStatusById(id: number) {
-        return id ? institutionTypes?.find((type) => type.id === id)?.name : ""
+        return id ? organizationTypes?.find((type) => type.id === id)?.description : ""
     }
 
     function getInstitutionStatusByName(name: string) {
-        let institutionTypeId = institutionTypes?.find((type) => type.name === name)?.id
+        let institutionTypeId = organizationTypes?.find((type) => type.description === name)?.id
         institutionTypeId && setOrganizationTypeId(institutionTypeId)
     }
 
@@ -80,7 +74,7 @@ const InstitutionModal = ({ closeModal, headerMessage, onSubmit }: InstitutionMo
 
                                     <InputComponent type={'tel'} value={institution.phoneNumber} required={true} label='Phone Number' width='w-full ' errorMessage={''} onChange={setPhoneNumber} />
 
-                                    <InputComponent type={'dropdown'} value={getInstitutionStatusById(institution.organizationTypeId as number)} required={true} label='Type Of Institution' width='w-full' options={institutionType} errorMessage={''} onChange={getInstitutionStatusByName} />
+                                    <InputComponent type={'dropdown'} value={getInstitutionStatusById(institution.organizationTypeId as number)} required={true} label='Type Of Institution' width='w-full' options={organizationType} errorMessage={''} onChange={getInstitutionStatusByName} />
 
                                     <InputComponent type={'dropdown'} value={getStatusNameById(institution?.statusId as number, statuses)} required={true} label='Status' width='w-full' errorMessage={''} options={institutionStatus} onChange={setStatusIdByName} />
 

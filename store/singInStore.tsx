@@ -9,6 +9,7 @@ interface LoginForm {
     password: string;
     rememberMe?: boolean
     userData?: user | string;
+    roleText?: string;
 
     setEmail: (newName: string) => void;
     setPassword: (newEmail: string) => void;

@@ -23,7 +23,8 @@ export async function userRegister(user: userData) {
         roleId: user.roleId,
         statusId: user.statusId,
         organizationId: user.organizationId,
-        countryId: user.countryId
+        countryId: user.countryId,
+        token: user.token ?? ""
     });
     console.log(user)
     return userLoginFetch

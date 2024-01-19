@@ -1,3 +1,4 @@
+import { Console } from "console";
 import CryptoJS from "crypto-js";
 import Cookies from "js-cookie";
 import { useRouter } from "next/router";
@@ -40,35 +41,20 @@ export function userLogOut() {
 export function isAuthorizedRoute(pathname: string, userRole: string) {
     const authorizedRoutes = {
 
-        //everyone have access
-        "/": ["student"],
+        //Organizations
+        "/Programs": ["Organization", "Administrator"],
+        "/Applications": ["Organization"],
 
-        "/Menu/[id]/editMenu": ["student"],
+        //Admin
+        "/Institutions": ["Administrator"],
+        "/Users": ["Administrator"],
 
-        "/Products": ["student"],
-        "/Products/[id]/editProduct": ["student"],
-
-        "/ProductOptions": ["student"],
-        "/ProductOptions/[id]/editProductOption": ["student"],
-
-        "/vistaPrevia": ["student"],
-
-        "/POS/OrderReception": ["student"],
-
-        "/Support": ["student"],
-
-
-        //Institutions
-        "/Applications": ["student"],
-        "/Programs": ["student"],
-
-        //admins
-        "/Institutions": ["student"],
-        "/Users": ["student"],
-
+        //UsersApp
     };
 
+
     const authorizedRoles = authorizedRoutes[pathname];
+
     if (!authorizedRoles) {
         return true;
     }

@@ -12,8 +12,8 @@ import UserModal from '@/components/modals/usersModal';
 import { toast } from 'react-toastify'
 import { useCreateUser, useGetUsers, useDeleteUser, useUpdateUser } from '@/hooks/users/hooks';
 import useUserForm from '@/store/usersStore';
-import { getStatusIdByName, getStatusNameById } from "@/hooks/status/methods";
-import { useGetStatus } from '@/hooks/status/hooks';
+import { getStatusIdByName, getStatusNameById } from "@/hooks/genericData/methods";
+import { useGetStatus, useGetRoles } from '@/hooks/genericData/hooks';
 
 
 const User = () => {
@@ -30,6 +30,7 @@ const User = () => {
     const { mutateAsync: deleteUsers } = useDeleteUser();
     const { user, setUser, reset } = useUserForm();
     const { data: statuses } = useGetStatus();
+
 
     const institutionStatus = statuses?.slice(0, 2).map((status) => status.description)
 

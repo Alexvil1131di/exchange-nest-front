@@ -12,8 +12,8 @@ import InstitutionModal from '@/components/modals/InstitutionModal';
 import useInstitutionForm from '@/store/institutionsStore';
 import { toast } from 'react-toastify'
 import { useGetOrganizations, useCreateOrganization, useDeleteOrganization, useUpdateOrganization } from '@/hooks/Institutions/hooks';
-import { useGetStatus } from '@/hooks/status/hooks';
-import { getStatusIdByName, getStatusNameById } from '@/hooks/status/methods';
+import { useGetStatus } from '@/hooks/genericData/hooks';
+import { getStatusIdByName, getStatusNameById } from '@/hooks/genericData/methods';
 
 const Institution = () => {
     const [page, setPage] = useState(0);
