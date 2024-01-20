@@ -25,7 +25,6 @@ export default function SignUp() {
     const [showModal, setShowModal] = useState(false)
     const [changePassEmail, setChangePassEmail] = useState("")
 
-
     useEffect(() => { if (!rememberMe) { setEmail(""); setPassword("") } else { setRememberMe(true) } }, [rememberMe])
 
     const handleSubmit = (e) => {
@@ -52,7 +51,6 @@ export default function SignUp() {
         }).catch((err) => { console.log(err) })
     }
 
-
     return (
 
         <div className="flex w-screen h-screen">
@@ -61,7 +59,6 @@ export default function SignUp() {
             }
 
             <img className="hidden select-none lg:inline w-full h-full object-center object-cover" src="/loginBackground.png" alt="" />
-
 
             <div className="flex flex-col w-full gap-[40px] h-full items-center pt-[60px] px-4 pb-4 flex-nowrap overflow-scroll">
 
