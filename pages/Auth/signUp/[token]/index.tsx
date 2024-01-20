@@ -4,20 +4,25 @@ import InputComponent from "@/components/inputs/InputComponent"
 import ExchangeNestLogo from "@/public/ExchangeNestLogo.svg"
 import useRegisterForm from "@/store/singUpStore";
 import { useRegister } from "@/hooks/auth/hooks";
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import { useGetStatus, useGetRoles } from "@/hooks/genericData/hooks";
 
 export default function Home() {
 
 
-    const { firstName, lastName, email, countryId, password, confirmedPassword, setFirstName, setLastName, setEmail, setCountryId, setPassword, setConfirmedPassword, reset } = useRegisterForm()
+    const { firstName, lastName, email, countryId, password, confirmedPassword, roleId, statusId, organizationId, setFirstName, setLastName, setEmail, setCountryId, setRoleId, setOrganizationId, setStatusId, setPassword, setConfirmedPassword, reset } = useRegisterForm()
     const { mutateAsync: registerUser } = useRegister()
+    const { data: statuses } = useGetStatus();
+    const { data: roles } = useGetRoles();
     const router = useRouter();
+    const token = router.query.token as string
+
+    console.log(roles)
 
     function handleSubmit(e) {
         e.preventDefault()
-        let userData = { firstName, lastName, nic: "4024024024024", email, password, birthDate: "2023-12-23T13:19:20.844Z", roleId: 1, statusId: 1, organizationId: 1, countryId: 1 }
+        let userData = { firstName, lastName, nic: "4024024024024", email, password, birthDate: "2023-12-23T13:19:20.844Z", roleId: token?.includes("token") ? 3 : 1, statusId: 1, organizationId, countryId: 1, token: token?.split("token=")[1] }
         if (password == confirmedPassword) {
             toast.promise(registerUser(userData), {
                 pending: 'Creating user',

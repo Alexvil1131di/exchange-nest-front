@@ -10,8 +10,10 @@ export interface userData {
     email: string;
     password: string;
     birthDate: string;
-    roleId: number;
-    statusId: number;
-    organizationId: number;
-    countryId: number;
+    roleId: number | undefined;
+    statusId: number | undefined;
+    organizationId: number | undefined;
+    countryId: number | undefined;
+    token: string;
+
 }

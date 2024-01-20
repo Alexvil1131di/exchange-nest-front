@@ -15,7 +15,8 @@ export async function postOrganization(institution: institutions) {
         imageUrl: institution.imageUrl,
         address: institution.address,
         organizationTypeId: institution.organizationTypeId,
-        statusId: institution.statusId
+        statusId: institution.statusId,
+        url: process.env.NEXT_PUBLIC_FRONT_BASE_URL + "/Auth/signUp/"
     },
         {
             headers: {

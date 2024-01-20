@@ -42,9 +42,11 @@ export function useUserAuth(route: string) {
     const [userAuth, setUserAuth] = useState(false)
     const { userData } = useLoginForm()
 
+
     useEffect(() => {
         if (userData) {
-            const data = stringDecrypter(userData as string) as user
+            const data = JSON.parse(stringDecrypter(userData as string))
+
             const token = Cookies.get("token");
             setUserAuth(true)
 

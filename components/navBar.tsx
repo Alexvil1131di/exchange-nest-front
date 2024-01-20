@@ -7,6 +7,8 @@ import useEventListener from '@/hooks/useEvent';
 import useLoginForm from '@/store/singInStore';
 import { stringDecrypter } from '@/hooks/auth/methods';
 import { user } from '@/interfaces/usersInterface';
+import { useUserAuth } from '@/hooks/auth/hooks';
+import { useRouter } from 'next/router';
 
 const NavBar = () => {
 
@@ -15,6 +17,15 @@ const NavBar = () => {
 
     const isExpandedRef = useRef<HTMLDivElement>(null);
     const { userData } = useLoginForm();
+
+    const { userAuth: Programs } = useUserAuth("/Programs")
+    const { userAuth: Applications } = useUserAuth("/Applications")
+    const { userAuth: Institutions } = useUserAuth("/Institutions")
+    const { userAuth: Users } = useUserAuth("/Users")
+
+    const router = useRouter()
+
+
 
     useEventListener("click", (e) => handleDocumentClick(e));
 
@@ -41,11 +52,11 @@ const NavBar = () => {
 
                     <div className={`absolute z-10 ${isExpanded ? "flex" : "hidden"} md:flex top-[58px] left-0 w-full md:items-center bg-[#949494] md:bg-transparent flex-col md:flex-row h-fit md:static flex md:h-full md:gap-16 font-bold text-[16px] text-white`}
                         onClick={() => { setIsExpanded(false) }}>
-                        <Link className='w-full md:w-fit p-2' href={'/'}>Home</Link>
-                        <Link className='w-full md:w-fit p-2' href={'/Programs'}>Programs</Link>
-                        <Link className='w-full md:w-fit p-2' href={'/Applications'}>Applications</Link>
-                        <Link className='w-full md:w-fit p-2' href={'/Institutions'}>Institutions</Link>
-                        <Link className='w-full md:w-fit p-2' href={'/Users'}>Users</Link>
+                        <Link className={`w-full md:w-fit p-2 ${router.pathname === "/" ? "underline" : ""}`} href={'/'}>Home</Link>
+                        {Programs && <Link className={`w-full md:w-fit p-2 ${router.pathname.includes("/Programs") ? "underline" : ""}`} href={'/Programs'}>Programs</Link>}
+                        {Applications && <Link className={`w-full md:w-fit p-2 ${router.pathname.includes("/Applications") ? "underline" : ""}`} href={'/Applications'}>Applications</Link>}
+                        {Institutions && <Link className={`w-full md:w-fit p-2 ${router.pathname.includes("/Institutions") ? "underline" : ""}`} href={'/Institutions'}>Institutions</Link>}
+                        {Users && <Link className={`w-full md:w-fit p-2 ${router.pathname.includes("/Users") ? "underline" : ""}`} href={'/Users'}>Users</Link>}
 
                     </div>
 
