@@ -25,13 +25,13 @@ const useProgramForm = create<programsForm>((set, get) => ({
         documents: "",
         startDate: "",
         finishDate: "",
-        imageUrls: [""]
+        imageUrl: [""]
 
     },
 
     setProgram: (newProgram) => set({ program: newProgram }),
     setName: (newName) => set((state) => ({ program: { ...state.program, name: newName } })),
-    setImage: (newImage) => set((state) => ({ program: { ...state.program, imageUrls: newImage } })),
+    setImage: (newImage) => set((state) => ({ program: { ...state.program, imagesUrl: newImage } })),
     setDescription: (newDescription) => set((state) => ({ program: { ...state.program, description: newDescription } })),
     setLimitApplicationDate: (newLimitApplicationDate) => set((state) => ({ program: { ...state.program, limitApplicationDate: newLimitApplicationDate } })),
     setDocuments: (newDocuments) => set((state) => ({ program: { ...state.program, documents: newDocuments } })),

@@ -9,9 +9,12 @@ import CustomizableButton from "@/components/buttons/CustomizableButton";
 import Dots from "@/public/DotsGrid.svg"
 import useProgramForm from "@/store/programsStore";
 import { toast } from "react-toastify";
-import { useGetStatus } from "@/hooks/genericData/hooks";
+import { useGetStatus, useGetCountries } from "@/hooks/genericData/hooks";
 import { getStatusIdByName, getStatusNameById } from "@/hooks/genericData/methods";
 import useLoginForm from "@/store/singInStore";
+import { useCreatePrograms, useUpdatePrograms } from "@/hooks/programs/hooks";
+import { useRouter } from "next/router";
+import { idID } from "@mui/material/locale";
 
 const DndItem = ({ id, text, index, moveItem }) => {
     const ref = useRef<HTMLDivElement>(null);
@@ -76,11 +79,18 @@ const EditProgram = () => {
     const { program, setProgram, setName, setImage, setDescription, setLimitApplicationDate, setDocuments, setStartDate, setFinishDate, setOrganizationId, setCountryId, setStateId, setStatusId, reset } = useProgramForm();
     const { data: status } = useGetStatus()
     const { getUserData } = useLoginForm()
+    const { data: countries } = useGetCountries()
+    const { mutateAsync: createProgram } = useCreatePrograms()
+    const { mutateAsync: updateProgram } = useUpdatePrograms()
+
 
     const [list, setList] = useState(mock);
 
-
     const statusOptions = status?.slice(0, 2).map((item) => item.description)
+    const countryOptions = countries?.map((item) => item.description)
+
+    const router = useRouter()
+    const id = router.query.id
 
     const moveItem = (fromIndex, toIndex) => {
         const newList = [...list];
@@ -115,13 +125,37 @@ const EditProgram = () => {
         setOrganizationId(getUserData()?.organizationId as number)
     }
 
+    function setCountry(country: string) {
+        setCountryId(getStatusIdByName(country, countries) as number)
+    }
+
+    function handleSubmit() {
+
+        if (id == "create") {
+            toast.promise(createProgram(program), {
+                pending: 'Creating program...',
+                success: 'Program created successfully',
+                error: 'Error creating program'
+            }).then(() => { reset(); router.push("/Programs") })
+        }
+        else {
+            toast.promise(updateProgram(program), {
+                pending: 'Updating institution...',
+                success: 'Institution updated successfully',
+                error: 'Error updating institution'
+            }).then(() => { reset(); router.push("/Programs") })
+
+        }
+
+    }
+
 
     return (
         <>
             <NavBar />
 
-            <div className='flex flex-col gap-8 p-6 mt-14'>
-                <h1 className='text-[20px] font-medium'>Exchange Programs</h1>
+            <form className='flex flex-col gap-8 p-6 mt-14'>
+                <button className='text-[20px] font-medium'>Exchange Programs</button>
                 <div className="flex flex-col w-full p-6 pt-12 gap-4">
 
                     <div className="flex flex-col md:flex-row w-full max-h-[644px] gap-3  ">
@@ -130,7 +164,7 @@ const EditProgram = () => {
 
                             <InputComponent type={'text'} value={program.name} required={true} label='Name' width='w-full ' errorMessage={''} onChange={(e) => { setName(e.target.value) }} />
 
-                            <InputComponent type={'dropdown'} value={""} required={true} label='Country' width='w-full' options={["1"]} errorMessage={''} onChange={(e) => { }} />
+                            <InputComponent type={'dropdown'} value={getStatusNameById(program.countryId, countries)} required={true} label='Country' width='w-full' options={countryOptions} errorMessage={''} onChange={setCountry} />
 
                             <InputComponent type={'dropdown'} value={getStatusNameById(program.statusId, status)} required={true} label='Status' width='w-full' errorMessage={''} options={statusOptions} onChange={setStatus} />
 
@@ -149,11 +183,11 @@ const EditProgram = () => {
 
                     </div>
 
-                    <InputComponent type={'text'} value={""} required={true} label='Google Maps Link' width='w-full ' errorMessage={''} onChange={(e) => { }} />
+                    {/* <InputComponent type={'text'} value={""} required={true} label='Google Maps Link' width='w-full ' errorMessage={''} onChange={(e) => { }} /> */}
 
                     <InputComponent type={'textarea'} value={program.description} required={true} height='h-[80px]' label='Description' width='w-full ' errorMessage={''} onChange={(e) => { setDescription(e.target.value) }} />
 
-                    <ImageUpload image={program?.imageUrls} multiImage showButton={false} description={"Click to browse or drag and drop your pictures"} errorMessage={"El tamaño del logo debe ser inferior a los 2mb"} imageOnChange={setImage} height={"h-[160px]"} uniqueKey={"commerceImage"} maxWidth={""} maxSize={200000000} />
+                    <ImageUpload image={program?.imagesUrl || []} multiImage showButton={false} description={"Click to browse or drag and drop your pictures"} errorMessage={"El tamaño del logo debe ser inferior a los 2mb"} imageOnChange={setImage} height={"h-[160px]"} uniqueKey={"commerceImage"} maxWidth={""} maxSize={200000000} />
 
                 </div>
 
@@ -180,12 +214,12 @@ const EditProgram = () => {
                 </div>
 
                 <div className="w-full flex justify-end px-10">
-                    <CustomizableButton text={'CREATE PROGRAM'} bgColor='bg-[#52BAAB]' textColor='text-[#ffffff] ' maxSize='w-full max-w-[250px] h-[45px] mb-4' onClick={() => { }} />
+                    <CustomizableButton text={'CREATE PROGRAM'} bgColor='bg-[#52BAAB]' textColor='text-[#ffffff] ' maxSize='w-full max-w-[250px] h-[45px] mb-4' onClick={() => { handleSubmit() }} />
                 </div>
 
 
 
-            </div>
+            </form>
         </>
     );
 }

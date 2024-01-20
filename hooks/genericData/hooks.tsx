@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getStatuses, getRoles, getOrganizationTypes } from "./fetchs";
+import { getStatuses, getRoles, getCountries, getOrganizationTypes } from "./fetchs";
 
 export function useGetStatus() {
     return useQuery({ queryKey: ['status'], queryFn: getStatuses })
@@ -11,4 +11,8 @@ export function useGetRoles() {
 
 export function useGetOrganizationTypes() {
     return useQuery({ queryKey: ['organizationType'], queryFn: getOrganizationTypes })
+}
+
+export function useGetCountries() {
+    return useQuery({ queryKey: ['country'], queryFn: getCountries })
 }

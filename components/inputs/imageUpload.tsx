@@ -20,43 +20,36 @@ const ImageUpload = ({ image, description, errorMessage, imageOnChange, maxWidth
 
         console.log(e)
         e.stopPropagation()
-        let newImageArray = [...imageArray];
+        let newImageArray = [...image];
         newImageArray.splice(index, 1);
         setImageArray(newImageArray);
         imageOnChange(newImageArray);
     }
 
     useEffect(() => {
-        if (multiImage && image.length < 6) {
-            image.map((img) => {
-                if (img && img !== null && typeof img == "object") {
-                    setImageArray([...imageArray, URL.createObjectURL(img)])
+        if (multiImage && image?.length < 6) {
+            setImageArray(image.map((img, index) => {
+                if (img && img !== null && typeof img === "object") {
+                    return URL.createObjectURL(img);
+                } else if (img) {
+                    return "https://qrepipawlxyhhqjvbyqs.supabase.co/storage/v1/object/public/" + img;
+                } else {
+                    return "";
                 }
-                else if (img?.length > 0) {
-                    setProfileImage("https://qrepipawlxyhhqjvbyqs.supabase.co/storage/v1/object/public/" + image)
-                }
-                else {
-                    setProfileImage("")
-                }
-            })
-
-        }
-        else {
-            if (image && image !== null && typeof image == "object") {
-                console.log(image)
-                setProfileImage(URL.createObjectURL(image))
-            }
-            else if (image?.length > 0) {
-                setProfileImage("https://qrepipawlxyhhqjvbyqs.supabase.co/storage/v1/object/public/" + image)
-            }
-            else {
-                setProfileImage("")
+            }));
+        } else {
+            if (image && image !== null && typeof image === "object") {
+                setProfileImage(URL.createObjectURL(image));
+            } else if (image?.length > 0) {
+                setProfileImage("https://qrepipawlxyhhqjvbyqs.supabase.co/storage/v1/object/public/" + image);
+            } else {
+                setProfileImage("");
             }
         }
-
     }, [image]);
 
-    console.log(imageArray)
+    console.log(image)
+
 
     return (
         <>

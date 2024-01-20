@@ -3,7 +3,7 @@ interface Program {
     name: string;
     description: string;
     limitApplicationDate: string;
-    imageUrls?: string[]; // commas separated string
+    imagesUrl?: string[] | File[] | string; // commas separated string
     documents?: string; // commas separated string
     startDate: string;
     finishDate: string;
