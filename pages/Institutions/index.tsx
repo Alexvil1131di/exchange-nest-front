@@ -14,6 +14,8 @@ import { toast } from 'react-toastify'
 import { useGetOrganizations, useCreateOrganization, useDeleteOrganization, useUpdateOrganization } from '@/hooks/Institutions/hooks';
 import { useGetStatus } from '@/hooks/genericData/hooks';
 import { getStatusIdByName, getStatusNameById } from '@/hooks/genericData/methods';
+import ActionConfirm from '@/components/modals/actionConfirmModal';
+import { useRouter } from 'next/router';
 
 const Institution = () => {
     const [page, setPage] = useState(0);
@@ -22,6 +24,7 @@ const Institution = () => {
     const [statusFilter, setStatusFilter] = useState('');
     const [checkedIds, setCheckedIds] = useState<number[]>([]); // [1,2,3] 
     const [openModal, setOpenModal] = useState<boolean>(false);
+    const [showModal, setShowModal] = useState(false)
 
     const { data: institutionArray, refetch } = useGetOrganizations()
     const { mutateAsync: createOrganization } = useCreateOrganization();
@@ -29,6 +32,8 @@ const Institution = () => {
     const { mutateAsync: deleteOrganization } = useDeleteOrganization();
     const { institution, setInsitution, reset } = useInstitutionForm();
     const { data: statuses } = useGetStatus();
+
+    const router = useRouter()
     const institutionStatus = statuses?.slice(0, 2).map((status) => status.description)
 
     const columns = [
@@ -61,14 +66,14 @@ const Institution = () => {
                 pending: 'Updating institution...',
                 success: 'Institution updated successfully',
                 error: 'Error updating institution'
-            }).then(() => { refetch(); setOpenModal(false); reset() }).catch(() => { }).then(() => refetch())
+            }).then(() => { setTimeout(() => { refetch() }, 2000);; setOpenModal(false); reset() }).catch(() => { })
         }
         else {
             toast.promise(createOrganization(institution), {
                 pending: 'Creating institution...',
                 success: 'Institution created successfully',
                 error: 'Error creating institution the email is already in use'
-            }).then(() => { refetch(); setOpenModal(false); reset() }).catch(() => { }).then(() => refetch())
+            }).then(() => { setTimeout(() => { refetch() }, 2000);; setOpenModal(false); reset() }).catch(() => { })
         }
     }
 
@@ -78,7 +83,7 @@ const Institution = () => {
                 pending: 'Deleting institutions...',
                 success: 'Institutions deleted successfully',
                 error: 'Error deleting institution'
-            }).then(() => { refetch(); setCheckedIds([]) }).catch(() => { })
+            }).then(() => { setTimeout(() => { refetch() }, 2000); setCheckedIds([]); }).catch(() => { })
         }
         else {
             toast.error('You must select at least one institution to delete')
@@ -177,6 +182,7 @@ const Institution = () => {
     return (
         <>
             <NavBar />
+            {showModal && <ActionConfirm title={"Delete Institution"} actionMessage={`Are you sure you want to delete all the selected Institutions`} acctionConfirm={() => { handleDelete(); setShowModal(false); refetch() }} acctionReject={() => { reset(); setShowModal(false) }} confirmButtonLabel={"Delete"} rejectButtonLabel={"Cancel"} />}
 
             <div className='flex flex-col gap-8 p-6 mt-14'>
                 <h1 className='text-[20px] font-medium'>Institutions administrator</h1>
@@ -194,7 +200,7 @@ const Institution = () => {
                         <CustomizableButton text={'EDIT'} bgColor='bg-[#ffffff]' beforeImage={<EditIcon className={" w-5 h-5 fill-[#52BAAB]"} />} textColor='text-[#52BAAB] border-2 border-[#52BAAB]' maxSize='px-8 h-[45px]' onClick={() => { handleEdit() }} />
                     </div>
 
-                    <CustomizableButton text={'DELETE'} bgColor='bg-[#16688C]' beforeImage={<TrashCan className={" w-5 h-5 fill-[#ffffff]"} />} textColor='text-[#ffffff] ' maxSize='px-8 h-[45px]' onClick={() => { handleDelete() }} />
+                    <CustomizableButton text={'DELETE'} bgColor='bg-[#16688C]' beforeImage={<TrashCan className={" w-5 h-5 fill-[#ffffff]"} />} textColor='text-[#ffffff] ' maxSize='px-8 h-[45px]' onClick={() => { setShowModal(true) }} />
 
                 </div>
 

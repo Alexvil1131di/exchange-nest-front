@@ -91,7 +91,7 @@ export default function SignUp() {
 
                 </form>
 
-                <Link href={"/Auth/signUp"}> New to Exchange Nest? <span className=" text-[#52BAAB] font-semibold ">Join now</span></Link>
+                <Link href={"/Auth/signUp/Xx"}> New to Exchange Nest? <span className=" text-[#52BAAB] font-semibold ">Join now</span></Link>
 
             </div>
 

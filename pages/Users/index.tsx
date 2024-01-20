@@ -14,6 +14,7 @@ import { useCreateUser, useGetUsers, useDeleteUser, useUpdateUser } from '@/hook
 import useUserForm from '@/store/usersStore';
 import { getStatusIdByName, getStatusNameById } from "@/hooks/genericData/methods";
 import { useGetStatus, useGetRoles } from '@/hooks/genericData/hooks';
+import ActionConfirm from '@/components/modals/actionConfirmModal';
 
 
 const User = () => {
@@ -23,6 +24,8 @@ const User = () => {
     const [statusFilter, setStatusFilter] = useState('');
     const [checkedIds, setCheckedIds] = useState<number[]>([]); // [1,2,3] 
     const [openModal, setOpenModal] = useState<boolean>(false);
+    const [showModal, setShowModal] = useState(false)
+
 
     const { data: usersArray, refetch } = useGetUsers()
     const { mutateAsync: createUser } = useCreateUser();
@@ -50,14 +53,14 @@ const User = () => {
                 pending: 'Updating user...',
                 success: 'User updated successfully',
                 error: 'Error updating user'
-            }).then(() => { refetch(); setOpenModal(false); reset() }).catch(() => { }).then(() => refetch())
+            }).then(() => { setTimeout(() => { refetch() }, 2000); setOpenModal(false); reset() }).catch(() => { })
         }
         else {
             toast.promise(createUser(user), {
                 pending: 'Creating user...',
                 success: 'User created successfully',
                 error: 'Error creating an user, the email is already in use'
-            }).then(() => { refetch(); setOpenModal(false); reset() }).catch(() => { }).then(() => refetch())
+            }).then(() => { setTimeout(() => { refetch() }, 2000); setOpenModal(false); reset() }).catch(() => { })
         }
     }
 
@@ -67,7 +70,7 @@ const User = () => {
                 pending: 'Deleting users...',
                 success: 'Users deleted successfully',
                 error: 'Error deleting user'
-            }).then(() => { refetch(); setCheckedIds([]) }).catch(() => { })
+            }).then(() => { setTimeout(() => { refetch() }, 2000); setCheckedIds([]) }).catch(() => { })
         }
         else {
             toast.error('You must select at least one user to delete')
@@ -160,6 +163,7 @@ const User = () => {
     return (
         <>
             <NavBar />
+            {showModal && <ActionConfirm title={"Delete Users"} actionMessage={`Are you sure you want to delete all the selected users`} acctionConfirm={() => { handleDelete(); setShowModal(false) }} acctionReject={() => { reset(); setShowModal(false) }} confirmButtonLabel={"Delete"} rejectButtonLabel={"Cancel"} />}
 
             <div className='flex flex-col gap-8 p-6 mt-14'>
                 <h1 className='text-[20px] font-medium'>User administrator</h1>
@@ -177,7 +181,7 @@ const User = () => {
                         <CustomizableButton text={'EDIT'} bgColor='bg-[#ffffff]' beforeImage={<EditIcon className={" w-5 h-5 fill-[#52BAAB]"} />} textColor='text-[#52BAAB] border-2 border-[#52BAAB]' maxSize='px-8 h-[45px]' onClick={() => { handleEdit() }} />
                     </div>
 
-                    <CustomizableButton text={'DELETE'} bgColor='bg-[#16688C]' beforeImage={<TrashCan className={" w-5 h-5 fill-[#ffffff]"} />} textColor='text-[#ffffff] ' maxSize='px-8 h-[45px]' onClick={() => { handleDelete() }} />
+                    <CustomizableButton text={'DELETE'} bgColor='bg-[#16688C]' beforeImage={<TrashCan className={" w-5 h-5 fill-[#ffffff]"} />} textColor='text-[#ffffff] ' maxSize='px-8 h-[45px]' onClick={() => { setShowModal(true) }} />
 
                 </div>
 

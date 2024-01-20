@@ -155,7 +155,7 @@ const EditProgram = () => {
             <NavBar />
 
             <form className='flex flex-col gap-8 p-6 mt-14'>
-                <button className='text-[20px] font-medium'>Exchange Programs</button>
+                <h1 className='text-[20px] font-medium'>Exchange Programs</h1>
                 <div className="flex flex-col w-full p-6 pt-12 gap-4">
 
                     <div className="flex flex-col md:flex-row w-full max-h-[644px] gap-3  ">

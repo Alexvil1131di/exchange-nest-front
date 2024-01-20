@@ -20,11 +20,11 @@ const Programs = () => {
     const [showModal, setShowModal] = useState(false)
 
     const fixedPrograms = Programs?.map((item) => ({ ...item, imagesUrl: (item?.imagesUrl as string)?.split(","), limitApplicationDate: item?.limitApplicationDate?.split("T")[0], startDate: item?.startDate?.split("T")[0], finishDate: item?.finishDate?.split("T")[0] }))
-    console.log(fixedPrograms)
+
     return (
         <>
             <NavBar />
-            {showModal && <ActionConfirm title={"Delete Program"} actionMessage={`Are you sure you want to delete the program ${program.name}`} acctionConfirm={() => { deleteProgram(program.id as number); setShowModal(false); refetch() }} acctionReject={() => { reset(); setShowModal(false) }} confirmButtonLabel={"Delete"} rejectButtonLabel={"Cancel"} />}
+            {showModal && <ActionConfirm title={"Delete Program"} actionMessage={`Are you sure you want to delete the program ${program.name}`} acctionConfirm={() => { deleteProgram(program.id as number); setShowModal(false); setTimeout(() => { refetch() }, 2000); }} acctionReject={() => { reset(); setShowModal(false) }} confirmButtonLabel={"Delete"} rejectButtonLabel={"Cancel"} />}
             <div className='flex flex-col gap-8 p-6 mt-14'>
                 <h1 className='text-[20px] font-medium'>Applications</h1>
 
@@ -36,7 +36,7 @@ const Programs = () => {
                         <InputComponent type={'dropdown'} placeholder='Filter by status' label='Status' width='w-full md:max-w-[250px]' errorMessage={''} onChange={() => { }} options={["Activos", "Inactivos"]} />
                     </div>
 
-                    <CustomizableButton text={'CREATE PROGRAM'} bgColor='bg-[#ffffff]' textColor='text-[#52BAAB] border-2 border-[#52BAAB]' maxSize='w-full md:max-w-[184px] h-[45px]' onClick={() => { router.push("/Programs/create/editProgram") }} />
+                    <CustomizableButton text={'CREATE PROGRAM'} bgColor='bg-[#ffffff]' textColor='text-[#52BAAB] border-2 border-[#52BAAB]' maxSize='w-full md:max-w-[184px] h-[45px]' onClick={() => { reset(); router.push("/Programs/create/editProgram") }} />
 
                 </div>
 
