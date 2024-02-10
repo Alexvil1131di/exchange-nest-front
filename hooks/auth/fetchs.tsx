@@ -12,6 +12,11 @@ export async function userLogin(user: loginForm) {
     return userLoginFetch.data as user
 }
 
+export async function idValidation(id: string) {
+    const idValidationFetch = await axios.get(`https://api.digital.gob.do/v3/cedulas/${id}/validate`);
+    return idValidationFetch.data.valid as boolean
+}
+
 export async function userRegister(user: userData) {
     const userLoginFetch = await axios.post(`${process.env.NEXT_PUBLIC_BASE_SERVER_URL}/api/auth/signup`, {
         firstName: user.firstName,
@@ -26,7 +31,7 @@ export async function userRegister(user: userData) {
         countryId: user.countryId,
         token: user.token ?? ""
     });
-    console.log(user)
+
     return userLoginFetch
 }
 

@@ -1,21 +1,41 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { userRegister, userLogin, changePassword } from "./fetchs";
+import { userRegister, userLogin, changePassword, idValidation } from "./fetchs";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { isAuthorizedRoute } from "./methods";
 import useLoginForm from "@/store/singInStore";
-import { stringDecrypter, stringEncrypter } from "./methods";
+import { stringDecrypter, stringEncrypter, luhnAlgorithm } from "./methods";
 import { user } from "@/interfaces/usersInterface";
 import { sendChangePasswordEmail } from "./fetchs";
+import { userData } from "@/interfaces/authInterface";
+
 
 // export function useLogIn() {
 //     return useQuery(["orders-count", from, to, status], () => getOrdersCount(status, from, to), { refetchInterval: 60 * 500 });
 // }
 
-export function useRegister() {
+export function useRegister(setIdError: (value: boolean) => void) {
     return useMutation({
-        mutationFn: userRegister,
+        mutationFn: async (user: userData) => {
+            var regex = new RegExp("^[0-9]{3}-?[0-9]{7}-?[0-9]{1}$");
+            const verifyer = regex.test(user.nic) ? luhnAlgorithm(user.nic) : false
+
+            if (regex.test(user.nic)) {
+                const idValidationFetch = await idValidation(user.nic)
+
+                if (verifyer && idValidationFetch) {
+                    return userRegister(user)
+                }
+                else {
+                    setIdError(true)
+                }
+            }
+            else {
+                return userRegister(user)
+            }
+
+        },
     })
 }
 
