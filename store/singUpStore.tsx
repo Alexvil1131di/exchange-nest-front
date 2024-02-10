@@ -1,12 +1,10 @@
 import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware'
-import { stringEncrypter } from '@/hooks/auth/methods';
-
 
 interface RegisterForm {
     firstName: string;
     lastName: string;
     email: string;
+    nic: string;
     roleId?: number,
     statusId?: number,
     organizationId?: number,
@@ -18,6 +16,7 @@ interface RegisterForm {
     setLastName: (newLastName: string) => void;
     setCountryId: (newCountryId: number) => void;
     setRoleId: (newRoleId: number) => void;
+    setNic: (newNic: string) => void;
     setStatusId: (newStatusId: number) => void;
     setOrganizationId: (newOrganizationId: number) => void;
     setEmail: (newEmail: string) => void;
@@ -30,6 +29,7 @@ const useRegisterForm = create<RegisterForm>((set, get) => ({
     firstName: "",
     lastName: "",
     email: "",
+    nic: "",
     password: "",
     confirmedPassword: "",
 
@@ -40,9 +40,10 @@ const useRegisterForm = create<RegisterForm>((set, get) => ({
     setStatusId: (newStatusId) => set({ statusId: newStatusId }),
     setOrganizationId: (newOrganizationId) => set({ organizationId: newOrganizationId }),
     setEmail: (newEmail) => set({ email: newEmail }),
+    setNic: (newNic) => { if (/^[a-zA-Z0-9]{0,20}$/.test(newNic)) { set({ nic: newNic }); } },
     setPassword: (newPassword) => set({ password: newPassword }),
     setConfirmedPassword: (newConfirmedPassword) => set({ confirmedPassword: newConfirmedPassword }),
-    reset: () => set({ firstName: "", lastName: "", email: "", countryId: undefined, password: "", confirmedPassword: "", }),
+    reset: () => set({ firstName: "", lastName: "", nic: "", email: "", countryId: undefined, password: "", confirmedPassword: "", }),
 
 }));
 

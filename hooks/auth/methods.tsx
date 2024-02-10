@@ -50,6 +50,10 @@ export function isAuthorizedRoute(pathname: string, userRole: string) {
         "/Users": ["Administrator"],
 
         //UsersApp
+        "/UsersApp": ["student", "Administrator"],
+        "/UsersApp/Applications": ["student", "Administrator"],
+        "/UsersApp/Profile": ["student", "Administrator"],
+
     };
 
 
@@ -60,4 +64,18 @@ export function isAuthorizedRoute(pathname: string, userRole: string) {
     }
 
     return authorizedRoles.includes(userRole);
+}
+
+export function luhnAlgorithm(cardNumber: string) {
+    let sum = 0;
+    let isSecond = false;
+    for (let i = cardNumber.length - 1; i >= 0; i--) {
+        let d = parseInt(cardNumber[i]);
+        if (isSecond == true)
+            d = d * 2;
+        sum += Math.floor(d / 10);
+        sum += d % 10;
+        isSecond = !isSecond;
+    }
+    return (sum % 10 == 0);
 }

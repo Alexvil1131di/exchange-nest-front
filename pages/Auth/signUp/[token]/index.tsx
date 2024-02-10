@@ -7,22 +7,23 @@ import { useRegister } from "@/hooks/auth/hooks";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import { useGetStatus, useGetRoles } from "@/hooks/genericData/hooks";
+import { useState } from "react";
 
 export default function Home() {
 
 
-    const { firstName, lastName, email, countryId, password, confirmedPassword, roleId, statusId, organizationId, setFirstName, setLastName, setEmail, setCountryId, setRoleId, setOrganizationId, setStatusId, setPassword, setConfirmedPassword, reset } = useRegisterForm()
-    const { mutateAsync: registerUser } = useRegister()
+    const { firstName, lastName, email, countryId, password, confirmedPassword, roleId, nic, statusId, organizationId, setFirstName, setLastName, setEmail, setCountryId, setNic, setPassword, setConfirmedPassword, reset } = useRegisterForm()
+    const [idError, setIdError] = useState(false)
+    const { mutateAsync: registerUser } = useRegister(setIdError)
     const { data: statuses } = useGetStatus();
     const { data: roles } = useGetRoles();
     const router = useRouter();
     const token = router.query.token as string
 
-    console.log(roles)
 
     function handleSubmit(e) {
         e.preventDefault()
-        let userData = { firstName, lastName, nic: "4024024024024", email, password, birthDate: "2023-12-23T13:19:20.844Z", roleId: token?.includes("token") ? 3 : 1, statusId: 1, organizationId, countryId: 1, token: token?.split("token=")[1] }
+        let userData = { firstName, lastName, nic: nic, email, password, birthDate: "2023-12-23T13:19:20.844Z", roleId: token?.includes("token") ? 3 : 1, statusId: 1, organizationId, countryId: 1, token: token?.split("token=")[1] }
         if (password == confirmedPassword) {
             toast.promise(registerUser(userData), {
                 pending: 'Creating user',
@@ -65,6 +66,9 @@ export default function Home() {
 
                     <InputComponent label="Email" required={true} placeholder="Enter your email" type="email" name="email" value={email} hasAnError={false}
                         width="w-full " onChange={(e) => { setEmail(e.target.value) }} errorMessage={"An error has occurred, please fill in the appropriate field."} />
+
+                    <InputComponent label="ID" required={true} placeholder="Enter your id or passport" type="text" name="id" value={nic} hasAnError={idError}
+                        width="w-full " onChange={(e) => { setNic(e.target.value) }} errorMessage={"An error has occurred, please use a valid id."} />
 
                     <InputComponent label="Country" required={true} placeholder="Enter your email" type="dropdown" name="country" value={countryId ? String(countryId) : ""} hasAnError={false}
                         width="w-full " onChange={setCountryId} options={["Opcion 1", "Opcion 2"]}
