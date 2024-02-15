@@ -50,9 +50,9 @@ export function isAuthorizedRoute(pathname: string, userRole: string) {
         "/Users": ["Administrator"],
 
         //UsersApp
-        "/UsersApp": ["student", "Administrator"],
-        "/UsersApp/Applications": ["student", "Administrator"],
-        "/UsersApp/Profile": ["student", "Administrator"],
+        "/UsersApp": ["Student", "Administrator"],
+        "/UsersApp/Applications": ["Student", "Administrator"],
+        "/UsersApp/Profile": ["Student", "Administrator"],
 
     };
 
