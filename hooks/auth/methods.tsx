@@ -42,7 +42,7 @@ export function isAuthorizedRoute(pathname: string, userRole: string) {
     const authorizedRoutes = {
 
         //Organizations
-        "/Programs": ["Organization", "Administrator"],
+        "/Programs": ["Organization"],
         "/Applications": ["Organization"],
 
         //Admin
@@ -50,9 +50,9 @@ export function isAuthorizedRoute(pathname: string, userRole: string) {
         "/Users": ["Administrator"],
 
         //UsersApp
-        "/UsersApp": ["Student", "Administrator"],
-        "/UsersApp/Applications": ["Student", "Administrator"],
-        "/UsersApp/Profile": ["Student", "Administrator"],
+        "/UsersApp": ["Student"],
+        "/UsersApp/Applications": ["Student"],
+        "/UsersApp/Profile": ["Student"],
 
     };
 
