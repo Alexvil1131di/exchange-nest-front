@@ -4,7 +4,8 @@ interface Program {
     description: string;
     limitApplicationDate: string;
     imagesUrl?: string[] | File[] | string; // commas separated string
-    documents?: string; // commas separated string
+    applicationDocuments: any | string[],
+    requiredDocuments: any | string[],
     startDate: string;
     finishDate: string;
     organizationId?: number;

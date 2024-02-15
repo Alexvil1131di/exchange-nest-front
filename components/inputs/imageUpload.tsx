@@ -70,7 +70,7 @@ const ImageUpload = ({ image, description, errorMessage, imageOnChange, maxWidth
 
                     {imageArray.length > 0 && <div className="relative flex flex-wrap gap-2">
                         {imageArray.map((img, index) => (
-                            <div className="relative w-[100px] z-[99] h-[100px] bg-cover bg-center bg-no-repeat rounded-[20px]" style={{ backgroundImage: `url(${img})` }} key={index} >
+                            <div className="relative w-[100px]  h-[100px] bg-cover bg-center bg-no-repeat rounded-[20px]" style={{ backgroundImage: `url(${img})` }} key={index} >
                                 <button type="button" className="absolute top-1 right-1 w-6 h-6  rounded-full bg-[#0000005e] p-[5px]" onClick={(e) => { e.stopPropagation(); handleImageRemove(e, index) }} ><X className=" fill-white" /></button>
                             </div>
                         ))}
