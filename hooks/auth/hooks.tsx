@@ -89,7 +89,6 @@ export function useUserAuth(route: string) {
 
         }
         else {
-            router.push("/Auth/signIn");
             setUserAuth(false)
         }
 
