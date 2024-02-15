@@ -195,7 +195,7 @@ const EditProgram = () => {
                         <CustomizableButton text={'ADD APPLICATION DOCUMENTS'} bgColor='bg-[#52BAAB]' textColor='text-[#ffffff] ' maxSize='w-full max-w-[250px] h-[45px] mb-4' onClick={() => { addApplicationDocuments() }} />
                         {
                             programToRender.applicationDocuments.map((item, index) => (
-                                <div className=" w-[513px] p-[7px] h-[70px] border border-[#52BAAB] rounded-[10px] flex justify-between items-center">
+                                <div key={index} className=" w-[513px] p-[7px] h-[70px] border border-[#52BAAB] rounded-[10px] flex justify-between items-center">
                                     <Dots className="w-8 h-8 fill-black" />
                                     <input type="text" value={item} className="w-full h-full bg-[#00000012] rounded-[10px] px-2 mr-2 text-[23px] font-bold" onChange={(e) => { setApplicationDocuments(e.target.value, index) }} />
                                     <TrashCan className="w-14 h-14 p-4 fill-white rounded-xl  cursor-pointer bg-[#16688C]" onClick={() => { deleteApplicationDocuments(index) }} />
@@ -213,7 +213,7 @@ const EditProgram = () => {
                         <CustomizableButton text={'ADD REQUIRED DOCUMENTS'} bgColor='bg-[#52BAAB]' textColor='text-[#ffffff] ' maxSize='w-full max-w-[250px] h-[45px] mb-4' onClick={() => { addRequiredDocuments() }} />
                         {
                             programToRender.requiredDocuments.map((item, index) => (
-                                <div className=" w-[513px] p-[7px] h-[70px] border border-[#52BAAB] rounded-[10px] flex justify-between items-center">
+                                <div key={index} className=" w-[513px] p-[7px] h-[70px] border border-[#52BAAB] rounded-[10px] flex justify-between items-center">
                                     <Dots className="w-8 h-8 fill-black" />
                                     <input type="text" value={item} className="w-full h-full bg-[#00000012] rounded-[10px] px-2 mr-2 text-[23px] font-bold" onChange={(e) => { setRequiredDocuments(e.target.value, index) }} />
                                     <TrashCan className="w-14 h-14 p-4 fill-white rounded-xl  cursor-pointer bg-[#16688C]" onClick={() => { deleteRequiredDocuments(index) }} />

@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import ExchangeNestLogo from '@/public/exchangeNestLogoPlain.svg'
 
-const userProgram = () => {
+const UserProgram = () => {
 
     const { data: programs, isLoading } = useGetPrograms();
     const [activeIndex, setActiveIndex] = useState(0);
@@ -123,4 +123,4 @@ const userProgram = () => {
     );
 };
 
-export default userProgram;
+export default UserProgram;
