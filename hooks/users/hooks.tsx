@@ -1,5 +1,5 @@
 import { user } from "@/interfaces/usersInterface";
-import { postUser, getUsers, deleteUsers, putUser } from "./fetchs";
+import { postUser, getUsers, deleteUsers, putUser, getUserById } from "./fetchs";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { checkImageType } from "../images/methods";
 import { postImage } from "../images/fetch";
@@ -20,15 +20,19 @@ export function useGetUsers() {
 export function useUpdateUser() {
     return useMutation({
         mutationFn: async (user: user) => {
-            checkImageType(user?.imageUrl) ? postImage(user?.imageUrl as File).then((img) => { putUser({ ...user, imageUrl: img }) }) : putUser(user)
-
+            checkImageType(user?.imageUrl) ? postImage(user?.imageUrl as File).then(async (img) => { await putUser({ ...user, imageUrl: img }) }) : await putUser(user);
         }
     })
 }
 
-
 export function useDeleteUser() {
     return useMutation({
         mutationFn: async (idArray: number[]) => { idArray.map((id) => { setTimeout(async () => { deleteUsers(id) }, 500); }) },
+    })
+}
+
+export function useGetUserById() {
+    return useMutation({
+        mutationFn: getUserById,
     })
 }
