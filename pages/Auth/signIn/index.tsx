@@ -34,15 +34,20 @@ export default function SignUp() {
             success: `Sucessfully logged in`,
             error: `An error has occurred, please try again later`,
         }).then((data) => {
-            if (data.roleText == "Student") {
-                router.push("/UsersApp")
-            }
-            else {
-                router.push("/")
-            }
 
-            setUserData(data)
             Cookies.set('token', stringEncrypter(String(data.accessToken)), { expires: 1 })
+            setUserData(data)
+
+            setTimeout(async () => {
+                if (data.roleText == "Student") {
+                    router.push("/UsersApp")
+                }
+                else {
+                    router.push("/")
+                }
+            }, 500)
+
+
         }).catch((err) => { console.log(err) })
 
     }
