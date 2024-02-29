@@ -9,23 +9,21 @@ export function useCreateApplication() {
     return useMutation({
         mutationFn: async (application: applications) => {
 
-            let applicationDocuments = await Promise.all(
+            let applyDocs = await Promise.all(
                 application.applicationDocuments.map(async (doc) => {
-                    checkImageType(doc.url) ? postFiles(doc.url as File).then((file) => doc.url = file) : doc.url || ""
+                    checkImageType(doc.url) ? doc.url = await postFiles(doc.url as File) : doc.url || ""
                     return doc
-                }
-                )
+                })
             )
 
-            let requiredDocuments = await Promise.all(
+            let reDocs = await Promise.all(
                 application.requiredDocuments.map(async (doc) => {
-                    checkImageType(doc.url) ? postFiles(doc.url as File).then((file) => doc.url = file) : doc.url || ""
+                    checkImageType(doc.url) ? doc.url = await postFiles(doc.url as File) : doc.url || ""
                     return doc
-                }
-                )
+                })
             )
 
-            postApplication({ ...application, applicationDocuments, requiredDocuments })
+            postApplication({ ...application, applicationDocuments: applyDocs, requiredDocuments: reDocs })
 
         }
     })
