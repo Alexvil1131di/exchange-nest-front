@@ -5,6 +5,7 @@ import UserNavBar from '@/components/usersNavBar';
 import { useGetPrograms } from '@/hooks/programs/hooks';
 import useProgramForm from '@/store/programsStore';
 import { useRouter } from 'next/router';
+import useApplicationForm from '@/store/usersAppStore';
 
 
 const UsersApp = () => {
@@ -13,6 +14,8 @@ const UsersApp = () => {
     const [search, setSearch] = React.useState('')
     const { program, setProgram } = useProgramForm();
     const router = useRouter();
+    const { application, setApplication, reset } = useApplicationForm();
+
 
     function filterPrograms() {
         return programs?.filter((program: any) => {
@@ -20,9 +23,9 @@ const UsersApp = () => {
         })
     }
 
-    function setSelectedProgram(program: Program) {
-        setProgram({ ...program, imagesUrl: (program?.imagesUrl as string).split(","), applicationDocuments: program.applicationDocuments.length > 0 ? program.applicationDocuments.split(",") : [], requiredDocuments: program.requiredDocuments.length > 0 ? program.requiredDocuments.split(",") : [] });
-    }
+    // function setSelectedProgram(program: Program) {
+    //     setProgram({ ...program, imagesUrl: (program?.imagesUrl as string).split(","), applicationDocuments: program.applicationDocuments.length > 0 ? program.applicationDocuments.split(",") : [], requiredDocuments: program.requiredDocuments.length > 0 ? program.requiredDocuments.split(",") : [] });
+    // }
 
     return (
         <>
@@ -31,7 +34,7 @@ const UsersApp = () => {
 
                 <div className='flex flex-col flex-wrap flex-shrink-0 gap-3 md:flex-row md:gap-16 w-full items-center' >
                     {filterPrograms()?.map((program) => (
-                        <UsersProgramCard key={program.id} name={program.name} images={(program?.imagesUrl as string).split(",")} description={program.description} onClick={() => { setSelectedProgram(program); router.push(`/UsersApp/${program.id}/userProgram`) }} />
+                        <UsersProgramCard key={program.id} name={program.name} images={(program?.imagesUrl as string).split(",")} description={program.description} onClick={() => { reset(); router.push(`/UsersApp/${program.id}/userProgram`) }} />
                     ))
                     }
 

@@ -16,6 +16,20 @@ export async function getPrograms() {
     return postOrganization.data as Program[];
 }
 
+export async function getProgramsById(id: number) {
+    const token = Cookies.get("token");
+    const decryptedToken = stringDecrypter(token as string);
+
+    const postOrganization = await axios.get(`${process.env.NEXT_PUBLIC_BASE_SERVER_URL}/api/exchange-programs/${id}`,
+        {
+            headers: {
+                Authorization: `Bearer ${decryptedToken}`,
+            },
+        });
+
+    return postOrganization.data as Program;
+}
+
 export async function postPrograms(program: Program) {
     const token = Cookies.get("token");
     const decryptedToken = stringDecrypter(token as string);
