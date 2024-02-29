@@ -1,5 +1,5 @@
 
-import { getPrograms, postPrograms, putPrograms, deleteProgram } from "./fetchs";
+import { getPrograms, postPrograms, putPrograms, deleteProgram, getProgramsById } from "./fetchs";
 import { checkImageType } from "../images/methods";
 import { postImage } from "../images/fetch";
 import { useQuery, useMutation } from "@tanstack/react-query";
@@ -55,6 +55,12 @@ export function useUpdatePrograms() {
 
 export function useGetPrograms() {
     return useQuery({ queryKey: ['programs'], queryFn: getPrograms })
+}
+
+export function useGetProgramsById() {
+    return useMutation({
+        mutationFn: getProgramsById,
+    })
 }
 
 export function useDeletePrograms() {
