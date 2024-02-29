@@ -1,17 +1,21 @@
-import UsersAppSearchBar from '@/components/inputs/usersAppSearchBar';
 import React from 'react';
-import UsersProgramCard from '@/components/cards/userProgramCard';
-import UserNavBar from '@/components/usersNavBar';
 
-const UserAppApplicationCard = () => {
+interface UserApplicationCardProps {
+    imageUrl: string;
+    status: string;
+    name: string;
+    onClick: () => void;
+}
+
+const UserAppApplicationCard = ({ imageUrl, status, name, onClick }: UserApplicationCardProps) => {
     return (
-        <div className='flex flex-col w-full p-4 gap-3 cursor-pointer'>
+        <div className='flex flex-col w-full p-4 gap-3 cursor-pointer' onClick={() => { onClick() }}>
             <div className='flex items-center gap-3'>
-                <div className='w-[60px] h-[60px] rounded-full bg-cover bg-center relative' style={{ backgroundImage: `url("https://yucatan.quadratin.com.mx/www/wp-content/uploads/2022/01/processed-9-1024x768.jpeg")` }} />
+                <div className='w-[60px] h-[60px] rounded-full bg-cover bg-center relative' style={{ backgroundImage: `url("${imageUrl}")` }} />
 
                 <div className='text-[12px]'>
-                    <p className='text-[14px] text-[#000000] font-bold'>Harlingen, Netherlands </p>
-                    <p className='text-[#717171]' >Pending Feb 13 - 14, 2023</p>
+                    <p className='text-[14px] text-[#000000] font-bold'>{name}</p>
+                    <p className='text-[#717171]' >{status} Feb 13 - 14, 2023</p>
                 </div>
             </div>
 

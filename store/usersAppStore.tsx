@@ -22,7 +22,7 @@ const useApplicationForm = create<applicationForm>((set, get) => ({
         programId: 0,
         studentId: 0,
         reason: "",
-        statusId: 1,
+        statusId: 5,
         applicationDocuments: [],
         requiredDocuments: [],
     },

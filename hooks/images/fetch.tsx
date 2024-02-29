@@ -30,13 +30,14 @@ export async function postFiles(image: File) {
     const decryptedToken = stringDecrypter(token as string)
 
     let imgName = new Date().getTime()
+    let fileName = image.name.replace(/[^a-zA-Z]/g, "").replace(/\b\w/g, (c) => c.toUpperCase());
     let formData = new FormData();
     formData.append('file', image);
 
     console.log(image.type)
 
     const response = await axios.post(
-        `https://qrepipawlxyhhqjvbyqs.supabase.co/storage/v1/object/ExchangeNestImages/Files/${imgName}.${image.type.split("/")[1]}`, formData,
+        `https://qrepipawlxyhhqjvbyqs.supabase.co/storage/v1/object/ExchangeNestImages/Files/${imgName}-${fileName}.${image.type.split("/")[1]}`, formData,
         {
             headers: {
                 Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFyZXBpcGF3bHh5aGhxanZieXFzIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcwNDY0MTc3NCwiZXhwIjoyMDIwMjE3Nzc0fQ.5VUseV8EUGQO9R_7IOowxsr72WxPJFRGChVrftn0ng8`,

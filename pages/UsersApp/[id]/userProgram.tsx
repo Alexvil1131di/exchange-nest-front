@@ -1,5 +1,5 @@
 import useProgramForm from '@/store/programsStore';
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { useGetPrograms, useGetProgramsById } from '@/hooks/programs/hooks';
 import { useSwipeable } from 'react-swipeable';
 
@@ -9,20 +9,26 @@ import ExchangeNestLogo from '@/public/exchangeNestLogoPlain.svg'
 
 import useApplicationForm from '@/store/usersAppStore';
 import useLoginForm from '@/store/singInStore';
-import { useCreateApplication } from '@/hooks/usersApp/hooks';
+import { useCreateApplication, useUpdateApplication } from '@/hooks/usersApp/hooks';
+import { toast } from 'react-toastify';
+import ActionConfirm from '@/components/modals/actionConfirmModal';
 
 const UserProgram = () => {
 
     const { mutateAsync: getProgramById } = useGetProgramsById();
     const { mutateAsync: createApplication } = useCreateApplication();
+    const { mutateAsync: updateApplication } = useUpdateApplication();
 
     const [activeIndex, setActiveIndex] = useState(0);
+    const [showModal, setShowModal] = useState(false);
+
     const { program, setProgram, reset: resetProgram } = useProgramForm();
     const { application, setApplication, reset } = useApplicationForm();
     const { getUserData } = useLoginForm();
 
     const router = useRouter();
-    const { id } = router.query;
+    const { id: UrlParams } = router.query;
+    const id = (UrlParams as string)?.split("-")[0];
 
     const handleSwipe = (direction: 'left' | 'right') => {
         if (direction === 'right') {
@@ -44,6 +50,13 @@ const UserProgram = () => {
             });
         }
     }, [id]);
+
+    useEffect(() => {
+        if ((UrlParams as string)?.split("-")[1] === "edit" && !application.id) {
+            resetProgram(); reset()
+            router.back();
+        }
+    }, [(UrlParams as string)?.split("-")[1]]);
 
     function handleDocumentUpload(e: React.ChangeEvent<HTMLInputElement>, category: string, type: "application" | "required") {
         if (e.target.files) {
@@ -75,15 +88,49 @@ const UserProgram = () => {
         let user = getUserData();
         let programApplication = { ...application, programId: program.id, studentId: user?.id };
         setApplication(programApplication);
-        createApplication(programApplication);
+
+        if (application.id) {
+            toast.promise(updateApplication(programApplication).finally(() => { resetProgram(); reset(); router.push("/UsersApp") }), {
+                pending: "Updating Application...",
+                success: "Application Updated",
+                error: "Error updating application"
+            })
+
+        } else {
+            toast.promise(createApplication(programApplication).finally(() => { resetProgram(); reset(); router.push("/UsersApp") }), {
+                pending: "Sending Application...",
+                success: "Application Sent",
+                error: "Error sending application"
+            })
+
+        }
     }
+
+    function cancelApplication() {
+        let user = getUserData();
+        let programApplication = { ...application, programId: program.id, studentId: user?.id, statusId: 6 };
+        setApplication(programApplication);
+
+        if (application.id) {
+            toast.promise(updateApplication(programApplication).finally(() => { resetProgram(); reset(); router.push("/UsersApp") }), {
+                pending: "Removing application...",
+                success: "Application removed",
+                error: "Error removing your application"
+            })
+
+        }
+    }
+
+    console.log(getUserData())
 
     return (
         <div className='mb-16'>
+            {showModal && <ActionConfirm mainColor='bg-[#16688C]' backGround='bg-[#16688C]' title={"Quit application"} actionMessage={`Are you sure you want to quit your application for the program ${program.name}`} acctionConfirm={() => { cancelApplication(); setShowModal(false); }} acctionReject={() => { setShowModal(false) }} confirmButtonLabel={"Accept"} rejectButtonLabel={"Cancel"} />}
+
             {program.imagesUrl && <div className='flex flex-col gap-3 h-full w-full items-center p-5 mt-4 '>
 
                 <div className='flex w-full justify-between'>
-                    <Link onClick={() => { resetProgram() }} className='text-[16px] underline' href={"/UsersApp"}>{"< Go Back"}</Link>
+                    <button type='button' onClick={() => { router.back(); resetProgram(); reset() }} className='text-[16px] underline' >{"< Go Back"}</button>
                     <ExchangeNestLogo className='w-[57px] ml-[-10px] stroke-[#000000] stroke-[2px] ' />
                 </div>
 
@@ -119,8 +166,7 @@ const UserProgram = () => {
                                             <input id={`fileInput${document}`} className='hidden' type="file" accept=".pdf,.doc,.docx,.xls,.xlsx" onChange={(e) => { handleDocumentUpload(e, document, "application") }} />
                                             {<label htmlFor={`fileInput${document}`} className={`border-2 border-black py-1 rounded-[4px] cursor-pointer w-[110px] ${application.applicationDocuments.find((doc) => doc.category == document) ? "text-[#ffffff] bg-black " : "UPLOAD"} text-center`}>{application.applicationDocuments.find((doc) => doc.category == document) ? "UPLOADED" : "UPLOAD"}</label>}                                        </div>
                                     </li>
-                                    <p className='text-[13px] self-end mt-[-10px] text-[#444]'>{(application.applicationDocuments.find((doc) => doc.category == document)?.url as File)?.name || ""}</p>
-
+                                    <p className='text-[13px] self-end mt-[-10px] text-[#444]'>{(application.applicationDocuments.find((doc) => doc.category == document)?.url as File)?.name || (application.applicationDocuments.find((doc) => doc.category == document)?.url as string)?.split("-")[1] || ""}</p>
                                     <hr className='w-full border ' />
 
                                 </>
@@ -144,7 +190,7 @@ const UserProgram = () => {
                                             {<label htmlFor={`fileInput${document}`} className={`border-2 border-black py-1 rounded-[4px] cursor-pointer w-[110px] ${application.requiredDocuments.find((doc) => doc.category == document) ? "text-[#ffffff] bg-black " : "UPLOAD"} text-center`}>{application.requiredDocuments.find((doc) => doc.category == document) ? "UPLOADED" : "UPLOAD"}</label>}
                                         </div>
                                     </li>
-                                    <p className='text-[13px] self-end mt-[-10px] text-[#444]'>{(application.requiredDocuments.find((doc) => doc.category == document)?.url as File)?.name || ""}</p>
+                                    <p className='text-[13px] self-end mt-[-10px] text-[#444]'>{(application.requiredDocuments.find((doc) => doc.category == document)?.url as File)?.name || (application.requiredDocuments.find((doc) => doc.category == document)?.url as string)?.split("-")[1] || ""}</p>
 
                                     <hr className='w-full border ' />
 
@@ -160,7 +206,10 @@ const UserProgram = () => {
             </div>
             }
 
-            <button type='button' onClick={() => { handleSubmit() }} className='w-full h-11 bottom-0 text-[#ffffff] text-[12px] font-bold bg-[#52BAAB] fixed'>SEND APPLICATION</button>
+            <div className='flex w-full fixed bottom-0 '>
+                {application.id && <button type='button' onClick={() => { setShowModal(true) }} className={`w-full h-11 text-[#ffffff] text-[12px] font-bold bg-[#16688C] `}>QUIT APPLICATION</button>}
+                <button type='button' onClick={() => { handleSubmit() }} className={`w-full h-11 text-[#ffffff] text-[12px] font-bold bg-[#52BAAB] `}>{application.id ? "UPDATE APPLICATION" : "SEND APPLICATION"}</button>
+            </div>
         </div>
 
     );

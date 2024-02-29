@@ -6,11 +6,13 @@ import { useGetPrograms } from '@/hooks/programs/hooks';
 import useProgramForm from '@/store/programsStore';
 import { useRouter } from 'next/router';
 import useApplicationForm from '@/store/usersAppStore';
+import { useGetApplications } from '@/hooks/usersApp/hooks';
 
 
 const UsersApp = () => {
 
     const { data: programs, isLoading } = useGetPrograms();
+    const { data: applications } = useGetApplications();
     const [search, setSearch] = React.useState('')
     const { program, setProgram } = useProgramForm();
     const router = useRouter();
@@ -18,9 +20,11 @@ const UsersApp = () => {
 
 
     function filterPrograms() {
-        return programs?.filter((program: any) => {
-            return program.name.toLowerCase().includes(search.toLowerCase());
-        })
+        let applicatedPrograms = applications?.filter((application: any) => application.statusId !== 6).map((application: any) => application.programId)
+        let filteredPtograms = programs?.filter((program: any) => program.name.toLowerCase().includes(search.toLowerCase()) && !applicatedPrograms?.includes(program.id))
+
+        return filteredPtograms
+
     }
 
     // function setSelectedProgram(program: Program) {

@@ -43,6 +43,7 @@ export async function putApplication(application: applications) {
     const decryptedToken = stringDecrypter(token as string);
 
     const putApplication = await axios.put(`${process.env.NEXT_PUBLIC_BASE_SERVER_URL}/api/applications`, {
+        id: application.id,
         programId: application.programId,
         studentId: application.studentId,
         reason: application.reason,
@@ -57,4 +58,18 @@ export async function putApplication(application: applications) {
         });
 
     return putApplication.data as string;
+}
+
+export async function cancelApplication(id: number) {
+    const token = Cookies.get("token");
+    const decryptedToken = stringDecrypter(token as string);
+
+    const cancelApplication = await axios.put(`${process.env.NEXT_PUBLIC_BASE_SERVER_URL}/api/applications/cancel`,
+        {
+            headers: {
+                Authorization: `Bearer ${decryptedToken}`,
+            },
+        });
+
+    return cancelApplication.data as string;
 }
