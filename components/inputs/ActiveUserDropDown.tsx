@@ -10,10 +10,11 @@ interface ActiveUserProps {
     commerceName: string;
     commerceImage: string;
     userEmail: string;
+    color?: string;
 }
 
 
-const ActiveUser = ({ commerceName, commerceImage, userEmail }: ActiveUserProps) => {
+const ActiveUser = ({ commerceName, commerceImage, userEmail, color = "#ffffff" }: ActiveUserProps) => {
 
     const [isExpanded, setIsExpanded] = useState(false);
     const isExpandedRef = useRef<HTMLDivElement>(null);
@@ -32,11 +33,11 @@ const ActiveUser = ({ commerceName, commerceImage, userEmail }: ActiveUserProps)
 
                 <div className=" flex gap-[14px] items-center">
                     <button onClick={() => setIsExpanded(!isExpanded)} className="flex gap-1 items-center justify-center">
-                        <UserSilhouette className="w-5 h-5 fill-white" alt="" />
-                        <DownArrow className={`w-5 h-5 fill-white stroke-white ${isExpanded && "rotate-180"}`} />
+                        <UserSilhouette className={`w-5 h-5 fill-[${color}]`} alt="" />
+                        <DownArrow className={`w-5 h-5 fill-[${color}] stroke-[${color}] ${isExpanded && "rotate-180"}`} />
                     </button>
 
-                    <div className="text-white hidden lg:inline">
+                    <div className={`text-[${color}] hidden lg:inline`}>
                         <h1 className=" whitespace-nowrap text-[14px] font-semibold">{commerceName || ""}</h1>
                         <h1 className=" whitespace-nowrap text-[10px]">{userEmail || "user@gmail.com"}</h1>
                     </div>

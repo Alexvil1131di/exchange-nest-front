@@ -121,8 +121,6 @@ const UserProgram = () => {
         }
     }
 
-    console.log(getUserData())
-
     return (
         <div className='mb-16'>
             {showModal && <ActionConfirm mainColor='bg-[#16688C]' backGround='bg-[#16688C]' title={"Quit application"} actionMessage={`Are you sure you want to quit your application for the program ${program.name}`} acctionConfirm={() => { cancelApplication(); setShowModal(false); }} acctionReject={() => { setShowModal(false) }} confirmButtonLabel={"Accept"} rejectButtonLabel={"Cancel"} />}
@@ -155,7 +153,7 @@ const UserProgram = () => {
 
                     {program.applicationDocuments.length > 0 && <div>
                         <h1 className="text-[16px] font-semibold my-4">Application Documents</h1>
-                        <ul className="flex flex-col gap-2 text-[13px text-[#000000]">
+                        <ul className="flex flex-col gap-2 text-[13px text-[#000000] overflow-x-hidden">
                             {program.applicationDocuments.map((document, index) => (
                                 <>
 
@@ -178,7 +176,7 @@ const UserProgram = () => {
 
                     {program.requiredDocuments.length > 0 && <div>
                         <h1 className="text-[16px] font-semibold my-4">Required Documents</h1>
-                        <ul className="flex flex-col gap-2 text-[13px text-[#000000]">
+                        <ul className="flex flex-col gap-2 text-[13px text-[#000000] overflow-x-hidden">
                             {program.requiredDocuments.map((document, index) => (
                                 <>
 

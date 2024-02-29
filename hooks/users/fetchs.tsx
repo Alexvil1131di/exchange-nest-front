@@ -43,6 +43,20 @@ export async function getUsers() {
     return getUsers.data as user[];
 }
 
+export async function getUserById(id) {
+    const token = Cookies.get("token");
+    const decryptedToken = stringDecrypter(token as string);
+
+    const getUsers = await axios.get(`${process.env.NEXT_PUBLIC_BASE_SERVER_URL}/api/user/${id}`,
+        {
+            headers: {
+                Authorization: `Bearer ${decryptedToken}`,
+            },
+        });
+
+    return getUsers.data as user;
+}
+
 export async function putUser(user: user) {
     const token = Cookies.get("token");
     const decryptedToken = stringDecrypter(token as string);

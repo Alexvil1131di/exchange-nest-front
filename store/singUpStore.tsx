@@ -22,6 +22,7 @@ interface RegisterForm {
     setEmail: (newEmail: string) => void;
     setPassword: (newPassword: string) => void;
     setConfirmedPassword: (newConfirmedPassword: string) => void;
+    setAll: (newFirstName: string, newLastName: string, newCountryId: number, newRoleId: number, newStatusId: number, newOrganizationId: number, newEmail: string, newNic: string,) => void;
     reset: () => void;
 }
 
@@ -44,6 +45,7 @@ const useRegisterForm = create<RegisterForm>((set, get) => ({
     setPassword: (newPassword) => set({ password: newPassword }),
     setConfirmedPassword: (newConfirmedPassword) => set({ confirmedPassword: newConfirmedPassword }),
     reset: () => set({ firstName: "", lastName: "", nic: "", email: "", countryId: undefined, password: "", confirmedPassword: "", }),
+    setAll: (newFirstName, newLastName, newCountryId, newRoleId, newStatusId, newOrganizationId, newEmail, newNic) => set({ firstName: newFirstName, lastName: newLastName, countryId: newCountryId, roleId: newRoleId, statusId: newStatusId, organizationId: newOrganizationId, email: newEmail, nic: newNic, })
 
 }));
 
