@@ -42,7 +42,7 @@ git clone https://github.com/tu-usuario/exchangenest.git
 
 ## Uso
 
-La aplicación estará disponible en [http://localhost:3000](http://localhost:3000).
+La aplicación estará disponible en [ExchangeNest](https://exchange-nest-front.vercel.app/).
 
 ## Contribución
 
