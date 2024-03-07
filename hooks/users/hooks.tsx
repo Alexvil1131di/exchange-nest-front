@@ -36,3 +36,7 @@ export function useGetUserById() {
         mutationFn: getUserById,
     })
 }
+
+export function useGetUserByIdStore(id: number | undefined) {
+    return useQuery({ queryKey: ['userById', id], queryFn: () => { return (id ? getUserById(id) : undefined) } })
+}
