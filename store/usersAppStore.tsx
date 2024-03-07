@@ -10,8 +10,8 @@ interface applicationForm {
     setStudentId: (newStudentId: number) => void;
     setReason: (newReason: string) => void;
     setStatusId: (newStatusId: number) => void;
-    setApplicationDocument: (newApplicationDocument: { id?: number; category: string; url: string | File; }) => void;
-    setRequiredDocument: (newRequiredDocument: { id?: number; category: string; url: string | File; }) => void;
+    setApplicationDocument: (newApplicationDocument: { id?: number; category: string; url: string | File; statusId: number; reason?: string; }) => void;
+    setRequiredDocument: (newRequiredDocument: { id?: number; category: string; url: string | File; statusId: number; reason?: string; }) => void;
     reset: () => void;
 
 }
