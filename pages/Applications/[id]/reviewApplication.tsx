@@ -108,7 +108,7 @@ const ReviewApplication = () => {
                         <div className="flex flex-col gap-4 h-full w-full overflow-scroll">
 
                             {application?.requiredDocuments?.map((document, index) => (
-                                <div className={`flex justify-between items-center px-6 ${document.statusId == 7 ? "bg-[#d0e1e8]" : document.statusId == 8 ? "bg-[#f2f7e5]" : "bg-[#EDEDED]"} rounded-xl min-h-[81px] gap-2 `}>
+                                <div key={index} className={`flex justify-between items-center px-6 ${document.statusId == 7 ? "bg-[#d0e1e8]" : document.statusId == 8 ? "bg-[#f2f7e5]" : "bg-[#EDEDED]"} rounded-xl min-h-[81px] gap-2 `}>
                                     <p className="text-[20px] font-medium overflow-x-scroll">{document.category}</p>
                                     <div className="flex gap-4">
                                         <CustomizableButton text={'ACEPT'} bgColor='bg-[#52BAAB]' textColor='text-[#ffffff] text-[11px]' maxSize='w-full md:max-w-[184px] h-[31px]' onClick={() => { onChangeDocumentStatus(document.id as number, "required", 8) }} />
@@ -119,7 +119,7 @@ const ReviewApplication = () => {
                             ))}
 
                             {application?.applicationDocuments?.map((document, index) => (
-                                <div className={`flex justify-between items-center px-6 ${document.statusId == 7 ? "bg-[#d0e1e8]" : document.statusId == 8 ? "bg-[#f2f7e5]" : "bg-[#EDEDED]"} rounded-xl min-h-[81px] gap-2 `}>
+                                <div key={index} className={`flex justify-between items-center px-6 ${document.statusId == 7 ? "bg-[#d0e1e8]" : document.statusId == 8 ? "bg-[#f2f7e5]" : "bg-[#EDEDED]"} rounded-xl min-h-[81px] gap-2 `}>
                                     <p className="text-[20px] font-medium overflow-x-scroll">{document.category}</p>
                                     <div className="flex gap-4">
                                         <CustomizableButton text={'ACEPT'} bgColor='bg-[#52BAAB]' textColor='text-[#ffffff] text-[11px]' maxSize='w-full md:max-w-[184px] h-[31px]' onClick={() => { onChangeDocumentStatus(document.id as number, "application", 8) }} />
