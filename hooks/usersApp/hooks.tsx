@@ -1,5 +1,5 @@
 import { user } from "@/interfaces/usersInterface";
-import { postApplication, putApplication, getApplications } from "./fetchs";
+import { postApplication, putApplication, getApplications, getApplicationById } from "./fetchs";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { checkImageType } from "../images/methods";
 import { postFiles } from "../images/fetch";
@@ -55,4 +55,8 @@ export function useUpdateApplication() {
 
 export function useGetApplications() {
     return useQuery({ queryKey: ['applications'], queryFn: getApplications })
+}
+
+export function useGetApplicationById(id: number | undefined) {
+    return useQuery({ queryKey: ['applications', id], queryFn: () => { return (id ? getApplicationById(id) : undefined) } })
 }

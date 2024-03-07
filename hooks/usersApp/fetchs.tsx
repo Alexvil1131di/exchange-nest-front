@@ -17,6 +17,20 @@ export async function getApplications() {
     return getApplications.data as applications[];
 }
 
+export async function getApplicationById(id: number) {
+    const token = Cookies.get("token");
+    const decryptedToken = stringDecrypter(token as string);
+
+    const getApplicationById = await axios.get(`${process.env.NEXT_PUBLIC_BASE_SERVER_URL}/api/applications/${id}`,
+        {
+            headers: {
+                Authorization: `Bearer ${decryptedToken}`,
+            },
+        });
+
+    return getApplicationById.data as applications;
+}
+
 export async function postApplication(application: applications) {
     const token = Cookies.get("token");
     const decryptedToken = stringDecrypter(token as string);

@@ -63,6 +63,10 @@ export function useGetProgramsById() {
     })
 }
 
+export function useGetProgramsByIdStore(id: number | undefined) {
+    return useQuery({ queryKey: ['programs', id], queryFn: () => { return (id ? getProgramsById(id) : undefined) } })
+}
+
 export function useDeletePrograms() {
     return useMutation({
         mutationFn: deleteProgram

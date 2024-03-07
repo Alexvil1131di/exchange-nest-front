@@ -8,10 +8,14 @@ export interface applications {
         id?: number;
         category: string;
         url: string | File;
+        statusId: number;
+        reason?: string;
     }[];
     requiredDocuments: {
         id?: number;
         category: string;
         url: string | File;
+        statusId: number;
+        reason?: string;
     }[];
 }
