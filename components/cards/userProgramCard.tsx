@@ -7,10 +7,11 @@ interface UsersProgramCardProps {
     name: string;
     images: string[];
     description: string;
+    institutionName?: string;
     onClick: () => void;
 }
 
-const UsersProgramCard = ({ name, description, images, onClick }: UsersProgramCardProps) => {
+const UsersProgramCard = ({ name, description, images, institutionName = "", onClick }: UsersProgramCardProps) => {
     const [activeIndex, setActiveIndex] = useState(0);
 
     const handleSwipe = (direction: 'left' | 'right') => {
@@ -43,6 +44,8 @@ const UsersProgramCard = ({ name, description, images, onClick }: UsersProgramCa
 
             <div className="flex flex-col mt-2 text-[16px]">
                 <h1 className="font-semibold">{name}</h1>
+                <h2 className="text-[14px] mb-1">{institutionName}</h2>
+
                 <p className="text-[14px] font-light text-[#717171]">{description}</p>
             </div>
             <div className="mt-auto">

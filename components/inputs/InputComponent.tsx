@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TooltipContainer from "../tooltips/tooltipContainer";
 import DownArrow from "@/public/DownArrow.svg"
 import PhoneInput from "react-phone-number-input";
@@ -21,11 +21,12 @@ interface InputComponentProps {
     onChange: (e: any) => void;
     options?: string[]; // New property for dropdown options
     minDate?: string;
+    endIcon?: React.ReactNode;
 }
 
 function InputComponent(
     {
-        label, placeholder, type, required = false, name, value, hasAnError, errorMessage,
+        label, placeholder, type, required = false, name, value, hasAnError, errorMessage, endIcon,
         onChange, height = "h-[56px]", width = "w-[100%]", bgColor = "#F4FFFF", border = `border-b-[3px] border-[#52BAAB]`,
         options = [], minDate,
 
@@ -137,12 +138,13 @@ function InputComponent(
 
     return (
         <TooltipContainer tooltipMessage={errorMessage} isActive={hasAnError} width={width}>
-            <div className={`relative ${hasAnError ? "border-b-[3px] border-[#FF0000]" : border}  ${height} ${width} rounded-[4px] `} style={{ background: bgColor }}>
+            <div className={`flex items-center justify-between relative ${hasAnError ? "border-b-[3px] border-[#FF0000]" : border}  ${height} ${width} rounded-[4px] `} style={{ background: bgColor }}>
                 {type === "dropdown" ? (
                     dropdown()
                 ) : (
                     input()
                 )}
+                {endIcon}
                 <label className={`absolute text-[14px] top-[-10px] px-1 left-[16px] z-0`} htmlFor={name}>{label}
                     <hr className="absolute w-full top-[51%] left-0 z-[-1]" style={{ border: bgColor }} />
                     <span className={`${!required && "hidden"} ml-1 text-[#ff3939]`}>*</span>
