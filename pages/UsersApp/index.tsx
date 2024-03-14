@@ -7,17 +7,23 @@ import useProgramForm from '@/store/programsStore';
 import { useRouter } from 'next/router';
 import useApplicationForm from '@/store/usersAppStore';
 import { useGetApplications } from '@/hooks/usersApp/hooks';
+import { useGetOrganizations } from '@/hooks/Institutions/hooks';
 
 
 const UsersApp = () => {
 
     const { data: programs, isLoading } = useGetPrograms();
     const { data: applications } = useGetApplications();
+    const { data: Organization } = useGetOrganizations();
+
     const [search, setSearch] = React.useState('')
     const { program, setProgram } = useProgramForm();
     const router = useRouter();
     const { application, setApplication, reset } = useApplicationForm();
 
+    function getOrganizationById(id: number) {
+        return Organization?.find((organization: any) => organization.id === id)
+    }
 
     function filterPrograms() {
         let applicatedPrograms = applications?.filter((application: any) => application.statusId !== 6).map((application: any) => application.programId)
@@ -38,7 +44,7 @@ const UsersApp = () => {
 
                 <div className='flex flex-col flex-wrap flex-shrink-0 gap-3 md:flex-row md:gap-16 w-full items-center' >
                     {filterPrograms()?.map((program) => (
-                        <UsersProgramCard key={program.id} name={program.name} images={(program?.imagesUrl as string).split(",")} description={program.description} onClick={() => { reset(); router.push(`/UsersApp/${program.id}/userProgram`) }} />
+                        <UsersProgramCard key={program.id} institutionName={getOrganizationById(program.organizationId as number)?.name} name={program.name} images={(program?.imagesUrl as string).split(",")} description={program.description} onClick={() => { reset(); router.push(`/UsersApp/${program.id}/userProgram`) }} />
                     ))
                     }
 

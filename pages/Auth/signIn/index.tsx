@@ -4,6 +4,9 @@ import CheckBoxWithLabel from "@/components/inputs/CheckBoxWithLabel";
 import InputComponent from "@/components/inputs/InputComponent"
 import ExchangeNestLogo from "@/public/ExchangeNestLogo.svg"
 import useLoginForm from "@/store/singInStore";
+import OpenEye from "@/public/openEye.svg"
+import CloseEye from "@/public/closeEye.svg"
+
 import { stringDecrypter, stringEncrypter } from "@/hooks/auth/methods";
 import { useEffect, useState } from "react";
 import { useLogin } from "@/hooks/auth/hooks";
@@ -24,6 +27,7 @@ export default function SignUp() {
 
     const [showModal, setShowModal] = useState(false)
     const [changePassEmail, setChangePassEmail] = useState("")
+    const [viewPassword1, setViewPassword1] = useState<"password" | "text">("password")
 
     useEffect(() => { if (!rememberMe) { setEmail(""); setPassword("") } else { setRememberMe(true) } }, [rememberMe])
 
@@ -87,8 +91,8 @@ export default function SignUp() {
                     <InputComponent label="Email" required={true} placeholder="Enter your email" type="email" name="email" value={stringDecrypter(email)} hasAnError={false}
                         width="w-full " onChange={(e) => { setEmail(e.target.value) }} errorMessage={"An error has occurred, please fill in the appropriate field."} />
 
-                    <InputComponent label="password" required={true} placeholder="Password" type="password" name="password" value={stringDecrypter(password)} hasAnError={false}
-                        width="w-full " onChange={(e) => setPassword(e.target.value)} errorMessage={"An error has occurred, please fill in the appropriate field."} />
+                    <InputComponent label="Password" required={true} placeholder="Enter your Password" type={viewPassword1} name="password" value={stringDecrypter(password)} hasAnError={false}
+                        width="w-full " onChange={(e) => { setPassword(e.target.value); }} endIcon={viewPassword1 == "password" ? <CloseEye className=" w-7 h-7 mr-4 cursor-pointer" onClick={() => { setViewPassword1("text"); }} /> : <OpenEye className=" w-7 h-7 mr-4 cursor-pointer" onClick={() => { setViewPassword1("password"); }} />} errorMessage={""} />
 
                     <div className="w-full text-[14px] flex justify-between">
                         <CheckBoxWithLabel label={"Remember me"} id={"recuerdame"} checked={rememberMe as boolean} onChange={() => { setRememberMe() }} />

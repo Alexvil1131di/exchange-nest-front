@@ -191,8 +191,31 @@ const EditProgram = () => {
                 </div>
 
                 <div className="flex justify-between w-full px-10">
+
                     <div className="flex flex-col gap-2">
+                        <p>Mandatory documents that needs to be filled to apply to the program</p>
+
+                        <CustomizableButton text={'ADD REQUIRED DOCUMENTS'} bgColor='bg-[#52BAAB]' textColor='text-[#ffffff] ' maxSize='w-full max-w-[250px] h-[45px] mb-4' onClick={() => { addRequiredDocuments() }} />
+                        {
+                            programToRender.requiredDocuments.map((item, index) => (
+                                <div key={index} className=" w-[513px] p-[7px] h-[70px] border border-[#52BAAB] rounded-[10px] flex justify-between items-center">
+                                    <Dots className="w-8 h-8 fill-black" />
+                                    <input type="text" value={item} className="w-full h-full bg-[#00000012] rounded-[10px] px-2 mr-2 text-[23px] font-bold" onChange={(e) => { setRequiredDocuments(e.target.value, index) }} />
+                                    <TrashCan className="w-14 h-14 p-4 fill-white rounded-xl  cursor-pointer bg-[#16688C]" onClick={() => { deleteRequiredDocuments(index) }} />
+                                </div>))
+                        }
+                        {/* <DndProvider backend={HTML5Backend}>
+                            {list.map((item, i) => (
+                                <DndItem key={item.id} index={i} id={item?.id} text={item.text} moveItem={moveItem} onChange={setRequiredDocuments} />
+                            ))}
+                        </DndProvider> */}
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                        <p>Required documents that needs to be uploaded during the program application</p>
+
                         <CustomizableButton text={'ADD APPLICATION DOCUMENTS'} bgColor='bg-[#52BAAB]' textColor='text-[#ffffff] ' maxSize='w-full max-w-[250px] h-[45px] mb-4' onClick={() => { addApplicationDocuments() }} />
+
                         {
                             programToRender.applicationDocuments.map((item, index) => (
                                 <div key={index} className=" w-[513px] p-[7px] h-[70px] border border-[#52BAAB] rounded-[10px] flex justify-between items-center">
@@ -209,22 +232,6 @@ const EditProgram = () => {
                         </DndProvider> */}
                     </div>
 
-                    <div className="flex flex-col gap-2">
-                        <CustomizableButton text={'ADD REQUIRED DOCUMENTS'} bgColor='bg-[#52BAAB]' textColor='text-[#ffffff] ' maxSize='w-full max-w-[250px] h-[45px] mb-4' onClick={() => { addRequiredDocuments() }} />
-                        {
-                            programToRender.requiredDocuments.map((item, index) => (
-                                <div key={index} className=" w-[513px] p-[7px] h-[70px] border border-[#52BAAB] rounded-[10px] flex justify-between items-center">
-                                    <Dots className="w-8 h-8 fill-black" />
-                                    <input type="text" value={item} className="w-full h-full bg-[#00000012] rounded-[10px] px-2 mr-2 text-[23px] font-bold" onChange={(e) => { setRequiredDocuments(e.target.value, index) }} />
-                                    <TrashCan className="w-14 h-14 p-4 fill-white rounded-xl  cursor-pointer bg-[#16688C]" onClick={() => { deleteRequiredDocuments(index) }} />
-                                </div>))
-                        }
-                        {/* <DndProvider backend={HTML5Backend}>
-                            {list.map((item, i) => (
-                                <DndItem key={item.id} index={i} id={item?.id} text={item.text} moveItem={moveItem} onChange={setRequiredDocuments} />
-                            ))}
-                        </DndProvider> */}
-                    </div>
                 </div>
 
                 <div className="w-full flex justify-end px-10">

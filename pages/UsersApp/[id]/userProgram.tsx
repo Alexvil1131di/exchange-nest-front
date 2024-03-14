@@ -12,12 +12,14 @@ import useLoginForm from '@/store/singInStore';
 import { useCreateApplication, useUpdateApplication } from '@/hooks/usersApp/hooks';
 import { toast } from 'react-toastify';
 import ActionConfirm from '@/components/modals/actionConfirmModal';
+import { useGetOrganizations } from '@/hooks/Institutions/hooks';
 
 const UserProgram = () => {
 
     const { mutateAsync: getProgramById } = useGetProgramsById();
     const { mutateAsync: createApplication } = useCreateApplication();
     const { mutateAsync: updateApplication } = useUpdateApplication();
+    const { data: Organization } = useGetOrganizations();
 
     const [activeIndex, setActiveIndex] = useState(0);
     const [showModal, setShowModal] = useState(false);
@@ -37,6 +39,11 @@ const UserProgram = () => {
             setActiveIndex(prevIndex => (prevIndex === (program?.imagesUrl as string[]).length - 1 ? 0 : prevIndex + 1));
         }
     };
+
+    function getOrganizationById(id: number) {
+        return Organization?.find((organization: any) => organization.id === id)
+    }
+
 
     const handlers = useSwipeable({
         onSwipedLeft: () => handleSwipe('left'),
@@ -163,6 +170,8 @@ const UserProgram = () => {
 
                     <div className="flex flex-col mt-2 text-[16px]">
                         <h1 className="font-semibold">{program.name}</h1>
+                        <h2 className="text-[14px] mb-1">{getOrganizationById(program.organizationId as number)?.name}</h2>
+
                         <p className="text-[14px] font-light text-[#717171]">{program.description}</p>
                     </div>
 

@@ -3,6 +3,10 @@ import CustomizableButton from "@/components/buttons/CustomizableButton";
 import InputComponent from "@/components/inputs/InputComponent"
 import ExchangeNestLogo from "@/public/ExchangeNestLogo.svg"
 import useRegisterForm from "@/store/singUpStore";
+import OpenEye from "@/public/openEye.svg"
+import CloseEye from "@/public/closeEye.svg"
+
+
 import { useRegister } from "@/hooks/auth/hooks";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
@@ -15,6 +19,9 @@ export default function Home() {
 
     const { firstName, lastName, email, countryId, password, confirmedPassword, roleId, nic, statusId, organizationId, setFirstName, setLastName, setEmail, setCountryId, setNic, setPassword, setConfirmedPassword, reset } = useRegisterForm()
     const [idError, setIdError] = useState(false)
+    const [viewPassword1, setViewPassword1] = useState<"password" | "text">("password")
+    const [viewPassword2, setViewPassword2] = useState<"password" | "text">("password")
+
     const { mutateAsync: registerUser } = useRegister(setIdError)
     const { data: countries } = useGetCountries()
 
@@ -29,7 +36,7 @@ export default function Home() {
     function handleSubmit(e) {
         e.preventDefault()
         let userData = { firstName, lastName, nic: nic, email, password, birthDate: "2023-12-23T13:19:20.844Z", roleId: token?.includes("token") ? 3 : 1, statusId: 1, organizationId, countryId: 1, token: token?.split("token=")[1] }
-        if (password == confirmedPassword) {
+        if (password == confirmedPassword && (/^(?=.*[A-Za-z])(?=.*\d).{6,}$/.test(password))) {
             toast.promise(registerUser(userData), {
                 pending: 'Creating user',
                 success: `User ${firstName} created successfully`,
@@ -77,11 +84,13 @@ export default function Home() {
 
                     <InputComponent type={'dropdown'} placeholder="Select a country" value={getStatusNameById(countryId, countries)} required={true} label='Country' width='w-full' options={countryOptions} errorMessage={''} onChange={setCountry} />
 
-                    <InputComponent label="Password" required={true} placeholder="Enter your Password" type="password" name="password" value={password} hasAnError={false}
-                        width="w-full " onChange={(e) => { setPassword(e.target.value) }} errorMessage={"An error has occurred, please fill in the appropriate field."} />
+                    <InputComponent label="Password" required={true} placeholder="Enter your Password" type={viewPassword1} name="password" value={password} hasAnError={password.length > 0 && !(/^(?=.*[A-Za-z])(?=.*\d).{6,}$/.test(password))}
+                        width="w-full " onChange={(e) => { setPassword(e.target.value) }} endIcon={viewPassword1 == "password" ? <CloseEye className=" w-7 h-7 mr-4 cursor-pointer" onClick={() => { setViewPassword1("text") }} /> : <OpenEye className=" w-7 h-7 mr-4 cursor-pointer" onClick={() => { setViewPassword1("password") }} />}
+                        errorMessage={(/^(?=.*[A-Za-z])(?=.*\d).{6,}$/.test(password)) ? "An error has occurred, please fill in the appropriate field." : "Your password must be at least 6 character length with a number"} />
 
-                    <InputComponent label="Confirm password" required={true} placeholder="Confirm your Password" type="password" name="password" value={confirmedPassword} hasAnError={password !== confirmedPassword}
-                        width="w-full " onChange={(e) => { setConfirmedPassword(e.target.value) }} errorMessage={"Your passwords do not match "} />
+                    <InputComponent label="Confirm password" required={true} placeholder="Confirm your Password" type={viewPassword2} name="password" value={confirmedPassword} hasAnError={password !== confirmedPassword}
+                        width="w-full " onChange={(e) => { setConfirmedPassword(e.target.value) }} endIcon={viewPassword2 == "password" ? <CloseEye className=" w-7 h-7 mr-4 cursor-pointer" onClick={() => { setViewPassword2("text") }} /> : <OpenEye className=" w-7 h-7 mr-4 cursor-pointer" onClick={() => { setViewPassword2("password") }} />}
+                        errorMessage={(/^(?=.*[A-Za-z])(?=.*\d).{6,}$/.test(password)) ? "An error has occurred, please fill in the appropriate field." : "Your password must be at least 6 character length with a number"} />
 
                     <CustomizableButton text={"SING UP"} maxSize="w-full h-[42px]" type="submit" onClick={() => { }} ></CustomizableButton>
 
