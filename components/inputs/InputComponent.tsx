@@ -18,6 +18,7 @@ interface InputComponentProps {
     width?: string;
     bgColor?: string;
     border?: string;
+    unCheck?: boolean;
     onChange: (e: any) => void;
     options?: string[]; // New property for dropdown options
     minDate?: string;
@@ -26,7 +27,7 @@ interface InputComponentProps {
 
 function InputComponent(
     {
-        label, placeholder, type, required = false, name, value, hasAnError, errorMessage, endIcon,
+        label, placeholder, type, required = false, name, value, hasAnError, errorMessage, endIcon, unCheck = true,
         onChange, height = "h-[56px]", width = "w-[100%]", bgColor = "#F4FFFF", border = `border-b-[3px] border-[#52BAAB]`,
         options = [], minDate,
 
@@ -44,7 +45,7 @@ function InputComponent(
     };
 
     function selectOption(option: string) {
-        if (option === value) {
+        if (option === value && unCheck) {
             onChange("");
         }
         else {
@@ -65,7 +66,7 @@ function InputComponent(
                     <div className={`absolute options w-full h-fit max-h-[200px] overflow-scroll mt-2 z-[99] flex flex-col border-[1px] border-[#52BAAB] rounded-[4px] shadow-sm`} style={{ background: bgColor }}>
                         {options.map((option, index) => (
                             <>
-                                <div className="w-full p-2 cursor-pointer text-[12px] px-[16px]" key={index} onClick={() => selectOption(option)}>
+                                <div className="w-full p-2 cursor-pointer text-[12px] text-[#000000] px-[16px]" key={index} onClick={() => selectOption(option)}>
                                     {option}
                                 </div>
                                 <hr className="border-[#52BAAB]" />

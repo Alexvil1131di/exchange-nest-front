@@ -1,4 +1,4 @@
-'use client'
+
 import React, { useEffect, useRef, useState } from 'react';
 import Logo from '@/public/exchangeNestLogoPlain.svg'
 import Link from 'next/link';
@@ -9,6 +9,7 @@ import { stringDecrypter } from '@/hooks/auth/methods';
 import { user } from '@/interfaces/usersInterface';
 import { useUserAuth } from '@/hooks/auth/hooks';
 import { useRouter } from 'next/router';
+import InputComponent from './inputs/InputComponent';
 
 const NavBar = () => {
 
@@ -16,17 +17,14 @@ const NavBar = () => {
     const [user, setUser] = useState<user>();
 
     const isExpandedRef = useRef<HTMLDivElement>(null);
-    const { userData } = useLoginForm();
+    const { userData, language, setLanguage } = useLoginForm();
 
     const { userAuth: Programs } = useUserAuth("/Programs")
     const { userAuth: Applications } = useUserAuth("/Applications")
     const { userAuth: Institutions } = useUserAuth("/Institutions")
     const { userAuth: Users } = useUserAuth("/Users")
 
-    const router = useRouter()
-
-
-
+    const router = useRouter();
     useEventListener("click", (e) => handleDocumentClick(e));
 
     const handleDocumentClick = (event: any) => {
@@ -61,6 +59,7 @@ const NavBar = () => {
                     </div>
 
                     <div className='flex items-center justify-center'>
+                        <InputComponent unCheck={false} bgColor="" type={'dropdown'} label='' width='w-fit text-[#ffffff]' value={user ? language : ""} errorMessage={''} onChange={(value) => { setLanguage(value) }} options={["En", "Es"]} />
                         <ActiveUser commerceName={user?.firstName as string} commerceImage={"/logo.svg"} userEmail={user?.email as string} />
                     </div>
 

@@ -18,12 +18,12 @@ import { useChangePasswordEmail } from "@/hooks/auth/hooks";
 import Link from "next/link";
 
 export default function SignUp() {
+    const router = useRouter();
 
-    const { email, password, rememberMe, userData, setEmail, setPassword, setRememberMe, setUserData } = useLoginForm();
+    const { email, password, rememberMe, userData, setEmail, setPassword, setRememberMe, setUserData, getTexts } = useLoginForm();
+    const { loginTittle, loginDescription, emailLabel, emailPlaceholder, passwordLabel, passwordPlaceholder, rememberMeLabel, forgotPassword, loginButton, signUpLabel, signUpButton, resetPasswordTittle, resetPasswordDescription, cancel, sendPasswordEmail } = getTexts("Auth")
     const { mutateAsync: loginUser } = useLogin()
     const { mutateAsync: changePassWord } = useChangePasswordEmail()
-
-    const router = useRouter();
 
     const [showModal, setShowModal] = useState(false)
     const [changePassEmail, setChangePassEmail] = useState("")
@@ -69,7 +69,7 @@ export default function SignUp() {
     return (
 
         <div className="flex w-screen h-screen">
-            {showModal && <ResetPasswordModal title={"Reset Password"} actionMessage={"Enter your user account's verified email address and we will send you a password reset link."}
+            {showModal && <ResetPasswordModal confirmButtonLabel={sendPasswordEmail} rejectButtonLabel={cancel} placeholder={emailPlaceholder} title={resetPasswordTittle} actionMessage={resetPasswordDescription}
                 acctionConfirm={() => { handleResetPassword() }} acctionReject={() => { setShowModal(false) }} value={changePassEmail} onChange={(e) => { setChangePassEmail(e.target.value) }} />
             }
 
@@ -82,28 +82,28 @@ export default function SignUp() {
                 </div>
 
                 <div className="flex flex-col w-full max-w-[600px] gap-2">
-                    <h1 className="text-[24px]">Sign in to ExchangeNest</h1>
-                    <p className="text-[16px]">Now you just have to enter your username and password and enjoy everything that Pidebot offers you.</p>
+                    <h1 className="text-[24px]">{loginTittle}</h1>
+                    <p className="text-[16px]">{loginDescription}</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="flex flex-col w-full max-w-[600px] items-center gap-8 justify-center">
 
-                    <InputComponent label="Email" required={true} placeholder="Enter your email" type="email" name="email" value={stringDecrypter(email)} hasAnError={false}
+                    <InputComponent label={emailLabel} required={true} placeholder={emailPlaceholder} type="email" name="email" value={stringDecrypter(email)} hasAnError={false}
                         width="w-full " onChange={(e) => { setEmail(e.target.value) }} errorMessage={"An error has occurred, please fill in the appropriate field."} />
 
-                    <InputComponent label="Password" required={true} placeholder="Enter your Password" type={viewPassword1} name="password" value={stringDecrypter(password)} hasAnError={false}
+                    <InputComponent label={passwordLabel} required={true} placeholder={passwordPlaceholder} type={viewPassword1} name="password" value={stringDecrypter(password)} hasAnError={false}
                         width="w-full " onChange={(e) => { setPassword(e.target.value); }} endIcon={viewPassword1 == "password" ? <CloseEye className=" w-7 h-7 mr-4 cursor-pointer" onClick={() => { setViewPassword1("text"); }} /> : <OpenEye className=" w-7 h-7 mr-4 cursor-pointer" onClick={() => { setViewPassword1("password"); }} />} errorMessage={""} />
 
                     <div className="w-full text-[14px] flex justify-between">
-                        <CheckBoxWithLabel label={"Remember me"} id={"recuerdame"} checked={rememberMe as boolean} onChange={() => { setRememberMe() }} />
-                        <button type="button" onClick={() => { setShowModal(true) }} className=" underline">Forgot password?</button>
+                        <CheckBoxWithLabel label={rememberMeLabel} id={"recuerdame"} checked={rememberMe as boolean} onChange={() => { setRememberMe() }} />
+                        <button type="button" onClick={() => { setShowModal(true) }} className="underline">{forgotPassword}</button>
                     </div>
 
-                    <CustomizableButton text={"SIGN IN"} maxSize="w-full h-[42px]" type="submit" onClick={() => { }} ></CustomizableButton>
+                    <CustomizableButton text={loginButton} maxSize="w-full h-[42px]" type="submit" onClick={() => { }} ></CustomizableButton>
 
                 </form>
 
-                <Link href={"/Auth/signUp/Xx"}> New to Exchange Nest? <span className=" text-[#52BAAB] font-semibold ">Join now</span></Link>
+                <Link href={"/Auth/signUp/Xx"}>{signUpLabel}<span className=" text-[#52BAAB] font-semibold ">{" " + signUpButton}</span></Link>
 
             </div>
 

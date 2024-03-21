@@ -1,0 +1,15 @@
+{
+    "Auth": {
+        "loginTittle": "Inicia sesión en ExchangeNest",
+        "loginDescription": "Ahora solo tienes que ingresar tu nombre de usuario y contraseña y disfrutar de todo lo que Pidebot te ofrece.",
+        "emailLabel": "Correo",
+        "emailPlaceholder": "Ingresa tu correo",
+        "passwordLabel": "Contraseña",
+        "passwordPlaceholder": "Ingresa tu contraseña",
+        "rememberMeLabel": "Recuérdame",
+        "forgotPassword": "¿Olvidaste tu contraseña?",
+        "loginButton": "INICIAR SESIÓN",
+        "signUpLabel": "¿No tienes una cuenta?",
+        "signUpButton": "Regístrate ahora"
+    }
+}

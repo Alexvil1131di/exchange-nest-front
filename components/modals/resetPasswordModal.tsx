@@ -5,6 +5,7 @@ interface ActionConfirmProps {
     title: string;
     actionMessage: string;
     value: string;
+    placeholder: string;
     onChange: (e) => void;
     acctionConfirm: () => void;
     acctionReject: () => void;
@@ -15,7 +16,7 @@ interface ActionConfirmProps {
 }
 
 
-const ResetPasswordModal = ({ title, actionMessage, value, onChange, acctionConfirm, acctionReject, confirmButtonLabel = "SEND PASSWORD RESET EMAIL", rejectButtonLabel = 'CANCEL', mainColor = "bg-[#52BAAB]", backGround = "bg-[#0000002b]" }: ActionConfirmProps) => {
+const ResetPasswordModal = ({ title, actionMessage, value, placeholder, onChange, acctionConfirm, acctionReject, confirmButtonLabel = "SEND PASSWORD RESET EMAIL", rejectButtonLabel = 'CANCEL', mainColor = "bg-[#52BAAB]", backGround = "bg-[#0000002b]" }: ActionConfirmProps) => {
 
     return (
         <>
@@ -25,7 +26,7 @@ const ResetPasswordModal = ({ title, actionMessage, value, onChange, acctionConf
                         <h2 className="ml-6 text-[15px] font-bold text-white">{title}</h2>
                     </div>
                     <p className="text-[#444444] text-[15px] mx-6">{actionMessage}</p>
-                    <InputComponent label="Email" required={true} placeholder="Enter your email" type="email" name="email" value={value} hasAnError={false}
+                    <InputComponent label="Email" required={true} placeholder={placeholder} type="email" name="email" value={value} hasAnError={false}
                         width="w-full h-[46px] px-2" onChange={onChange} errorMessage={"An error has occurred, please fill in the appropriate field."} />
 
                     <div className="flex justify-end mb-4 mx-4 gap-4 text-[14px]">

@@ -13,4 +13,5 @@ export interface user {
     organizationId?: number;
     countryId?: number;
     accessToken?: string;
+    language?: "En" | "Es";
 }
