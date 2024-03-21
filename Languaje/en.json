@@ -32,7 +32,13 @@
         "cancel": "CANCEL",
         "sendPasswordEmail": "SEND PASSWORD RESET EMAIL"
     },
-    "home": {},
+    "navBar": {
+        "homeLabel": "Home",
+        "programsLabel": "Programs",
+        "applicationLabel": "Applications",
+        "institutionsLabel": "Institutions",
+        "userLabel": "Users"
+    },
     "LoginNotification": {
         "pending": "Loggin in",
         "success": "Sucessfully logged in",
