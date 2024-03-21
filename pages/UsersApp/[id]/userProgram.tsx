@@ -72,7 +72,7 @@ const UserProgram = () => {
                 const existingDocumentIndex = application.applicationDocuments.findIndex(doc => doc.category === category);
                 if (existingDocumentIndex !== -1) {
                     const updatedDocuments = [...application.applicationDocuments];
-                    updatedDocuments[existingDocumentIndex] = newDocument;
+                    updatedDocuments[existingDocumentIndex] = { ...updatedDocuments[existingDocumentIndex], url: newDocument.url || updatedDocuments[existingDocumentIndex].url };
                     setApplication({ ...application, applicationDocuments: updatedDocuments });
                 } else {
                     setApplication({ ...application, applicationDocuments: [...application.applicationDocuments, newDocument] });
@@ -82,7 +82,7 @@ const UserProgram = () => {
                 const existingDocumentIndex = application.requiredDocuments.findIndex(doc => doc.category === category);
                 if (existingDocumentIndex !== -1) {
                     const updatedDocuments = [...application.requiredDocuments];
-                    updatedDocuments[existingDocumentIndex] = newDocument;
+                    updatedDocuments[existingDocumentIndex] = { ...updatedDocuments[existingDocumentIndex], url: newDocument.url || updatedDocuments[existingDocumentIndex].url };
                     setApplication({ ...application, requiredDocuments: updatedDocuments });
                 } else {
                     setApplication({ ...application, requiredDocuments: [...application.requiredDocuments, newDocument] });
@@ -94,14 +94,15 @@ const UserProgram = () => {
     function handleSubmit() {
         let user = getUserData();
         let programApplication = { ...application, programId: program.id, studentId: user?.id };
+        console.log(programApplication)
         setApplication(programApplication);
 
         if (application.id) {
-            toast.promise(updateApplication(programApplication).finally(() => { resetProgram(); reset(); router.push("/UsersApp") }), {
-                pending: "Updating Application...",
-                success: "Application Updated",
-                error: "Error updating application"
-            })
+            // toast.promise(updateApplication(programApplication).finally(() => { resetProgram(); reset(); router.push("/UsersApp") }), {
+            //     pending: "Updating Application...",
+            //     success: "Application Updated",
+            //     error: "Error updating application"
+            // })
 
         } else {
             toast.promise(createApplication(programApplication).finally(() => { resetProgram(); reset(); router.push("/UsersApp") }), {
