@@ -84,7 +84,7 @@ const ReviewApplication = () => {
                             <p className="text-[14px] font-light px-6">{program?.description}</p>
                         </div>
                         <div className="flex p-6">
-                            <img className=" w-14 h-14 mr-2" src={users?.imageUrl ? "https://qrepipawlxyhhqjvbyqs.supabase.co/storage/v1/object/public/" + users?.imageUrl : "/userProfile.svg"} alt="" />
+                            <img className=" w-14 h-14 mr-2 rounded-full" src={users?.imageUrl ? "https://qrepipawlxyhhqjvbyqs.supabase.co/storage/v1/object/public/" + users?.imageUrl : "/userProfile.svg"} alt="" />
                             <div>
                                 <h1 className="text-[16px] font-semibold">{users?.firstName} {users?.lastName}</h1>
                                 <p className="text-[16px] font-light">{users?.email}</p>
