@@ -122,7 +122,7 @@ const ReviewApplication = () => {
                                 <div key={index} className={`flex justify-between items-center px-6 ${document.statusId == 7 ? "bg-[#d0e1e8]" : document.statusId == 8 ? "bg-[#f2f7e5]" : "bg-[#EDEDED]"} rounded-xl min-h-[81px] gap-2 `}>
                                     <p className="text-[20px] font-medium overflow-x-scroll">{document.category}</p>
                                     <div className="flex gap-4">
-                                        <CustomizableButton text={'ACEPT'} bgColor='bg-[#52BAAB]' textColor='text-[#ffffff] text-[11px]' maxSize='w-full md:max-w-[184px] h-[31px]' onClick={() => { onChangeDocumentStatus(document.id as number, "application", 8) }} />
+                                        <CustomizableButton text={'ACCEPT'} bgColor='bg-[#52BAAB]' textColor='text-[#ffffff] text-[11px]' maxSize='w-full md:max-w-[184px] h-[31px]' onClick={() => { onChangeDocumentStatus(document.id as number, "application", 8) }} />
                                         <CustomizableButton text={'DECLINE'} bgColor='bg-[#16688C]' textColor='text-[#ffffff] text-[11px]' maxSize='w-full md:max-w-[184px] h-[31px]' onClick={() => { setOpenModal(true); setRejectData({ documentId: document.id as number, type: "application", statusId: 7 }) }} />
                                         <CustomizableButton text={'DOWNLOAD'} bgColor='bg-[#ffffff]' textColor='text-[#000000] text-[11px]' maxSize='w-full md:max-w-[184px] h-[31px]' onClick={() => { window.open('https://qrepipawlxyhhqjvbyqs.supabase.co/storage/v1/object/public/' + document.url, '_blank') }} />
 

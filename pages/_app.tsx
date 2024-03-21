@@ -7,12 +7,18 @@ import { QueryClient, QueryClientProvider, useQuery, } from '@tanstack/react-que
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useUserAuth } from "@/hooks/auth/hooks";
+import useLoginForm from "@/store/singInStore";
 
 
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
+  const [client, setClient] = useState(false)
   const { userAuth } = useUserAuth(router.pathname)
+
+  useEffect(() => {
+    setClient(true)
+  }, [router])
 
   return (
     <>
@@ -33,7 +39,7 @@ export default function App({ Component, pageProps }: AppProps) {
           pauseOnHover
           theme="light"
         />
-        <Component {...pageProps} />
+        {client && < Component {...pageProps} />}
 
       </QueryClientProvider>
 

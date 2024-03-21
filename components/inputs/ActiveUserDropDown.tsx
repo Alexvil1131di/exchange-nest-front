@@ -4,6 +4,7 @@ import DownArrow from "@/public/DownArrow.svg"
 import useEventListener from "@/hooks/useEvent";
 import UserSilhouette from "@/public/userSilhouette.svg"
 import { userLogOut } from "@/hooks/auth/methods";
+import useLoginForm from "@/store/singInStore";
 
 
 interface ActiveUserProps {
@@ -20,6 +21,8 @@ const ActiveUser = ({ commerceName, commerceImage, userEmail, color = "#ffffff" 
     const isExpandedRef = useRef<HTMLDivElement>(null);
 
     useEventListener("click", (e) => handleDocumentClick(e));
+    const { getTexts } = useLoginForm();
+    const { supportLabel, logoutLabel } = getTexts("navBar")
 
     const handleDocumentClick = (event: any) => {
         if (isExpandedRef.current && !isExpandedRef.current.contains(event.target)) {
@@ -52,11 +55,11 @@ const ActiveUser = ({ commerceName, commerceImage, userEmail, color = "#ffffff" 
                             </div>
                             <hr />
                             <button type="button" className="flex gap-2 items-center py-2 px-4 w-full hover:bg-[#00000010]" onClick={() => { }}>
-                                <h1 className="my-[9px] text-[14px] text-[#444444]">Soporte</h1>
+                                <h1 className="my-[9px] text-[14px] text-[#444444]">{supportLabel}</h1>
                             </button>
                             <hr />
                             <button type="button" className="flex gap-2 items-center py-2 px-4  w-full hover:bg-[#00000010]" onClick={() => { userLogOut() }}>
-                                <h1 className="my-[9px] text-[14px] text-[#444444]">LogOut</h1>
+                                <h1 className="my-[9px] text-[14px] text-[#444444]">{logoutLabel}</h1>
                             </button>
                         </div>
 
