@@ -37,7 +37,9 @@
         "programsLabel": "Programs",
         "applicationLabel": "Applications",
         "institutionsLabel": "Institutions",
-        "userLabel": "Users"
+        "userLabel": "Users",
+        "supportLabel": "Support",
+        "logoutLabel": "LogOut"
     },
     "LoginNotification": {
         "pending": "Loggin in",
