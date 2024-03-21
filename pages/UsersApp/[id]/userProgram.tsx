@@ -147,7 +147,7 @@ const UserProgram = () => {
         <div className='mb-16'>
             {showModal && <ActionConfirm mainColor='bg-[#16688C]' backGround='bg-[#16688C]' title={"Quit application"} actionMessage={`Are you sure you want to quit your application for the program ${program.name}`} acctionConfirm={() => { cancelApplication(); setShowModal(false); }} acctionReject={() => { setShowModal(false) }} confirmButtonLabel={"Accept"} rejectButtonLabel={"Cancel"} />}
 
-            {program.imagesUrl && <div className='flex flex-col gap-3 h-full w-full items-center p-5 mt-4 '>
+            {program.imagesUrl && <div className='flex flex-col gap-3 w-full items-center p-5 mt-4 '>
 
                 <div className='flex w-full justify-between'>
                     <button type='button' onClick={() => { router.back(); resetProgram(); reset() }} className='text-[16px] underline' >{"< Go Back"}</button>
@@ -182,15 +182,19 @@ const UserProgram = () => {
                                 <>
 
                                     <li key={index} className='flex items-center justify-between'>
+
                                         <p className='flex items-center'>{document}
-                                            <label className='w-fit h-fit ml-1 text-[10px] px-[5px] py-[2px] flex justify-center items-center text-[#ffffff] rounded-[4px] bg-[#52BAAB]'>{application.requiredDocuments.find((doc) => doc.category == document)?.statusId == 8 ? "Accepted" : application.requiredDocuments.find((doc) => doc.category == document)?.statusId == 7 ? "Declined" : "Pending"}</label>
                                         </p>
+
                                         <div className='flex gap-2 items-center'>
+                                            <label className='w-fit h-fit ml-1 text-[10px] px-[5px] py-[2px] flex justify-center items-center text-[#ffffff] rounded-[4px] bg-[#52BAAB]'>{application.requiredDocuments.find((doc) => doc.category == document)?.statusId == 8 ? "Accepted" : application.requiredDocuments.find((doc) => doc.category == document)?.statusId == 7 ? "Declined" : "Pending"}</label>
                                             <input id={`fileInput${document}`} className='hidden' type="file" accept=".pdf,.doc,.docx,.xls,.xlsx" onChange={(e) => { handleDocumentUpload(e, document, "required") }} />
                                             {<label htmlFor={`fileInput${document}`} className={`border-2 border-black py-1 rounded-[4px] cursor-pointer w-[110px] ${application.requiredDocuments.find((doc) => doc.category == document) ? "text-[#ffffff] bg-black " : "UPLOAD"} text-center`}>{application.requiredDocuments.find((doc) => doc.category == document) ? "UPLOADED" : "UPLOAD"}</label>}
                                         </div>
+
                                     </li>
-                                    <p className='text-[13px] self-end mt-[-10px] text-[#444]'>{(application.requiredDocuments.find((doc) => doc.category == document)?.url as File)?.name || (application.requiredDocuments.find((doc) => doc.category == document)?.url as string)?.split("-")[1] || ""}</p>
+                                    <p className='text-[13px] mt-[-10px] text-[#444]'>{(application.requiredDocuments.find((doc) => doc.category == document)?.url as File)?.name || (application.requiredDocuments.find((doc) => doc.category == document)?.url as string)?.split("-")[1] || ""}</p>
+                                    <p className='text-[13px] mt-[-10px] text-[#444]'>{(application.requiredDocuments.find((doc) => doc.category == document)?.reason)}</p>
 
                                     <hr className='w-full border ' />
 
@@ -208,16 +212,19 @@ const UserProgram = () => {
                                 <>
 
                                     <li key={index} className='flex items-center justify-between'>
-                                        <p className='flex items-center'>{document}
-                                            <label className='w-fit h-fit ml-1 text-[10px] px-[5px] py-[2px] flex justify-center items-center text-[#ffffff] rounded-[4px] bg-[#52BAAB]'>{application.applicationDocuments.find((doc) => doc.category == document)?.statusId == 8 ? "Accepted" : application.applicationDocuments.find((doc) => doc.category == document)?.statusId == 7 ? "Declined" : "Pending"}</label>
+                                        <p className='flex items-center justify-between'>{document}
                                         </p>
 
                                         <div className='flex gap-2 items-center'>
+                                            <label className='w-fit h-fit ml-1 text-[10px] px-[5px] py-[2px] flex justify-center items-center text-[#ffffff] rounded-[4px] bg-[#52BAAB]'>{application.applicationDocuments.find((doc) => doc.category == document)?.statusId == 8 ? "Accepted" : application.applicationDocuments.find((doc) => doc.category == document)?.statusId == 7 ? "Declined" : "Pending"}</label>
+
                                             <input id={`fileInput${document}`} className='hidden' type="file" accept=".pdf,.doc,.docx,.xls,.xlsx" onChange={(e) => { handleDocumentUpload(e, document, "application") }} />
-                                            {<label htmlFor={`fileInput${document}`} className={`border-2 border-black py-1 rounded-[4px] cursor-pointer w-[110px] ${application.applicationDocuments.find((doc) => doc.category == document) ? "text-[#ffffff] bg-black " : "UPLOAD"} text-center`}>{application.applicationDocuments.find((doc) => doc.category == document) ? "UPLOADED" : "UPLOAD"}</label>}                                        </div>
+                                            {<label htmlFor={`fileInput${document}`} className={`border-2 border-black py-1 rounded-[4px] cursor-pointer w-[110px] ${application.applicationDocuments.find((doc) => doc.category == document) ? "text-[#ffffff] bg-black " : "UPLOAD"} text-center`}>{application.applicationDocuments.find((doc) => doc.category == document) ? "UPLOADED" : "UPLOAD"}</label>}
+                                        </div>
                                     </li>
-                                    <p className='text-[13px] self-end mt-[-10px] text-[#444]'>{(application.applicationDocuments.find((doc) => doc.category == document)?.url as File)?.name || (application.applicationDocuments.find((doc) => doc.category == document)?.url as string)?.split("-")[1] || ""}</p>
-                                    <p className='text-[13px] self-end mt-[-10px] text-[#444]'>{(application.applicationDocuments.find((doc) => doc.category == document)?.reason)}</p>
+
+                                    <p className='text-[13px] mt-[-10px] text-[#444]'>{(application.applicationDocuments.find((doc) => doc.category == document)?.url as File)?.name || (application.applicationDocuments.find((doc) => doc.category == document)?.url as string)?.split("-")[1] || ""}</p>
+                                    <p className='text-[13px] mt-[-10px] text-[#444]'>{(application.applicationDocuments.find((doc) => doc.category == document)?.reason)}</p>
 
                                     <hr className='w-full border ' />
 

@@ -99,7 +99,7 @@ export default function SignUp() {
                         <button type="button" onClick={() => { setShowModal(true) }} className=" underline">Forgot password?</button>
                     </div>
 
-                    <CustomizableButton text={"SING IN"} maxSize="w-full h-[42px]" type="submit" onClick={() => { }} ></CustomizableButton>
+                    <CustomizableButton text={"SIGN IN"} maxSize="w-full h-[42px]" type="submit" onClick={() => { }} ></CustomizableButton>
 
                 </form>
 
