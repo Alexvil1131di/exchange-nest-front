@@ -98,11 +98,11 @@ const UserProgram = () => {
         setApplication(programApplication);
 
         if (application.id) {
-            // toast.promise(updateApplication(programApplication).finally(() => { resetProgram(); reset(); router.push("/UsersApp") }), {
-            //     pending: "Updating Application...",
-            //     success: "Application Updated",
-            //     error: "Error updating application"
-            // })
+            toast.promise(updateApplication(programApplication).finally(() => { resetProgram(); reset(); router.push("/UsersApp") }), {
+                pending: "Updating Application...",
+                success: "Application Updated",
+                error: "Error updating application"
+            })
 
         } else {
             toast.promise(createApplication(programApplication).finally(() => { resetProgram(); reset(); router.push("/UsersApp") }), {
