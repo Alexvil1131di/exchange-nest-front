@@ -4,6 +4,8 @@
         "loginDescription": "Now you just have to enter your username and password and enjoy everything that Pidebot offers you.",
         "signUpTittle": "Sign up to ExchangeNest",
         "signUpDescription": "¡Welcome to ExchangeNest! To make the most of our platform and access all its incredible features, we invite you to register.",
+        "changePasswordTittle": "Reset your password",
+        "changePasswordDescription": "Set the new password for your account so you can login and access all featuress.",
         "firstNameLabel": "First name",
         "firstNamePlaceholder": "Enter your first name",
         "lastNameLabel": "Last name",
@@ -17,6 +19,7 @@
         "passwordLabel": "Password",
         "passwordPlaceholder": "Enter your password",
         "confirmPasswordLabel": "Confirm password",
+        "updatePasswordButton": "UPDATE PASSWORD",
         "confirmPasswordPlaceholder": "Enter your password again",
         "rememberMeLabel": "Remember me",
         "forgotPassword": "Forgot your password?",
@@ -29,6 +32,7 @@
         "cancel": "CANCEL",
         "sendPasswordEmail": "SEND PASSWORD RESET EMAIL"
     },
+    "home": {},
     "LoginNotification": {
         "pending": "Loggin in",
         "success": "Sucessfully logged in",
@@ -37,6 +41,11 @@
     "resetPasswordNotification": {
         "pending": "Sending email",
         "success": "Email sended, please check your inbox",
+        "error": "An error has occurred, please try again later"
+    },
+    "changePasswordNotification": {
+        "pending": "Changing password",
+        "success": "Password changed successfully",
         "error": "An error has occurred, please try again later"
     }
 }
