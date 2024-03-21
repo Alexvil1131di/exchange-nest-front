@@ -22,6 +22,10 @@ export default function SignUp() {
 
     const { email, password, rememberMe, userData, setEmail, setPassword, setRememberMe, setUserData, getTexts } = useLoginForm();
     const { loginTittle, loginDescription, emailLabel, emailPlaceholder, passwordLabel, passwordPlaceholder, rememberMeLabel, forgotPassword, loginButton, signUpLabel, signUpButton, resetPasswordTittle, resetPasswordDescription, cancel, sendPasswordEmail } = getTexts("Auth")
+    const { pending, success, error } = getTexts("LoginNotification")
+    const { pending: passPending, success: passSuccess, error: passError } = getTexts("resetPasswordNotification")
+
+
     const { mutateAsync: loginUser } = useLogin()
     const { mutateAsync: changePassWord } = useChangePasswordEmail()
 
@@ -34,9 +38,9 @@ export default function SignUp() {
     const handleSubmit = (e) => {
         e.preventDefault()
         toast.promise(loginUser({ email: stringDecrypter(email), password: stringDecrypter(password) }), {
-            pending: 'Loggin in',
-            success: `Sucessfully logged in`,
-            error: `An error has occurred, please try again later`,
+            pending: pending,
+            success: success,
+            error: error,
         }).then((data) => {
 
             Cookies.set('token', stringEncrypter(String(data.accessToken)), { expires: 1 })
@@ -58,9 +62,9 @@ export default function SignUp() {
 
     const handleResetPassword = () => {
         toast.promise(changePassWord(changePassEmail), {
-            pending: 'Sending email',
-            success: `Email sended, please check your inbox`,
-            error: `An error has occurred, please try again later`,
+            pending: passPending,
+            success: passSuccess,
+            error: passError,
         }).then(() => {
             setShowModal(false)
         }).catch((err) => { console.log(err) })

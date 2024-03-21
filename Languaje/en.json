@@ -28,5 +28,15 @@
         "resetPasswordDescription": "Enter your user account's verified email address and we will send you a password reset link.",
         "cancel": "CANCEL",
         "sendPasswordEmail": "SEND PASSWORD RESET EMAIL"
+    },
+    "LoginNotification": {
+        "pending": "Loggin in",
+        "success": "Sucessfully logged in",
+        "error": "An error has occurred, please try again later"
+    },
+    "resetPasswordNotification": {
+        "pending": "Sending email",
+        "success": "Email sended, please check your inbox",
+        "error": "An error has occurred, please try again later"
     }
 }
