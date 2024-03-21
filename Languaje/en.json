@@ -2,6 +2,8 @@
     "Auth": {
         "loginTittle": "Sign in to ExchangeNest",
         "loginDescription": "Now you just have to enter your username and password and enjoy everything that Pidebot offers you.",
+        "signUpTittle": "Sign up to ExchangeNest",
+        "signUpDescription": "¡Welcome to ExchangeNest! To make the most of our platform and access all its incredible features, we invite you to register.",
         "firstNameLabel": "First name",
         "firstNamePlaceholder": "Enter your first name",
         "lastNameLabel": "Last name",
@@ -20,6 +22,7 @@
         "forgotPassword": "Forgot your password?",
         "loginButton": "SIGN IN",
         "signUpLabel": "Don't have an account?",
+        "signUp": "SIGN UP",
         "signUpButton": "Join now",
         "resetPasswordTittle": "Reset password",
         "resetPasswordDescription": "Enter your user account's verified email address and we will send you a password reset link.",
