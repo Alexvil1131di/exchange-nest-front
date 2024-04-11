@@ -17,6 +17,7 @@ interface InputComponentProps {
     height?: string;
     width?: string;
     bgColor?: string;
+    optionsBg?: string;
     border?: string;
     unCheck?: boolean;
     onChange: (e: any) => void;
@@ -28,7 +29,7 @@ interface InputComponentProps {
 function InputComponent(
     {
         label, placeholder, type, required = false, name, value, hasAnError, errorMessage, endIcon, unCheck = true,
-        onChange, height = "h-[56px]", width = "w-[100%]", bgColor = "#F4FFFF", border = `border-b-[3px] border-[#52BAAB]`,
+        onChange, height = "h-[56px]", width = "w-[100%]", bgColor = "#F4FFFF", optionsBg = "#F4FFFF", border = `border-b-[3px] border-[#52BAAB]`,
         options = [], minDate,
 
     }: InputComponentProps) {
@@ -63,7 +64,7 @@ function InputComponent(
                 </div>
                 <input className="absolute bottom-0 w-0 h-0" type="text" required value={value} />
                 {isOpen && (
-                    <div className={`absolute options w-full h-fit max-h-[200px] overflow-scroll mt-2 z-[99] flex flex-col border-[1px] border-[#52BAAB] rounded-[4px] shadow-sm`} style={{ background: bgColor }}>
+                    <div className={`absolute options w-full h-fit max-h-[200px] overflow-scroll mt-2 z-[99] flex flex-col border-[1px] border-[#52BAAB] rounded-[4px] shadow-sm`} style={{ background: optionsBg }}>
                         {options.map((option, index) => (
                             <>
                                 <div className="w-full p-2 cursor-pointer text-[12px] text-[#000000] px-[16px]" key={index} onClick={() => selectOption(option)}>

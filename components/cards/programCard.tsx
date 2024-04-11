@@ -22,7 +22,7 @@ const ProgramCard = ({ imageUrl, title, description, onEdit, onDelete }: CardPro
                 <div className="gap-5">
                     <div className="gap-2">
                         <h1 className="text-zinc-800 text-xl font-medium leading-7">{title}</h1>
-                        <p className="opacity-80 text-zinc-800 text-sm leading-tight tracking-tight h-14 overflow-hidden">{description}</p>
+                        <p className="hidden md:block opacity-80 text-zinc-800 text-sm leading-tight tracking-tight h-14 overflow-hidden">{description}</p>
                     </div>
                 </div>
                 <div className="h-[17px] flex justify-between items-center w-full">
