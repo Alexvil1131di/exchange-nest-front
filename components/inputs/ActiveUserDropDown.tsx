@@ -49,7 +49,7 @@ const ActiveUser = ({ commerceName, commerceImage, userEmail, color = "#ffffff" 
 
                 {isExpanded && (
                     <>
-                        <div className="origin-top-right right-0 absolute z-[999] mt-4 rounded-md shadow-lg bg-white w-[220px] h-[137] overflow-hidden" style={{ position: "absolute" }}>
+                        <div className="origin-top-right right-0 absolute z-[9999] mt-4 rounded-md shadow-lg bg-white w-[220px] h-[137] overflow-hidden" style={{ position: "absolute" }}>
                             <div className=" p-4 lg:hidden">
                                 <p className=" text-base">{commerceName || "Commerce Name"}</p>
                                 <p className=" text-[14px] text-[#444444]">{userEmail || "user@gmail.com"}</p>
