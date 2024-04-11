@@ -19,7 +19,7 @@ const NavBar = () => {
 
     const isExpandedRef = useRef<HTMLDivElement>(null);
     const { userData, language, setLanguage, getTexts } = useLoginForm();
-    const { homeLabel, programsLabel, applicationLabel, institutionsLabel, userLabel } = getTexts("navBar")
+    const { homeLabel, programsLabel, applicationLabel, institutionsLabel, userLabel, loginLabel } = getTexts("navBar")
 
     const { userAuth: Programs } = useUserAuth("/Programs")
     const { userAuth: Applications } = useUserAuth("/Applications")
@@ -63,6 +63,7 @@ const NavBar = () => {
                     </div>
 
                     <div className='flex items-center justify-center'>
+                        {!token && <Link className={`w-full md:w-fit p-2 text-[#ffffff] whitespace-nowrap`} href={'/Auth/signIn'}>{loginLabel}</Link>}
                         <InputComponent unCheck={false} bgColor="" type={'dropdown'} label='' width='w-fit text-[#ffffff]' value={user ? language : ""} errorMessage={''} onChange={(value) => { setLanguage(value) }} options={["En", "Es"]} />
                         {token && <ActiveUser commerceName={user?.firstName as string} commerceImage={"/logo.svg"} userEmail={user?.email as string} />}
                     </div>

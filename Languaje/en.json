@@ -39,7 +39,12 @@
         "institutionsLabel": "Institutions",
         "userLabel": "Users",
         "supportLabel": "Support",
-        "logoutLabel": "LogOut"
+        "logoutLabel": "LogOut",
+        "loginLabel": "Log In",
+        "landinDescription": "At ExchangeNest, we are dedicated to connecting worlds and uniting cultures through educational exchange programs. Our platform offers comprehensive exchange management, facilitating collaboration between educational institutions and students from around the world.",
+        "HowToLabel": "How does it work?",
+        "howToDescription": "Exchange Nest is a platform that simplifies the management of educational exchange programs and application administration. Divided into Programs and Applications, it allows users to create customized programs and apply to them. In the Programs section, detailed programs can be created, while in Applications, applicants can upload documents for their application, which are reviewed and validated by program administrators. Exchange Nest centralizes and streamlines the entire exchange process, from program creation to participant selection, providing a seamless experience for both organizers and applicants.",
+        "logInButton": "Join Now"
     },
     "LoginNotification": {
         "pending": "Loggin in",
