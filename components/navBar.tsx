@@ -10,6 +10,7 @@ import { user } from '@/interfaces/usersInterface';
 import { useUserAuth } from '@/hooks/auth/hooks';
 import { useRouter } from 'next/router';
 import InputComponent from './inputs/InputComponent';
+import Cookies from 'js-cookie';
 
 const NavBar = () => {
 
@@ -17,18 +18,17 @@ const NavBar = () => {
     const [user, setUser] = useState<user>();
 
     const isExpandedRef = useRef<HTMLDivElement>(null);
-    const { userData, language, setLanguage } = useLoginForm();
+    const { userData, language, setLanguage, getTexts } = useLoginForm();
+    const { homeLabel, programsLabel, applicationLabel, institutionsLabel, userLabel } = getTexts("navBar")
 
     const { userAuth: Programs } = useUserAuth("/Programs")
     const { userAuth: Applications } = useUserAuth("/Applications")
     const { userAuth: Institutions } = useUserAuth("/Institutions")
     const { userAuth: Users } = useUserAuth("/Users")
 
-    const { getTexts } = useLoginForm();
-    const { homeLabel, programsLabel, applicationLabel, institutionsLabel, userLabel } = getTexts("navBar")
-
-
     const router = useRouter();
+    const token = Cookies.get("token");
+
     useEventListener("click", (e) => handleDocumentClick(e));
 
     const handleDocumentClick = (event: any) => {
@@ -55,16 +55,16 @@ const NavBar = () => {
                     <div className={`absolute z-10 ${isExpanded ? "flex" : "hidden"} md:flex top-[58px] left-0 w-full md:items-center bg-[#949494] md:bg-transparent flex-col md:flex-row h-fit md:static flex md:h-full md:gap-16 font-bold text-[16px] text-white`}
                         onClick={() => { setIsExpanded(false) }}>
                         <Link className={`w-full md:w-fit p-2 ${router.pathname === "/" ? "underline" : ""}`} href={'/'}>{homeLabel}</Link>
-                        {Programs && <Link className={`w-full md:w-fit p-2 ${router.pathname.includes("/Programs") ? "underline" : ""}`} href={'/Programs'}>{programsLabel}</Link>}
-                        {Applications && <Link className={`w-full md:w-fit p-2 ${router.pathname.includes("/Applications") ? "underline" : ""}`} href={'/Applications'}>{applicationLabel}</Link>}
-                        {Institutions && <Link className={`w-full md:w-fit p-2 ${router.pathname.includes("/Institutions") ? "underline" : ""}`} href={'/Institutions'}>{institutionsLabel}</Link>}
-                        {Users && <Link className={`w-full md:w-fit p-2 ${router.pathname.includes("/Users") ? "underline" : ""}`} href={'/Users'}>{userLabel}</Link>}
+                        {Programs && token && <Link className={`w-full md:w-fit p-2 ${router.pathname.includes("/Programs") ? "underline" : ""}`} href={'/Programs'}>{programsLabel}</Link>}
+                        {Applications && token && <Link className={`w-full md:w-fit p-2 ${router.pathname.includes("/Applications") ? "underline" : ""}`} href={'/Applications'}>{applicationLabel}</Link>}
+                        {Institutions && token && <Link className={`w-full md:w-fit p-2 ${router.pathname.includes("/Institutions") ? "underline" : ""}`} href={'/Institutions'}>{institutionsLabel}</Link>}
+                        {Users && token && <Link className={`w-full md:w-fit p-2 ${router.pathname.includes("/Users") ? "underline" : ""}`} href={'/Users'}>{userLabel}</Link>}
 
                     </div>
 
                     <div className='flex items-center justify-center'>
                         <InputComponent unCheck={false} bgColor="" type={'dropdown'} label='' width='w-fit text-[#ffffff]' value={user ? language : ""} errorMessage={''} onChange={(value) => { setLanguage(value) }} options={["En", "Es"]} />
-                        <ActiveUser commerceName={user?.firstName as string} commerceImage={"/logo.svg"} userEmail={user?.email as string} />
+                        {token && <ActiveUser commerceName={user?.firstName as string} commerceImage={"/logo.svg"} userEmail={user?.email as string} />}
                     </div>
 
                 </div>

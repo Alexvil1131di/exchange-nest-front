@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import ConsecutiveDots from '@/public/ConsecutiveDots.svg';
 import Link from 'next/link';
+import useLoginForm from '@/store/singInStore';
 
 interface UsersProgramCardProps {
     name: string;
@@ -12,6 +13,9 @@ interface UsersProgramCardProps {
 }
 
 const UsersProgramCard = ({ name, description, images, institutionName = "", onClick }: UsersProgramCardProps) => {
+    const { getTexts } = useLoginForm();
+    const { applyButton } = getTexts("UsersApp")
+
     const [activeIndex, setActiveIndex] = useState(0);
 
     const handleSwipe = (direction: 'left' | 'right') => {
@@ -50,7 +54,7 @@ const UsersProgramCard = ({ name, description, images, institutionName = "", onC
             </div>
             <div className="mt-auto">
                 <button type="button" className="flex items-center text-[16px] text-[#252525] font-normal underline" onClick={() => onClick()}>
-                    {"Apply Now >"}
+                    {applyButton}
                 </button>
             </div>
         </div>

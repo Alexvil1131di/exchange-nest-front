@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 import { getStatusNameById } from "@/hooks/genericData/methods";
+import useLoginForm from "@/store/singInStore";
 
 const ReviewApplication = () => {
 
@@ -22,6 +23,8 @@ const ReviewApplication = () => {
     const { data: users } = useGetUserByIdStore(application?.studentId ? application?.studentId : undefined)
     const { data: status } = useGetStatus()
     const { mutateAsync: updateApplication } = useUpdateApplication()
+    const { getTexts } = useLoginForm();
+    const { tittle, statusLabel, documentManagementLabel, documentManagementDescription, acceptButton, rejectButton, downloadButton } = getTexts("Application")
 
     const statusArray = status?.map((status) => status.description)
     const [statusName, setStatusName] = useState('')
@@ -73,7 +76,7 @@ const ReviewApplication = () => {
         <>
             <NavBar />
             <div className='flex flex-col gap-5 w-full h-full p-6 mt-14'>
-                <h1 className='text-[20px] font-medium'>Applications</h1>
+                <h1 className='text-[20px] font-medium'>{tittle}</h1>
 
                 <div className="flex flex-col md:flex-row w-full h-full md:max-h-[622px] border rounded-3xl shadow-md shadow-[#00000025] overflow-x-auto">
 
@@ -84,7 +87,7 @@ const ReviewApplication = () => {
                             <p className="text-[14px] font-light px-6">{program?.description}</p>
                         </div>
                         <div className="flex p-6">
-                            <img className=" w-14 h-14 mr-2" src={users?.imageUrl ? "https://qrepipawlxyhhqjvbyqs.supabase.co/storage/v1/object/public/" + users?.imageUrl : "/userProfile.svg"} alt="" />
+                            <img className=" w-14 h-14 mr-2 rounded-full" src={users?.imageUrl ? "https://qrepipawlxyhhqjvbyqs.supabase.co/storage/v1/object/public/" + users?.imageUrl : "/userProfile.svg"} alt="" />
                             <div>
                                 <h1 className="text-[16px] font-semibold">{users?.firstName} {users?.lastName}</h1>
                                 <p className="text-[16px] font-light">{users?.email}</p>
@@ -97,10 +100,10 @@ const ReviewApplication = () => {
                     <div className="flex flex-col p-6 w-full ">
                         <div className="flex justify-between items-center mb-6">
                             <div>
-                                <h1 className="text-[29px] font-semibold">Document Management</h1>
-                                <p className="text-[16px] text-[#606060]">Here you can manage the applicant uploaded documents</p>
+                                <h1 className="text-[29px] font-semibold">{documentManagementLabel}</h1>
+                                <p className="text-[16px] text-[#606060]">{documentManagementDescription}</p>
                             </div>
-                            <InputComponent type={'dropdown'} label='Status' width='w-full md:max-w-[250px]' value={getStatusNameById(application?.statusId, status)} errorMessage={''} onChange={(status) => { setStatusName(status); onStatusChange(status) }} options={statusArray} />
+                            <InputComponent type={'dropdown'} label={statusLabel} width='w-full md:max-w-[250px]' value={getStatusNameById(application?.statusId, status)} errorMessage={''} onChange={(status) => { setStatusName(status); onStatusChange(status) }} options={statusArray} />
 
                         </div>
 
@@ -111,9 +114,9 @@ const ReviewApplication = () => {
                                 <div key={index} className={`flex justify-between items-center px-6 ${document.statusId == 7 ? "bg-[#d0e1e8]" : document.statusId == 8 ? "bg-[#f2f7e5]" : "bg-[#EDEDED]"} rounded-xl min-h-[81px] gap-2 `}>
                                     <p className="text-[20px] font-medium overflow-x-scroll">{document.category}</p>
                                     <div className="flex gap-4">
-                                        <CustomizableButton text={'ACEPT'} bgColor='bg-[#52BAAB]' textColor='text-[#ffffff] text-[11px]' maxSize='w-full md:max-w-[184px] h-[31px]' onClick={() => { onChangeDocumentStatus(document.id as number, "required", 8) }} />
-                                        <CustomizableButton text={'DECLINE'} bgColor='bg-[#16688C]' textColor='text-[#ffffff] text-[11px]' maxSize='w-full md:max-w-[184px] h-[31px]' onClick={() => { setOpenModal(true); setRejectData({ documentId: document.id as number, type: "required", statusId: 7 }) }} />
-                                        <CustomizableButton text={'DOWNLOAD'} bgColor='bg-[#ffffff]' textColor='text-[#000000] text-[11px]' maxSize='w-full md:max-w-[184px] h-[31px]' onClick={() => { window.open('https://qrepipawlxyhhqjvbyqs.supabase.co/storage/v1/object/public/' + document.url, '_blank') }} />
+                                        <CustomizableButton text={acceptButton} bgColor='bg-[#52BAAB]' textColor='text-[#ffffff] text-[11px]' maxSize='w-full md:max-w-[184px] h-[31px]' onClick={() => { onChangeDocumentStatus(document.id as number, "required", 8) }} />
+                                        <CustomizableButton text={rejectButton} bgColor='bg-[#16688C]' textColor='text-[#ffffff] text-[11px]' maxSize='w-full md:max-w-[184px] h-[31px]' onClick={() => { setOpenModal(true); setRejectData({ documentId: document.id as number, type: "required", statusId: 7 }) }} />
+                                        <CustomizableButton text={downloadButton} bgColor='bg-[#ffffff]' textColor='text-[#000000] text-[11px]' maxSize='w-full md:max-w-[184px] h-[31px]' onClick={() => { window.open('https://qrepipawlxyhhqjvbyqs.supabase.co/storage/v1/object/public/' + document.url, '_blank') }} />
                                     </div>
                                 </div>
                             ))}
@@ -122,10 +125,9 @@ const ReviewApplication = () => {
                                 <div key={index} className={`flex justify-between items-center px-6 ${document.statusId == 7 ? "bg-[#d0e1e8]" : document.statusId == 8 ? "bg-[#f2f7e5]" : "bg-[#EDEDED]"} rounded-xl min-h-[81px] gap-2 `}>
                                     <p className="text-[20px] font-medium overflow-x-scroll">{document.category}</p>
                                     <div className="flex gap-4">
-                                        <CustomizableButton text={'ACCEPT'} bgColor='bg-[#52BAAB]' textColor='text-[#ffffff] text-[11px]' maxSize='w-full md:max-w-[184px] h-[31px]' onClick={() => { onChangeDocumentStatus(document.id as number, "application", 8) }} />
-                                        <CustomizableButton text={'DECLINE'} bgColor='bg-[#16688C]' textColor='text-[#ffffff] text-[11px]' maxSize='w-full md:max-w-[184px] h-[31px]' onClick={() => { setOpenModal(true); setRejectData({ documentId: document.id as number, type: "application", statusId: 7 }) }} />
-                                        <CustomizableButton text={'DOWNLOAD'} bgColor='bg-[#ffffff]' textColor='text-[#000000] text-[11px]' maxSize='w-full md:max-w-[184px] h-[31px]' onClick={() => { window.open('https://qrepipawlxyhhqjvbyqs.supabase.co/storage/v1/object/public/' + document.url, '_blank') }} />
-
+                                        <CustomizableButton text={acceptButton} bgColor='bg-[#52BAAB]' textColor='text-[#ffffff] text-[11px]' maxSize='w-full md:max-w-[184px] h-[31px]' onClick={() => { onChangeDocumentStatus(document.id as number, "application", 8) }} />
+                                        <CustomizableButton text={rejectButton} bgColor='bg-[#16688C]' textColor='text-[#ffffff] text-[11px]' maxSize='w-full md:max-w-[184px] h-[31px]' onClick={() => { setOpenModal(true); setRejectData({ documentId: document.id as number, type: "application", statusId: 7 }) }} />
+                                        <CustomizableButton text={downloadButton} bgColor='bg-[#ffffff]' textColor='text-[#000000] text-[11px]' maxSize='w-full md:max-w-[184px] h-[31px]' onClick={() => { window.open('https://qrepipawlxyhhqjvbyqs.supabase.co/storage/v1/object/public/' + document.url, '_blank') }} />
                                     </div>
                                 </div>
                             ))}

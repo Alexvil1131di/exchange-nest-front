@@ -70,7 +70,7 @@ export function useUserAuth(route: string) {
             const token = Cookies.get("token");
             setUserAuth(true)
 
-            if (!token && !router.pathname.includes("Auth")) {
+            if (!token && !router.pathname.includes("Auth") && router.pathname !== "/") {
                 router.push("/Auth/signIn");
                 setUserAuth(false)
             }

@@ -12,6 +12,7 @@ import { useGetApplications } from '@/hooks/usersApp/hooks';
 import { useGetUsers } from '@/hooks/users/hooks';
 import { useGetStatus } from '@/hooks/genericData/hooks';
 import { getStatusNameById, getStatusIdByName } from '@/hooks/genericData/methods';
+import useLoginForm from '@/store/singInStore';
 
 const Application = () => {
 
@@ -19,6 +20,8 @@ const Application = () => {
     const { data: applications } = useGetApplications();
     const { data: usersArray, refetch } = useGetUsers()
     const { data: status } = useGetStatus()
+    const { getTexts } = useLoginForm();
+    const { tittle, SearchLabel, SearchPlaceholder, statusLabel, statusPlaceholder, programsLabel, programsPlaceholder, applicantNameLabel, reviewLabel } = getTexts("Application")
 
     const statusArray = status?.map((status) => status.description)
     const programsArray = programs?.map((program) => program.name)
@@ -65,15 +68,15 @@ const Application = () => {
             <NavBar />
 
             <div className='flex flex-col gap-8 p-4 mt-14'>
-                <h1 className='text-[20px] font-medium'>Applications</h1>
+                <h1 className='text-[20px] font-medium'>{tittle}</h1>
 
                 <div className='flex flex-col md:flex-row md:justify-between justify-center items-center gap-5 '>
 
 
                     <div className='flex gap-4 w-full flex-col md:flex-row'>
-                        <InputComponent type={'search'} label='Search' width='w-full md:max-w-[300px]' value={search} errorMessage={''} onChange={(e) => { setSearch(e.target.value) }} />
-                        <InputComponent type={'dropdown'} label='Status' width='w-full md:max-w-[250px]' value={statusName} errorMessage={''} onChange={(e) => { setStatusName(e) }} options={statusArray} />
-                        <InputComponent type={'dropdown'} label='Program' width='w-full md:max-w-[250px]' value={programName} errorMessage={''} onChange={(e) => { setProgramName(e) }} options={programsArray} />
+                        <InputComponent type={'search'} label={SearchLabel} placeholder={SearchPlaceholder} width='w-full md:max-w-[300px]' value={search} errorMessage={''} onChange={(e) => { setSearch(e.target.value) }} />
+                        <InputComponent type={'dropdown'} label={statusLabel} placeholder={statusPlaceholder} width='w-full md:max-w-[250px]' value={statusName} errorMessage={''} onChange={(e) => { setStatusName(e) }} options={statusArray} />
+                        <InputComponent type={'dropdown'} label={programsLabel} placeholder={programsPlaceholder} width='w-full md:max-w-[250px]' value={programName} errorMessage={''} onChange={(e) => { setProgramName(e) }} options={programsArray} />
                     </div>
 
 
@@ -83,11 +86,11 @@ const Application = () => {
                     <table className="w-full text-[#000000] text-[15px] font-medium">
                         <thead >
                             <tr >
-                                <th >Applicant Name</th>
-                                <th className='hidden md:table-cell'>Status</th>
+                                <th >{applicantNameLabel}</th>
+                                <th className='hidden md:table-cell'>{statusLabel}</th>
                                 <th className='hidden md:table-cell'>Email</th>
-                                <th className='hidden md:table-cell'>Program</th>
-                                <th>Review</th>
+                                <th className='hidden md:table-cell'>{programsLabel}</th>
+                                <th>{reviewLabel}</th>
                             </tr>
                         </thead>
                         <tbody>
