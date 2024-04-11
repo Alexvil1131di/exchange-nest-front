@@ -5,6 +5,7 @@ import useEventListener from "@/hooks/useEvent";
 import UserSilhouette from "@/public/userSilhouette.svg"
 import { userLogOut } from "@/hooks/auth/methods";
 import useLoginForm from "@/store/singInStore";
+import Link from "next/link";
 
 
 interface ActiveUserProps {
@@ -54,9 +55,9 @@ const ActiveUser = ({ commerceName, commerceImage, userEmail, color = "#ffffff" 
                                 <p className=" text-[14px] text-[#444444]">{userEmail || "user@gmail.com"}</p>
                             </div>
                             <hr />
-                            <button type="button" className="flex gap-2 items-center py-2 px-4 w-full hover:bg-[#00000010]" onClick={() => { }}>
+                            <Link className="flex gap-2 items-center py-2 px-4 w-full hover:bg-[#00000010]" href={"/"}>
                                 <h1 className="my-[9px] text-[14px] text-[#444444]">{supportLabel}</h1>
-                            </button>
+                            </Link>
                             <hr />
                             <button type="button" className="flex gap-2 items-center py-2 px-4  w-full hover:bg-[#00000010]" onClick={() => { userLogOut() }}>
                                 <h1 className="my-[9px] text-[14px] text-[#444444]">{logoutLabel}</h1>
