@@ -33,9 +33,9 @@ const UsersApp = () => {
                         <p className='max-w-[700px] text-[18px] text-justify'>{howToDescription}</p>
                     </div>
 
-                    <div className="bg-[#000000] h-[550px] w-full max-w-[300px] border border-gray-300 rounded-[12px] shadow-md p-1 mx-auto">
-                        <div className="h-full border border-gray-300 rounded-lg overflow-hidden">
-                            <iframe width="300" height="550" src="https://www.youtube.com/embed/VjcV_s9EyBU?si=l7QOblEtMDQ6h5W8&amp;controls=0" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ></iframe>
+                    <div className="bg-[#000000] h-[590px] w-full max-w-[300px] border border-gray-300 rounded-[12px] shadow-md p-1 mx-auto">
+                        <div className="h-full w-full flex items-center justify-center border border-gray-300 rounded-lg overflow-hidden">
+                            <iframe width="400" height="580" src="https://www.youtube.com/embed/cF3tkF4C79w?si=dlD6lqrNNUz2l_D-" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" ></iframe>
                         </div>
                     </div>
 

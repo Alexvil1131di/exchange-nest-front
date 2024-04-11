@@ -80,7 +80,7 @@ const ReviewApplication = () => {
 
                 <div className="flex flex-col md:flex-row w-full h-full md:max-h-[622px] border rounded-3xl shadow-md shadow-[#00000025] overflow-x-auto">
 
-                    <div className="flex flex-col w-full md:max-w-[360px] h-full md:max-h-[622px] border rounded-3xl shadow-md shadow-[#00000025] justify-between overflow-auto">
+                    <div className="flex flex-col w-full md:max-w-[360px] h-full md:max-h-[622px] border rounded-3xl shadow-md shadow-[#00000025] justify-between  overflow-visible md:overflow-scroll">
                         <div className="flex flex-col gap-2">
                             <img className="w-full h-[263px] rounded-3xl object-cover object-center" src={program?.imagesUrl ? "https://qrepipawlxyhhqjvbyqs.supabase.co/storage/v1/object/public/" + (program?.imagesUrl as string)?.split(",")[0] : ""} />
                             <h1 className="text-[24px] font-semibold px-6">{program?.name}</h1>
