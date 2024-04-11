@@ -17,15 +17,14 @@ const NavBar = () => {
     const [user, setUser] = useState<user>();
 
     const isExpandedRef = useRef<HTMLDivElement>(null);
-    const { userData, language, setLanguage } = useLoginForm();
+    const { userData, language, setLanguage, getTexts } = useLoginForm();
+    const { homeLabel, programsLabel, applicationLabel, institutionsLabel, userLabel } = getTexts("navBar")
 
     const { userAuth: Programs } = useUserAuth("/Programs")
     const { userAuth: Applications } = useUserAuth("/Applications")
     const { userAuth: Institutions } = useUserAuth("/Institutions")
     const { userAuth: Users } = useUserAuth("/Users")
 
-    const { getTexts } = useLoginForm();
-    const { homeLabel, programsLabel, applicationLabel, institutionsLabel, userLabel } = getTexts("navBar")
 
 
     const router = useRouter();

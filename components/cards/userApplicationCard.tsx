@@ -1,3 +1,4 @@
+import useLoginForm from '@/store/singInStore';
 import React from 'react';
 
 interface CardProps {
@@ -11,6 +12,10 @@ interface CardProps {
 }
 
 const UserApplicationCard = ({ imageUrl, applicantName, email, programName, status, onClick }: CardProps) => {
+    const { getTexts } = useLoginForm();
+    const { reviewButton } = getTexts("Application")
+
+
     return (
         <tr style={{ verticalAlign: 'middle' }} className="  border-[#F1F1F1] h-[80px] shadow-md shadow-[#F1F1F1] rounded-lg text-[#000000] text-[15px] font-medium">
             <td className=' md:w-auto h-[80px]  table-cell align-middle'>
@@ -29,7 +34,7 @@ const UserApplicationCard = ({ imageUrl, applicantName, email, programName, stat
             <td className='hidden md:table-cell font-normal text-center'>{programName}</td>
 
             <td style={{ textAlign: 'center', verticalAlign: 'middle' }} className=' pr-2'>
-                <button type='button' onClick={() => onClick()} className='border-[1px] border-[#000000] text-xs font-bold rounded-3xl h-8 px-4 text-center'>Review Application</button>
+                <button type='button' onClick={() => onClick()} className='border-[1px] border-[#000000] text-xs font-bold rounded-3xl h-8 px-4 text-center'>{reviewButton}</button>
             </td>
         </tr>
     );

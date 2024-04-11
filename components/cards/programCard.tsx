@@ -1,3 +1,4 @@
+import useLoginForm from '@/store/singInStore';
 import React from 'react';
 
 interface CardProps {
@@ -9,6 +10,11 @@ interface CardProps {
 }
 
 const ProgramCard = ({ imageUrl, title, description, onEdit, onDelete }: CardProps) => {
+
+    const { getTexts } = useLoginForm();
+    const { editCardLabel, deleteCardLabel } = getTexts("Programs")
+
+    console.log(getTexts("Programs"))
     return (
         <div className="w-full md:w-[452px] h-[178px] bg-white rounded-lg shadow-md shadow-[#C0C0C0] flex">
             <img className="w-full max-w-[204px] h-[178px] rounded object-cover object-center" src={imageUrl} />
@@ -20,8 +26,8 @@ const ProgramCard = ({ imageUrl, title, description, onEdit, onDelete }: CardPro
                     </div>
                 </div>
                 <div className="h-[17px] flex justify-between items-center w-full">
-                    <span className="opacity-60 text-zinc-800 text-xs leading-none tracking-tight cursor-pointer" onClick={() => { onEdit && onEdit() }}>Edit Program</span>
-                    <span className="opacity-60 text-cyan-700 text-xs leading-none tracking-tight cursor-pointer" onClick={() => { onDelete && onDelete() }}>Delete Program</span>
+                    <span className="opacity-60 text-zinc-800 text-xs leading-none tracking-tight cursor-pointer" onClick={() => { onEdit && onEdit() }}>{editCardLabel}</span>
+                    <span className="opacity-60 text-cyan-700 text-xs leading-none tracking-tight cursor-pointer" onClick={() => { onDelete && onDelete() }}>{deleteCardLabel}</span>
                 </div>
             </div>
         </div>

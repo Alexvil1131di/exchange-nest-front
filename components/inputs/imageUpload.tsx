@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import CustomizableButton from "../buttons/CustomizableButton";
 import X from "@/public/x.svg"
+import useLoginForm from "@/store/singInStore";
 const ImageUpload = ({ image, description, errorMessage, imageOnChange, maxWidth, height, uniqueKey, maxSize, showButton = true, multiImage = false }) => {
     const [profileImage, setProfileImage] = useState<string>('');
     const [imageArray, setImageArray] = useState<string[]>([]);
     const [error, setError] = useState<boolean>(false);
-
+    const { getTexts } = useLoginForm();
+    const { imageLabel, imageDescription, } = getTexts("Images")
 
     const handleImageChange = (file: File | undefined) => {
         if (file && file.size > maxSize) {
@@ -48,9 +50,6 @@ const ImageUpload = ({ image, description, errorMessage, imageOnChange, maxWidth
         }
     }, [image]);
 
-    console.log(image)
-
-
     return (
         <>
             <div className="flex md:flex-col gap-3 items-center justify-between w-full ">
@@ -61,10 +60,10 @@ const ImageUpload = ({ image, description, errorMessage, imageOnChange, maxWidth
 
                     {imageArray.length < 1 && !profileImage ? <div className=" text-center">
                         <p className="text-[10px] font-semibold text-[#444444]">
-                            {description}
+                            {imageLabel}
                         </p>
                         <p className="text-[10px] text-[#444444]">
-                            Tamaño Máx 5Mb
+                            {imageDescription}
                         </p>
                     </div> : ""}
 

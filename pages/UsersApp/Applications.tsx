@@ -8,6 +8,7 @@ import { useGetStatus } from '@/hooks/genericData/hooks';
 import { getStatusNameById } from '@/hooks/genericData/methods';
 import { useRouter } from 'next/router';
 import useApplicationForm from '@/store/usersAppStore';
+import useLoginForm from '@/store/singInStore';
 
 const UsersApp = () => {
 
@@ -15,6 +16,9 @@ const UsersApp = () => {
     const { data: program, } = useGetPrograms();
     const { data: status, } = useGetStatus();
     const { application, setApplication, reset } = useApplicationForm();
+    const { getTexts } = useLoginForm();
+    const { applicationLabel, recentApplicationLabel, } = getTexts("UsersApp")
+
 
     function getProgramById(id: number | undefined) {
         return program?.find((program) => program.id === id);
@@ -33,10 +37,10 @@ const UsersApp = () => {
         <>
             <div className='flex flex-col w-full p-4 mt-4 mb-16'>
 
-                <h1 className='text-[30px] font-bold text-[#000000] mb-[40px]'>My Applications</h1>
+                <h1 className='text-[30px] font-bold text-[#000000] mb-[40px]'>{applicationLabel}</h1>
 
                 <div className='mb-3'>
-                    <h2 className='text-[14px] font-bold mb-3'>Recent Applications</h2>
+                    <h2 className='text-[14px] font-bold mb-3'>{recentApplicationLabel}</h2>
                     <div className="flex">
                         <hr className="w-[150px] border-[1px] border-[#000000]" />
                         <hr className="flex-1 border-[1px] border-[#DEDEDE]" />

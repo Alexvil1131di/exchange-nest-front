@@ -20,10 +20,16 @@ const EditProgram = () => {
 
     const { program, setProgram, setName, setImage, setDescription, setRequiredDocuments, setApplicationDocuments, setLimitApplicationDate, addApplicationDocuments, addRequiredDocuments, deleteApplicationDocuments, deleteRequiredDocuments, setStartDate, setFinishDate, setOrganizationId, setCountryId, setStateId, setStatusId, reset } = useProgramForm();
     const { data: status } = useGetStatus()
-    const { getUserData } = useLoginForm()
+    const { getUserData, getTexts } = useLoginForm()
     const { data: countries } = useGetCountries()
     const { mutateAsync: createProgram } = useCreatePrograms()
     const { mutateAsync: updateProgram } = useUpdatePrograms()
+    const { tittle, nameLabel, namePlaceholder, countryLabel, countryPlaceholder,
+        StatusLabel, statusPlaceholder, descriptionLabel, descriptionPlaceholder, limitDateLabel,
+        limitDatePlaceholder, StartDateLabel, StartDatePlaceholder, FinishDateLabel, FinishDatePlaceholder,
+        requiredDocumentsDescription, requiredDocumentsLabel, applicationDocumentDescription,
+        applicationDocumentLabel, createButton, editButton } = getTexts("editProgram")
+
     const [errorShown, setErrorShown] = useState(false);
 
     const statusOptions = status?.slice(0, 2).map((item) => item.description)
@@ -154,28 +160,28 @@ const EditProgram = () => {
             <NavBar />
 
             <form className='flex flex-col gap-8 p-6 mt-14'>
-                <h1 className='text-[20px] font-medium'>Exchange Programs</h1>
+                <h1 className='text-[20px] font-medium'>{tittle}</h1>
                 <div className="flex flex-col w-full p-6 pt-12 gap-4">
 
                     <div className="flex flex-col md:flex-row w-full max-h-[644px] gap-3  ">
                         <div className="flex flex-col gap-6 items-end w-full ">
 
 
-                            <InputComponent type={'text'} value={program.name} required={true} label='Name' width='w-full ' errorMessage={''} onChange={(e) => { setName(e.target.value) }} />
+                            <InputComponent type={'text'} value={program.name} required={true} label={nameLabel} placeholder={namePlaceholder} width='w-full ' errorMessage={''} onChange={(e) => { setName(e.target.value) }} />
 
-                            <InputComponent type={'dropdown'} value={getStatusNameById(program.countryId, countries)} required={true} label='Country' width='w-full' options={countryOptions} errorMessage={''} onChange={setCountry} />
+                            <InputComponent type={'dropdown'} value={getStatusNameById(program.countryId, countries)} required={true} label={countryLabel} placeholder={countryPlaceholder} width='w-full' options={countryOptions} errorMessage={''} onChange={setCountry} />
 
-                            <InputComponent type={'dropdown'} value={getStatusNameById(program.statusId, status)} required={true} label='Status' width='w-full' errorMessage={''} options={statusOptions} onChange={setStatus} />
+                            <InputComponent type={'dropdown'} value={getStatusNameById(program.statusId, status)} required={true} label={StatusLabel} placeholder={statusPlaceholder} width='w-full' errorMessage={''} options={statusOptions} onChange={setStatus} />
 
                         </div>
 
                         <div className="flex flex-col gap-6 items-end w-full ">
 
-                            <InputComponent type={'date'} value={program.limitApplicationDate} required={true} label='Limit application Date' width='w-full ' errorMessage={''} onChange={(e) => { checkDateAvailability("limitApplicationDate", (e.target.value)) }} />
+                            <InputComponent type={'date'} value={program.limitApplicationDate} required={true} label={limitDateLabel} placeholder={limitDatePlaceholder} width='w-full ' errorMessage={''} onChange={(e) => { checkDateAvailability("limitApplicationDate", (e.target.value)) }} />
 
-                            <InputComponent type={'date'} value={program.startDate} required={true} label='Start Date' width='w-full' errorMessage={''} minDate={program.limitApplicationDate} onChange={(e) => { checkDateAvailability("StartDate", (e.target.value)) }} />
+                            <InputComponent type={'date'} value={program.startDate} required={true} label={StartDateLabel} placeholder={StartDatePlaceholder} width='w-full' errorMessage={''} minDate={program.limitApplicationDate} onChange={(e) => { checkDateAvailability("StartDate", (e.target.value)) }} />
 
-                            <InputComponent type={'date'} value={program.finishDate} required={true} label='Finish Date' width='w-full' errorMessage={''} minDate={program.startDate} onChange={(e) => { checkDateAvailability("FinishDate", (e.target.value)) }} />
+                            <InputComponent type={'date'} value={program.finishDate} required={true} label={FinishDateLabel} placeholder={FinishDatePlaceholder} width='w-full' errorMessage={''} minDate={program.startDate} onChange={(e) => { checkDateAvailability("FinishDate", (e.target.value)) }} />
 
 
                         </div>
@@ -184,21 +190,21 @@ const EditProgram = () => {
 
                     {/* <InputComponent type={'text'} value={""} required={true} label='Google Maps Link' width='w-full ' errorMessage={''} onChange={(e) => { }} /> */}
 
-                    <InputComponent type={'textarea'} value={program.description} required={true} height='h-[80px]' label='Description' width='w-full ' errorMessage={''} onChange={(e) => { setDescription(e.target.value) }} />
+                    <InputComponent type={'textarea'} value={program.description} required={true} height='h-[80px]' label={descriptionLabel} placeholder={descriptionPlaceholder} width='w-full ' errorMessage={''} onChange={(e) => { setDescription(e.target.value) }} />
 
                     <ImageUpload image={program?.imagesUrl || []} multiImage showButton={false} description={"Click to browse or drag and drop your pictures"} errorMessage={"El tamaño del logo debe ser inferior a los 2mb"} imageOnChange={setImage} height={"h-[160px]"} uniqueKey={"commerceImage"} maxWidth={""} maxSize={200000000} />
 
                 </div>
 
-                <div className="flex justify-between w-full px-10">
+                <div className="flex flex-col justify-between lg:flex-row w-full px-10 gap-2">
 
                     <div className="flex flex-col gap-2">
-                        <p>Mandatory documents that needs to be filled to apply to the program</p>
+                        <p>{requiredDocumentsDescription}</p>
 
-                        <CustomizableButton text={'ADD REQUIRED DOCUMENTS'} bgColor='bg-[#52BAAB]' textColor='text-[#ffffff] ' maxSize='w-full max-w-[250px] h-[45px] mb-4' onClick={() => { addRequiredDocuments() }} />
+                        <CustomizableButton text={requiredDocumentsLabel} bgColor='bg-[#52BAAB]' textColor='text-[#ffffff] ' maxSize='w-full max-w-[250px] h-[45px] mb-4' onClick={() => { addRequiredDocuments() }} />
                         {
                             programToRender.requiredDocuments.map((item, index) => (
-                                <div key={index} className=" w-[513px] p-[7px] h-[70px] border border-[#52BAAB] rounded-[10px] flex justify-between items-center">
+                                <div key={index} className=" w-full max-w-[513px] p-[7px] h-[70px] border border-[#52BAAB] rounded-[10px] flex justify-between items-center">
                                     <Dots className="w-8 h-8 fill-black" />
                                     <input type="text" value={item} className="w-full h-full bg-[#00000012] rounded-[10px] px-2 mr-2 text-[23px] font-bold" onChange={(e) => { setRequiredDocuments(e.target.value, index) }} />
                                     <TrashCan className="w-14 h-14 p-4 fill-white rounded-xl  cursor-pointer bg-[#16688C]" onClick={() => { deleteRequiredDocuments(index) }} />
@@ -212,13 +218,13 @@ const EditProgram = () => {
                     </div>
 
                     <div className="flex flex-col gap-2">
-                        <p>Required documents that needs to be uploaded during the program application</p>
+                        <p>{applicationDocumentDescription}</p>
 
-                        <CustomizableButton text={'ADD APPLICATION DOCUMENTS'} bgColor='bg-[#52BAAB]' textColor='text-[#ffffff] ' maxSize='w-full max-w-[250px] h-[45px] mb-4' onClick={() => { addApplicationDocuments() }} />
+                        <CustomizableButton text={applicationDocumentLabel} bgColor='bg-[#52BAAB]' textColor='text-[#ffffff] ' maxSize='w-full max-w-[250px] h-[45px] mb-4' onClick={() => { addApplicationDocuments() }} />
 
                         {
                             programToRender.applicationDocuments.map((item, index) => (
-                                <div key={index} className=" w-[513px] p-[7px] h-[70px] border border-[#52BAAB] rounded-[10px] flex justify-between items-center">
+                                <div key={index} className=" w-full max-w-[513px] p-[7px] h-[70px] border border-[#52BAAB] rounded-[10px] flex justify-between items-center">
                                     <Dots className="w-8 h-8 fill-black" />
                                     <input type="text" value={item} className="w-full h-full bg-[#00000012] rounded-[10px] px-2 mr-2 text-[23px] font-bold" onChange={(e) => { setApplicationDocuments(e.target.value, index) }} />
                                     <TrashCan className="w-14 h-14 p-4 fill-white rounded-xl  cursor-pointer bg-[#16688C]" onClick={() => { deleteApplicationDocuments(index) }} />
@@ -235,7 +241,7 @@ const EditProgram = () => {
                 </div>
 
                 <div className="w-full flex justify-end px-10">
-                    <CustomizableButton text={'CREATE PROGRAM'} bgColor='bg-[#52BAAB]' textColor='text-[#ffffff] ' maxSize='w-full max-w-[250px] h-[45px] mb-4' onClick={() => { handleSubmit() }} />
+                    <CustomizableButton text={parseInt(id as string) ? editButton : createButton} bgColor='bg-[#52BAAB]' textColor='text-[#ffffff] ' maxSize='w-full max-w-[250px] h-[45px] mb-4' onClick={() => { handleSubmit() }} />
                 </div>
 
 

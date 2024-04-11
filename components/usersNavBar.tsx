@@ -21,8 +21,8 @@ const UserNavBar = () => {
     const [user, setUser] = useState<user>();
 
     const isExpandedRef = useRef<HTMLDivElement>(null);
-    const { userData } = useLoginForm();
-
+    const { userData, getTexts } = useLoginForm();
+    const { applicationsLabel, homeLabel, profileLabel } = getTexts("UsersApp")
     const { userAuth: home } = useUserAuth("/UsersApp")
     const { userAuth: Applications } = useUserAuth("/UsersApp/Applications")
     const { userAuth: profile } = useUserAuth("/UsersApp/Profile")
@@ -42,17 +42,17 @@ const UserNavBar = () => {
 
                 {Applications && <Link className={`flex flex-col items-center justify-center ${router.pathname === "/UsersApp/Applications" ? "text-[#52BAAB]" : "text-[#717171]"}`} href={'/UsersApp/Applications'}>
                     <MessageBubble className={`w-[20px] ${router.pathname === "/UsersApp/Applications" ? "stroke-[#52BAAB]" : "stroke-[#717171]"} `} />
-                    Aplications
+                    {applicationsLabel}
                 </Link>}
 
                 {home && <Link className={`flex flex-col items-center justify-center ${router.pathname === "/UsersApp" ? "text-[#52BAAB]" : "text-[#717171]"}`} href={'/UsersApp'}>
                     <Logo className={`w-[40px] ml-[-7px] stroke-[4px] ${router.pathname === "/UsersApp" ? "fill-[#52BAAB] stroke-[#52BAAB]" : "fill-[#717171] stroke-[#717171]"} `} />
-                    Home
+                    {homeLabel}
                 </Link>}
 
                 {profile && <Link className={`flex flex-col items-center justify-center ${router.pathname === "/UsersApp/Profile" ? "text-[#52BAAB]" : "text-[#717171]"}`} href={'/UsersApp/Profile'}>
                     <UserProfile className={`w-[20px] ${router.pathname === "/UsersApp/Profile" ? "fill-[#52BAAB]" : "fill-[#717171]"}  `} />
-                    Profile
+                    {profileLabel}
                 </Link>}
 
             </nav>
