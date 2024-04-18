@@ -13,6 +13,7 @@ import { getStatusIdByName, getStatusNameById } from "@/hooks/genericData/method
 import ActiveUser from "@/components/inputs/ActiveUserDropDown";
 import UserNavBar from "@/components/usersNavBar";
 import ImageUpload from "@/components/inputs/imageUpload";
+import { profile } from "console";
 
 export default function Home() {
 
@@ -60,6 +61,8 @@ export default function Home() {
     function setCountry(country: string) {
         setCountryId(getStatusIdByName(country, countries) as number)
     }
+
+    console.log(profileImg)
 
     return (
 

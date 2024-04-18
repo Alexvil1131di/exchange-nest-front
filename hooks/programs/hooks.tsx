@@ -10,21 +10,18 @@ export function useCreatePrograms() {
             let imageUrls: string[] = [];
 
             if (program.imagesUrl) {
-                await Promise.all(Array.isArray(program.imagesUrl) ? program.imagesUrl.map(async (image) => {
+                for (let i = 0; i < program.imagesUrl.length; i++) {
+                    const image = program.imagesUrl[i];
                     if (checkImageType(image)) {
                         const res = await postImage(image as File);
-                        imageUrls.push(res);
+                        imageUrls[i] = res;
+                    } else {
+                        imageUrls[i] = image as string;
                     }
-                    else {
-                        imageUrls.push(image as string);
-                    }
-                }) : []
-                );
+                }
             }
 
             return postPrograms({ ...program, imagesUrl: imageUrls.join(",") });
-
-
         }
     })
 }

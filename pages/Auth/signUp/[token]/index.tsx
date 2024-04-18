@@ -39,7 +39,7 @@ export default function Home() {
 
     function handleSubmit(e) {
         e.preventDefault()
-        let userData = { firstName, lastName, nic: nic, email, password, birthDate: "2023-12-23T13:19:20.844Z", roleId: token?.includes("token") ? 3 : 1, statusId: 1, organizationId, countryId: 1, token: token?.split("token=")[1] }
+        let userData = { firstName, lastName, nic: nic, email, password, birthDate: "2023-12-23T13:19:20.844Z", roleId: token?.includes("token") ? 3 : 1, statusId: 1, organizationId, countryId: countryId, token: token?.split("token=")[1] }
         if (password == confirmedPassword && (passwordRegex.test(password))) {
             toast.promise(registerUser(userData), {
                 pending: 'Creating user',

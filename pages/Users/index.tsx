@@ -173,7 +173,7 @@ const User = () => {
 
                     <div className='flex gap-4 w-full flex-col md:flex-row'>
                         <InputComponent type={'search'} label='Search' width='w-full md:max-w-[300px]' errorMessage={''} onChange={(e) => { setSearchText(e.target.value) }} />
-                        <InputComponent type={'dropdown'} label='Search' value={statusFilter} width='w-full md:max-w-[250px]' errorMessage={''} onChange={setStatusFilter} options={institutionStatus} />
+                        <InputComponent type={'dropdown'} label='Status' value={statusFilter} width='w-full md:max-w-[250px]' errorMessage={''} onChange={setStatusFilter} options={institutionStatus} />
                     </div>
 
                     <div className=' flex gap-4'>

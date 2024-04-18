@@ -63,7 +63,7 @@ function InputComponent(
                     <DownArrow className={`w-[24px] h-[24px] stroke-[1.5px] ${isOpen && " rotate-180"} `} />
                 </div>
                 <input className="absolute bottom-0 w-0 h-0" type="text" required value={value} />
-                {isOpen && (
+                {isOpen && options.length > 0 && (
                     <div className={`absolute options w-full h-fit max-h-[200px] overflow-scroll mt-2 z-[99] flex flex-col border-[1px] border-[#52BAAB] rounded-[4px] shadow-sm`} style={{ background: optionsBg }}>
                         {options.map((option, index) => (
                             <>
@@ -103,28 +103,15 @@ function InputComponent(
                     keyboardType="phone-pad"
                     name={name}
                     value={value}
-                    onChange={onChange}
                     required
+                    onChange={(e) => onChange(e)}
                 />
+
+
             );
         }
         else if (type === "date") {
-            <input
-                style={{ background: bgColor }}
-                className={`w-full h-full rounded-[4px] text-[12px] px-[16px] `}
-                type={type}
-                placeholder={placeholder}
-                name={name}
-                value={value}
-                onClick={onChange}
-                required
-                min={minDate}
-            />
-        }
-
-
-        return (
-            <input
+            return <input
                 style={{ background: bgColor }}
                 className={`w-full h-full rounded-[4px] text-[12px] px-[16px] `}
                 type={type}
@@ -135,7 +122,26 @@ function InputComponent(
                 required
                 min={minDate}
             />
-        );
+        }
+        else {
+
+            return (
+                <input
+                    style={{ background: bgColor }}
+                    className={`w-full h-full rounded-[4px] text-[12px] px-[16px] `}
+                    type={type}
+                    placeholder={placeholder}
+                    name={name}
+                    value={value}
+                    onChange={onChange}
+                    required
+                    min={minDate}
+                />
+            );
+        }
+
+
+
     }
 
     return (
@@ -152,6 +158,8 @@ function InputComponent(
                     <span className={`${!required && "hidden"} ml-1 text-[#ff3939]`}>*</span>
                 </label>
             </div>
+            {hasAnError && <p className="lg:hidden text-[14px] text-[#ff3939]">{errorMessage}</p>}
+
         </TooltipContainer>
     );
 

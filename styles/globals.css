@@ -30,6 +30,10 @@ textarea:focus {
   outline: none;
 }
 
+input .PhoneInputInput {
+  background-color: "#F4FFFF";
+}
+
 #__next {
   height: 100vh;
 }

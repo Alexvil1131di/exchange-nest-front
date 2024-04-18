@@ -5,7 +5,7 @@ import X from "@/public/x.svg";
 import CustomizableButton from "../buttons/CustomizableButton";
 import useUserForm from "@/store/usersStore";
 import { useGetOrganizations } from "@/hooks/Institutions/hooks";
-import { useGetStatus, useGetRoles } from "@/hooks/genericData/hooks";
+import { useGetStatus, useGetRoles, useGetCountries } from "@/hooks/genericData/hooks";
 import { getStatusIdByName, getStatusNameById } from "@/hooks/genericData/methods";
 
 
@@ -18,6 +18,7 @@ interface UserModal {
 const UserModal = ({ closeModal, headerMessage, onSubmit }: UserModal) => {
     const [submitted, setSubmitted] = useState<boolean>(false)
     const { user, setFirstName, setLastName, setImage, setEmail, setPassword, setNic, setCountryId, setOrganizationId, setRoleId, setStatusId } = useUserForm();
+    const { data: countries } = useGetCountries()
 
     const { data: organizations } = useGetOrganizations()
     const { data: statuses } = useGetStatus();
@@ -28,6 +29,7 @@ const UserModal = ({ closeModal, headerMessage, onSubmit }: UserModal) => {
     const organizationName = organizations?.map((organization) => organization.name)
     const institutionStatus = statuses?.slice(0, 2).map((status) => status.description)
     const userRoles = roles?.map((role) => role.description)
+    const countryOptions = countries?.map((item) => item.description)
 
 
 
@@ -40,7 +42,7 @@ const UserModal = ({ closeModal, headerMessage, onSubmit }: UserModal) => {
         organizationId && setOrganizationId(organizationId)
     }
 
-    function getStatusIdByName(status: string) {
+    function getStatusIdByNameLocal(status: string) {
         let StatusId = statuses?.find((statusObject) => statusObject.description == status)?.id
         setStatusId(StatusId as number)
     }
@@ -54,12 +56,16 @@ const UserModal = ({ closeModal, headerMessage, onSubmit }: UserModal) => {
         setRoleId(roleId as number)
     }
 
+    function setCountry(country: string) {
+        setCountryId(getStatusIdByName(country, countries) as number)
+    }
+
     return (
         <>
 
             <div className="fixed top-14 left-0 right-0 bottom-0 flex flex-col justify-center items-center bg-[#0000004b] z-10 ">
 
-                <form onSubmit={(e) => { e.preventDefault(), onSubmit() }} className="flex flex-col w-full max-w-[1222px] bg-white rounded-md overflow-scroll ">
+                <form onSubmit={(e) => { e.preventDefault(), onSubmit() }} className="flex flex-col w-full max-w-[1222px] bg-[#ffffffe6] rounded-md overflow-scroll ">
 
                     <div className="flex items-center justify-between h-16 w-full max-w-[1222px] bg-[#52BAAB] text-center text-white text-[24px] font-bold">
                         <div></div>
@@ -78,26 +84,26 @@ const UserModal = ({ closeModal, headerMessage, onSubmit }: UserModal) => {
                             <div className="flex flex-col md:flex-row w-full max-h-[644px] gap-3  ">
                                 <div className="flex flex-col gap-6 items-end w-full ">
 
-                                    <InputComponent type={'text'} value={user.firstName} required={true} label='First Name' width='w-full ' errorMessage={''} onChange={(e) => { setFirstName(e.target.value) }} />
+                                    <InputComponent bgColor="#ffffff" type={'text'} value={user.firstName} required={true} label='First Name' width='w-full ' errorMessage={''} onChange={(e) => { setFirstName(e.target.value) }} placeholder="Enter first name" />
 
-                                    <InputComponent type={'text'} value={user.lastName} required={true} label='Last Name' width='w-full ' errorMessage={''} onChange={(e) => { setLastName(e.target.value) }} />
+                                    <InputComponent bgColor="#ffffff" type={'text'} value={user.lastName} required={true} label='Last Name' width='w-full ' errorMessage={''} onChange={(e) => { setLastName(e.target.value) }} placeholder="Enter last name" />
 
-                                    <InputComponent type={'text'} value={user.nic} required={true} label='Id or PassportNumber' width='w-full' errorMessage={''} onChange={(e) => { setNic(e.target.value) }} />
+                                    <InputComponent bgColor="#ffffff" type={'text'} value={user.nic} required={true} label='Id or PassportNumber' width='w-full' errorMessage={''} onChange={(e) => { setNic(e.target.value) }} placeholder="Enter ID or passport number" />
 
-                                    <InputComponent type={'email'} value={user.email} required={true} label='Email' width='w-full ' errorMessage={''} onChange={(e) => { setEmail(e.target.value) }} />
+                                    <InputComponent bgColor="#ffffff" type={'email'} value={user.email} required={true} label='Email' width='w-full ' errorMessage={''} onChange={(e) => { setEmail(e.target.value) }} placeholder="Enter email" />
 
-                                    {!user.id && <InputComponent type={'password'} value={user?.password} required={true} label='Password' width='w-full ' errorMessage={''} onChange={(e) => { setPassword(e.target.value) }} />}
+                                    {!user.id && <InputComponent bgColor="#ffffff" type={'password'} value={user?.password} required={true} label='Password' width='w-full ' errorMessage={''} onChange={(e) => { setPassword(e.target.value) }} placeholder="Enter password" />}
                                 </div>
 
                                 <div className="flex flex-col gap-6 items-end w-full ">
 
-                                    <InputComponent type={'dropdown'} value={getRoleById(user.roleId as number)} required={true} label='User Rol' width='w-full' options={userRoles} errorMessage={''} onChange={setRoleIdByName} />
+                                    <InputComponent bgColor="#ffffff" type={'dropdown'} value={getRoleById(user.roleId as number)} required={true} label='User Rol' width='w-full' options={userRoles} errorMessage={''} onChange={setRoleIdByName} placeholder="Select user role" />
 
-                                    <InputComponent type={'dropdown'} value={getStatusNameById(user?.statusId as number, statuses)} required={true} label='Status' width='w-full' errorMessage={''} options={institutionStatus} onChange={getStatusIdByName} />
+                                    <InputComponent bgColor="#ffffff" type={'dropdown'} value={getStatusNameById(user?.statusId as number, statuses)} required={true} label='Status' width='w-full' errorMessage={''} options={institutionStatus} onChange={getStatusIdByNameLocal} placeholder="Select status" />
 
-                                    <InputComponent type={'dropdown'} value={getSelectedName(user?.organizationId)} required={true} label='Institution' width='w-full' options={organizationName} errorMessage={''} onChange={setOrganizationIdByName} />
+                                    <InputComponent bgColor="#ffffff" type={'dropdown'} value={getSelectedName(user?.organizationId)} required={true} label='Institution' width='w-full' options={organizationName} errorMessage={''} onChange={setOrganizationIdByName} placeholder="Select institution" />
 
-                                    <InputComponent type={'dropdown'} value={String(user.countryId)} required={true} label='Country' width='w-full' errorMessage={''} options={["1"]} onChange={(e) => { setCountryId(1) }} />
+                                    <InputComponent bgColor="#ffffff" type={'dropdown'} value={getStatusNameById(user.countryId, countries)} required={true} label={"Country"} placeholder={"Please select a country"} width='w-full' options={countryOptions} errorMessage={''} onChange={setCountry} />
 
                                 </div>
 

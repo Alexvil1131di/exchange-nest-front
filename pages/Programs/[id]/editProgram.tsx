@@ -50,20 +50,35 @@ const EditProgram = () => {
     // };
 
     function checkDateAvailability(toSetField: string, setDate) {
+        console.log(setDate)
 
-        if (toSetField === "limitApplicationDate" && !program.startDate && !program.finishDate) {
-            setLimitApplicationDate(setDate);
-        } else if (toSetField === "StartDate" && program.limitApplicationDate && !program.finishDate) {
-            setStartDate(setDate);
-        } else if (toSetField === "FinishDate" && program.limitApplicationDate && program.startDate) {
-            setFinishDate(setDate);
-        } else {
-            if (!errorShown) { // Verificar si el error ya se ha mostrado
-                toast.error("Please fill all date fields in order");
-                setErrorShown(true); // Establecer el estado para indicar que el error se ha mostrado
+
+        if (toSetField == "StartDate") {
+            const endDate = program.finishDate
+            const newStartDate = new Date(setDate).getTime();
+            const newEndDate = new Date(endDate).getTime()
+
+            if (!endDate || newStartDate <= newEndDate || !setDate) {
+                return setStartDate(setDate);
             }
-            setFinishDate(""); // Restablecer la fecha de finalización
+            else if (setDate !== undefined && !errorShown) { setErrorShown(true); toast.error("Start date must be before finish date") }
+
+
         }
+
+        else if (toSetField == "FinishDate") {
+            const startDate = program.startDate
+            const newStartDate = new Date(startDate).getTime();
+            const newEndDate = new Date(setDate).getTime()
+
+            if (!startDate || newStartDate <= newEndDate || !setDate) {
+                return setFinishDate(setDate);
+            }
+            else if (setDate !== undefined && !errorShown) { setErrorShown(true); toast.error("Finish date must be after start date") }
+        }
+
+        setTimeout(() => { setErrorShown(false) }, 500)
+
     }
 
     function setStatus(stat: string) {
@@ -153,6 +168,8 @@ const EditProgram = () => {
         );
     };
 
+    console.log(program.imagesUrl)
+
 
 
     return (
@@ -177,8 +194,6 @@ const EditProgram = () => {
 
                         <div className="flex flex-col gap-6 items-end w-full ">
 
-                            <InputComponent type={'date'} value={program.limitApplicationDate} required={true} label={limitDateLabel} placeholder={limitDatePlaceholder} width='w-full ' errorMessage={''} onChange={(e) => { checkDateAvailability("limitApplicationDate", (e.target.value)) }} />
-
                             <InputComponent type={'date'} value={program.startDate} required={true} label={StartDateLabel} placeholder={StartDatePlaceholder} width='w-full' errorMessage={''} minDate={program.limitApplicationDate} onChange={(e) => { checkDateAvailability("StartDate", (e.target.value)) }} />
 
                             <InputComponent type={'date'} value={program.finishDate} required={true} label={FinishDateLabel} placeholder={FinishDatePlaceholder} width='w-full' errorMessage={''} minDate={program.startDate} onChange={(e) => { checkDateAvailability("FinishDate", (e.target.value)) }} />
@@ -192,7 +207,7 @@ const EditProgram = () => {
 
                     <InputComponent type={'textarea'} value={program.description} required={true} height='h-[80px]' label={descriptionLabel} placeholder={descriptionPlaceholder} width='w-full ' errorMessage={''} onChange={(e) => { setDescription(e.target.value) }} />
 
-                    <ImageUpload image={program?.imagesUrl || []} multiImage showButton={false} description={"Click to browse or drag and drop your pictures"} errorMessage={"El tamaño del logo debe ser inferior a los 2mb"} imageOnChange={setImage} height={"h-[160px]"} uniqueKey={"commerceImage"} maxWidth={""} maxSize={200000000} />
+                    <ImageUpload image={program?.imagesUrl || []} multiImage showButton={false} description={"Click to browse or drag and drop your pictures"} errorMessage={"El tamaño del logo debe ser inferior a los 2mb"} imageOnChange={setImage} height={"h-fit min-h-[160px]"} uniqueKey={"commerceImage"} maxWidth={""} maxSize={200000000} />
 
                 </div>
 

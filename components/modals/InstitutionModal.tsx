@@ -44,7 +44,7 @@ const InstitutionModal = ({ closeModal, headerMessage, onSubmit }: InstitutionMo
 
             <div className="fixed top-14 left-0 right-0 bottom-0 flex flex-col justify-center items-center bg-[#0000004b] z-10 ">
 
-                <form onSubmit={(e) => { e.preventDefault(), onSubmit() }} className="flex flex-col w-full max-w-[1222px] bg-white rounded-md overflow-scroll ">
+                <form onSubmit={(e) => { e.preventDefault(), onSubmit() }} className="flex flex-col w-full max-w-[1222px] bg-[#ffffffe6] rounded-md overflow-scroll ">
 
                     <div className="flex items-center justify-between h-16 w-full max-w-[1222px] bg-[#52BAAB] text-center text-white text-[24px] font-bold">
                         <div></div>
@@ -63,26 +63,26 @@ const InstitutionModal = ({ closeModal, headerMessage, onSubmit }: InstitutionMo
                             <div className="flex flex-col md:flex-row w-full max-h-[644px] gap-3  ">
                                 <div className="flex flex-col gap-6 items-end w-full ">
 
-                                    <InputComponent type={'text'} value={institution.name} required={true} label='Institution Name' width='w-full ' errorMessage={''} onChange={(e) => { setName(e.target.value) }} />
+                                    <InputComponent type={'text'} bgColor="#ffffff" value={institution.name} required={true} label='Institution Name' width='w-full ' errorMessage={''} onChange={(e) => { setName(e.target.value) }} placeholder='Enter institution name' />
 
-                                    <InputComponent type={'text'} value={institution.address} required={true} label='Address' width='w-full ' errorMessage={''} onChange={(e) => { setAddress(e.target.value) }} />
+                                    <InputComponent type={'text'} bgColor="#ffffff" value={institution.address} required={true} label='Address' width='w-full ' errorMessage={''} onChange={(e) => { setAddress(e.target.value) }} placeholder='Enter address' />
 
-                                    <InputComponent type={'email'} value={institution.email} required={true} label='Email' width='w-full ' errorMessage={''} onChange={(e) => { setEmail(e.target.value) }} />
+                                    <InputComponent type={'email'} bgColor="#ffffff" value={institution.email} required={true} label='Email' width='w-full ' errorMessage={''} onChange={(e) => { setEmail(e.target.value) }} placeholder='Enter email' />
                                 </div>
 
                                 <div className="flex flex-col gap-6 items-end w-full ">
 
-                                    <InputComponent type={'tel'} value={institution.phoneNumber} required={true} label='Phone Number' width='w-full ' errorMessage={''} onChange={setPhoneNumber} />
+                                    <InputComponent type={'tel'} bgColor="#ffffff" value={institution.phoneNumber} required={true} label='Phone Number' width='w-full ' errorMessage={''} onChange={setPhoneNumber} placeholder='Enter phone number' />
 
-                                    <InputComponent type={'dropdown'} value={getInstitutionStatusById(institution.organizationTypeId as number)} required={true} label='Type Of Institution' width='w-full' options={organizationType} errorMessage={''} onChange={getInstitutionStatusByName} />
+                                    <InputComponent type={'dropdown'} bgColor="#ffffff" value={getInstitutionStatusById(institution.organizationTypeId as number)} required={true} label='Type Of Institution' width='w-full' options={organizationType} errorMessage={''} onChange={getInstitutionStatusByName} placeholder='Select institution type' />
 
-                                    <InputComponent type={'dropdown'} value={getStatusNameById(institution?.statusId as number, statuses)} required={true} label='Status' width='w-full' errorMessage={''} options={institutionStatus} onChange={setStatusIdByName} />
+                                    <InputComponent type={'dropdown'} bgColor="#ffffff" value={getStatusNameById(institution?.statusId as number, statuses)} required={true} label='Status' width='w-full' errorMessage={''} options={institutionStatus} onChange={setStatusIdByName} placeholder='Select status' />
 
                                 </div>
 
                             </div>
 
-                            <InputComponent type={'textarea'} value={institution.description} required={true} height='h-[80px]' label='Description' width='w-full ' errorMessage={''} onChange={(e) => { setDescription(e.target.value) }} />
+                            <InputComponent type={'textarea'} bgColor="#ffffff" value={institution.description} required={true} height='h-[80px]' label='Description' width='w-full ' errorMessage={''} onChange={(e) => { setDescription(e.target.value) }} placeholder='Enter description' />
 
                         </div>
 

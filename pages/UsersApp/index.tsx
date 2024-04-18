@@ -9,6 +9,7 @@ import useApplicationForm from '@/store/usersAppStore';
 import { useGetApplications } from '@/hooks/usersApp/hooks';
 import { useGetOrganizations } from '@/hooks/Institutions/hooks';
 import useLoginForm from '@/store/singInStore';
+import NothingToSeeHere from '@/components/cards/nothingToSee';
 
 
 const UsersApp = () => {
@@ -29,7 +30,7 @@ const UsersApp = () => {
         let applicatedPrograms = applications?.filter((application: any) => application.statusId !== 6).map((application: any) => application.programId)
         let filteredPtograms = programs?.filter((program: any) => program.name.toLowerCase().includes(search.toLowerCase()) && !applicatedPrograms?.includes(program.id))
 
-        return filteredPtograms
+        return filteredPtograms || []
 
     }
 
@@ -50,11 +51,9 @@ const UsersApp = () => {
 
                 </div>
 
-                {filterPrograms()?.length === 0 && !isLoading &&
+                {filterPrograms()?.length < 1 && !isLoading &&
 
-                    <div className='flex flex-col items-center gap-3'>
-                        <h1 className='text-[20px] font-medium'>No programs found</h1>
-                    </div>
+                    <NothingToSeeHere />
 
                 }
 
