@@ -1,7 +1,7 @@
 {
     "Auth": {
         "loginTittle": "Sign in to ExchangeNest",
-        "loginDescription": "Now you just have to enter your username and password and enjoy everything that Pidebot offers you.",
+        "loginDescription": "Now you just have to enter your username and password and enjoy everything that ExchangeNest offers you.",
         "signUpTittle": "Sign up to ExchangeNest",
         "signUpDescription": "¡Welcome to ExchangeNest! To make the most of our platform and access all its incredible features, we invite you to register.",
         "changePasswordTittle": "Reset your password",
@@ -44,7 +44,8 @@
         "landinDescription": "At ExchangeNest, we are dedicated to connecting worlds and uniting cultures through educational exchange programs. Our platform offers comprehensive exchange management, facilitating collaboration between educational institutions and students from around the world.",
         "HowToLabel": "How does it work?",
         "howToDescription": "Exchange Nest is a platform that simplifies the management of educational exchange programs and application administration. Divided into Programs and Applications, it allows users to create customized programs and apply to them. In the Programs section, detailed programs can be created, while in Applications, applicants can upload documents for their application, which are reviewed and validated by program administrators. Exchange Nest centralizes and streamlines the entire exchange process, from program creation to participant selection, providing a seamless experience for both organizers and applicants.",
-        "logInButton": "Join Now"
+        "logInButton": "Join Now",
+        "NothingtoShow": "Nothing to see here"
     },
     "LoginNotification": {
         "pending": "Loggin in",

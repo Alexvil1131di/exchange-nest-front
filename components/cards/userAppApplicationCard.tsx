@@ -15,7 +15,7 @@ const UserAppApplicationCard = ({ imageUrl, status, name, onClick }: UserApplica
 
                 <div className='text-[12px]'>
                     <p className='text-[14px] text-[#000000] font-bold'>{name}</p>
-                    <p className='text-[#717171]' >{status} Feb 13 - 14, 2023</p>
+                    <p className='text-[#717171]' >{status} </p>
                 </div>
             </div>
 

@@ -38,7 +38,7 @@ export async function postPrograms(program: Program) {
         {
             name: program.name,
             description: program.description,
-            limitApplicationDate: program.limitApplicationDate + "T00:00:00.000Z",
+            limitApplicationDate: "2024-04-30T00:00:00.000Z",
             startDate: program.startDate + "T00:00:00.000Z",
             finishDate: program.finishDate + "T00:00:00.000Z",
             applicationDocuments: program.applicationDocuments.filter((item) => item.length > 0).join(",") || "",
@@ -67,7 +67,7 @@ export async function putPrograms(program: Program) {
             id: program.id,
             name: program.name,
             description: program.description,
-            limitApplicationDate: program.limitApplicationDate + "T00:00:00.000Z",
+            limitApplicationDate: "2024-04-30T00:00:00.000Z",
             startDate: program.startDate + "T00:00:00.000Z",
             finishDate: program.finishDate + "T00:00:00.000Z",
             applicationDocuments: program.applicationDocuments.filter((item) => item.length > 0).join(",") || "",

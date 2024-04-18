@@ -26,7 +26,7 @@ const useProgramForm = create<programsForm>((set, get) => ({
     program: {
         name: "",
         description: "",
-        limitApplicationDate: "",
+        limitApplicationDate: "2024-04-30T00:00:00.000Z",
         applicationDocuments: [],
         requiredDocuments: [],
         documents: "",

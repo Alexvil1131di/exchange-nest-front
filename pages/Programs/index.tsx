@@ -10,6 +10,7 @@ import { useDeletePrograms, useGetPrograms } from '@/hooks/programs/hooks';
 import useProgramForm from '@/store/programsStore';
 import ActionConfirm from '@/components/modals/actionConfirmModal';
 import useLoginForm from '@/store/singInStore';
+import NothingToSeeHere from '@/components/cards/nothingToSee';
 
 
 const Programs = () => {
@@ -44,17 +45,24 @@ const Programs = () => {
                 </div>
 
                 <div className='flex flex-wrap w-full gap-5 justify-center md:justify-start'>
-                    {fixedPrograms?.map((item, index) => (
 
-                        <ProgramCard
-                            key={index}
-                            imageUrl={`https://qrepipawlxyhhqjvbyqs.supabase.co/storage/v1/object/public/${item?.imagesUrl[0]}`}
-                            title={item?.name}
-                            description={item.description}
-                            onEdit={() => { setProgram({ ...item, applicationDocuments: item.applicationDocuments.split(","), requiredDocuments: item.requiredDocuments.split(",") }), router.push(`/Programs/${item.id}/editProgram`) }}
-                            onDelete={() => { setProgram({ ...item, applicationDocuments: item.applicationDocuments.split(","), requiredDocuments: item.requiredDocuments.split(",") }), setShowModal(true) }}
-                        />
-                    ))}
+
+                    {
+
+                        fixedPrograms && fixedPrograms?.length > 0 ?
+                            fixedPrograms?.map((item, index) => (
+
+                                <ProgramCard
+                                    key={index}
+                                    imageUrl={`https://qrepipawlxyhhqjvbyqs.supabase.co/storage/v1/object/public/${item?.imagesUrl[0]}`}
+                                    title={item?.name}
+                                    description={item.description}
+                                    onEdit={() => { setProgram({ ...item, applicationDocuments: item.applicationDocuments.split(","), requiredDocuments: item.requiredDocuments.split(",") }), router.push(`/Programs/${item.id}/editProgram`) }}
+                                    onDelete={() => { setProgram({ ...item, applicationDocuments: item.applicationDocuments.split(","), requiredDocuments: item.requiredDocuments.split(",") }), setShowModal(true) }}
+                                />
+                            ))
+                            : <NothingToSeeHere />
+                    }
 
                 </div>
 

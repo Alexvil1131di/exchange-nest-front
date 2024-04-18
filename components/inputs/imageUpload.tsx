@@ -54,7 +54,7 @@ const ImageUpload = ({ image, description, errorMessage, imageOnChange, maxWidth
         <>
             <div className="flex md:flex-col gap-3 items-center justify-between w-full ">
 
-                <label className={`relative w-full flex items-center justify-center rounded-[20px] bg-white border-dashed ${maxWidth + " " + height} ${image && ('bg-cover')} bg-center bg-no-repeat shadow-sm border-2 border-[#0C9281] cursor-pointer`}
+                <label className={`relative w-full flex items-center justify-center rounded-[20px] bg-white border-dashed p-2 ${maxWidth + " " + height} ${image && ('bg-cover')} bg-center bg-no-repeat shadow-sm border-2 border-[#0C9281] cursor-pointer`}
                     style={{ backgroundImage: `url(${profileImage})` }}
                     htmlFor={uniqueKey} id={"upload " + uniqueKey} >
 

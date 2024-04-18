@@ -3,8 +3,7 @@
 import React, { use, useState } from 'react';
 import NavBar from '@/components/navBar';
 import InputComponent from '@/components/inputs/InputComponent';
-import CustomizableButton from '@/components/buttons/CustomizableButton';
-import ProgramCard from '@/components/cards/programCard';
+import NothingToSeeHere from '@/components/cards/nothingToSee';
 import UserApplicationCard from '@/components/cards/userApplicationCard';
 import { useRouter } from 'next/router';
 import { useGetPrograms } from '@/hooks/programs/hooks';
@@ -60,7 +59,7 @@ const Application = () => {
             filteredApplications = filteredApplications?.filter((application) => application.statusId === statusId)
         }
 
-        return filteredApplications
+        return filteredApplications || []
     }
 
     return (
@@ -84,7 +83,7 @@ const Application = () => {
 
                 <div className='flex flex-col gap-5 justify-center md:justify-start'>
                     <table className="w-full text-[#000000] text-[15px] font-medium">
-                        <thead >
+                        {filteredApplications() && filteredApplications()?.length > 0 && <thead >
                             <tr >
                                 <th >{applicantNameLabel}</th>
                                 <th className='hidden md:table-cell'>{statusLabel}</th>
@@ -92,14 +91,14 @@ const Application = () => {
                                 <th className='hidden md:table-cell'>{programsLabel}</th>
                                 <th>{reviewLabel}</th>
                             </tr>
-                        </thead>
+                        </thead>}
                         <tbody>
 
-                            {filteredApplications() ? filteredApplications()?.map((application, index) => (
+                            {filteredApplications() && filteredApplications()?.length > 0 ? filteredApplications()?.map((application, index) => (
                                 <UserApplicationCard key={index} imageUrl={getUserById(application.studentId as number)?.imageUrl ? `https://qrepipawlxyhhqjvbyqs.supabase.co/storage/v1/object/public/${getUserById(application.studentId as number)?.imageUrl}` : "/userProfile.svg"} applicantName={getUserById(application.studentId as number)?.firstName as string} email={getUserById(application.studentId as number)?.email as string} programName={getProgramById(application.programId as number)?.name as string} status={getStatusNameById(application.statusId, status) as string} onClick={() => { router.push(`/Applications/${application.id}/reviewApplication`) }} />
                             ))
 
-                                : <></>
+                                : <NothingToSeeHere />
                             }
 
                         </tbody>
