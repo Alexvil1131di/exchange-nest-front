@@ -36,14 +36,13 @@ const UsersApp = () => {
 
     return (
         <>
-            <div className='flex flex-col gap-3 w-full items-center p-5 mt-4 mb-16'>
+            <div className='flex flex-col gap-3 w-full h-full items-center p-5 mt-4 pb-[84px]'>
                 <div className='flex flex-col w-full whitespace-nowrap items-center gap-4'>
                     <p className='text-[20px] font-medium'>Exchange Nest</p>
                     <UsersAppSearchBar value={search} onChange={(e) => { setSearch(e.target.value) }} />
                 </div>
 
-
-                <div className='flex flex-col flex-wrap flex-shrink-0 gap-3 md:flex-row md:gap-16 w-full items-center' >
+                <div className='flex flex-col flex-wrap gap-3 md:flex-row md:gap-16 w-full items-center pb-[84px]' >
                     {filterPrograms()?.map((program) => (
                         <UsersProgramCard key={program.id} institutionName={getOrganizationById(program.organizationId as number)?.name} name={program.name} images={(program?.imagesUrl as string).split(",")} description={program.description} onClick={() => { reset(); router.push(`/UsersApp/${program.id}/userProgram`) }} />
                     ))
@@ -52,14 +51,12 @@ const UsersApp = () => {
                 </div>
 
                 {filterPrograms()?.length < 1 && !isLoading &&
-
                     <NothingToSeeHere />
-
                 }
 
             </div>
-
             <UserNavBar />
+
         </>
 
     );

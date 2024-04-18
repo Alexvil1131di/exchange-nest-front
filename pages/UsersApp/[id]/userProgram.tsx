@@ -145,17 +145,17 @@ const UserProgram = () => {
     }
 
     return (
-        <div className='mb-16'>
+        <>
             {showModal && <ActionConfirm mainColor='bg-[#16688C]' backGround='bg-[#16688C]' title={"Quit application"} actionMessage={`Are you sure you want to quit your application for the program ${program.name}`} acctionConfirm={() => { cancelApplication(); setShowModal(false); }} acctionReject={() => { setShowModal(false) }} confirmButtonLabel={"Accept"} rejectButtonLabel={"Cancel"} />}
 
-            {program.imagesUrl && <div className='flex flex-col gap-3 w-full items-center p-5 mt-4 '>
+            {program.imagesUrl && <div className='flex flex-col gap-3 w-full items-center p-5 mt-4  h-full'>
 
                 <div className='flex w-full justify-between'>
                     <button type='button' onClick={() => { router.back(); resetProgram(); reset() }} className='text-[16px] underline' >{"< Go Back"}</button>
                     <ExchangeNestLogo className='w-[57px] ml-[-10px] stroke-[#000000] stroke-[2px] ' />
                 </div>
 
-                <div className=" relative w-full md:w-[330px] rounded-[20px]  ">
+                <div className=" relative w-full md:w-[330px] rounded-[20px] pb-[84px] ">
                     <div {...handlers} className="w-full h-[325px] rounded-[15px] bg-cover bg-center relative" style={{ backgroundImage: `url(https://qrepipawlxyhhqjvbyqs.supabase.co/storage/v1/object/public/${(program?.imagesUrl as string[])[activeIndex] || ""})` }}>
 
                         <div className="w-[50%] absolute inset-0 bg-black opacity-5 left-0 rounded-l-[20px]" onClick={() => { handleSwipe("right") }} />
@@ -245,7 +245,7 @@ const UserProgram = () => {
                 {application.id && <button type='button' onClick={() => { setShowModal(true) }} className={`w-full h-11 text-[#ffffff] text-[12px] font-bold bg-[#16688C] `}>QUIT APPLICATION</button>}
                 <button type='button' onClick={() => { handleSubmit() }} className={`w-full h-11 text-[#ffffff] text-[12px] font-bold bg-[#52BAAB] `}>{application.id ? "UPDATE APPLICATION" : "SEND APPLICATION"}</button>
             </div>
-        </div>
+        </>
 
     );
 };
